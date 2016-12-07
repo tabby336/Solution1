@@ -32,4 +32,4 @@ As *single, simple solution* is the central motto of our project, we have made i
 In order to uphold academic standards, assignment centralization will also check for plagiarism.
 
 # Donate
-
+Because we're awesome, we give you the opportunity to give us money!
