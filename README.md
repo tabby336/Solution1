@@ -1,6 +1,8 @@
 # Context 
 
-Our platform offers a series of functionalities that will positively impact the inner workings of our college, helping both teachers and students by providing a single, simple to use solution through which courses can be accessed and assignments distributed and centralized.
+Our platform, **Solution1**, comes as the 1st solution for the issues our college is facing. 
+
+It offers a series of functionalities that will positively impact the inner workings of our college, helping both teachers and students by providing a single, simple to use solution through which courses can be accessed and assignments distributed and centralized.
 
 # Access to the Platform
 
