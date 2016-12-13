@@ -33,5 +33,13 @@ As *single, simple solution* is the central motto of our project, we have made i
 
 In order to uphold academic standards, assignment centralization will also check for plagiarism.
 
+##Plagiarism check
+Our team is comprised of young idealistic minds, striving for perfection every day. We are firm believers that no matter the circumstances, one should never cheat, after all perfection comes from within, not from a google search. Hence, we shall use MOSS (Measure of Software Similarity). MOSS is tool for automatically
+detecting plagiarism. Although the algorithm behind MOSS is very proficient (more details here http://theory.stanford.edu/~aiken/publications/papers/sigmod03.pdf), it is still
+up to the examiner to go and check the code suspected of foul play.
+MOSS is an internet service. Our app will send source files to the central server. Once the payload is delivered, the central server returns the results in form of a URL string (e.g. http://moss.stanford.edu/results/XXXXXXXX).
+
+For more details about MOSS, check https://theory.stanford.edu/~aiken/moss/ 
+
 # Donate
 Because we're awesome, we give you the opportunity to give us money!
