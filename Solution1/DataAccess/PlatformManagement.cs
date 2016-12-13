@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace Services.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class PlatformManagement : DbContext
     {
         public DbSet<Mark> Marks { get; set; }
 

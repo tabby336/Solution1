@@ -7,7 +7,7 @@ using Services.Data;
 
 namespace DataAccess.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(PlatformManagement))]
     [Migration("20161213170604_test2")]
     partial class test2
     {

@@ -8,8 +8,8 @@ using Services.Data;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PlatformManagement))]
-    [Migration("20161213163051_test")]
-    partial class test
+    [Migration("20161213173529_test3")]
+    partial class test3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
