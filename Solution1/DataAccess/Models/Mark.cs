@@ -1,12 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Models
 {
-    public class Mark
+    public class Mark: BaseModel
     {
-        public Guid Id { get; set; }
-
         public Guid ModuleId { get; set; }
         
         public Guid UserId { get; set; }
