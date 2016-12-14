@@ -5,10 +5,10 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IRepository<T>
     {
-        void Create(T obj);
+        T Create(T obj);
         void Update(T obj);
         void Delete(T obj);
-        IEnumerable<T> GetById(Guid id);
+        T GetById(Guid id);
         IEnumerable<T> GetAll();
     }
 }
