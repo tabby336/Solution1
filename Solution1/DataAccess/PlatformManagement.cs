@@ -1,13 +1,15 @@
-﻿using DataAccess;
-using DataAccess.Models;
+﻿using DataAccess.Models;
+using DataAccess.Repositories.ModuleManagement;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 
-namespace Services.Data
+namespace DataAccess
 {
     public class PlatformManagement : DbContext
     {
         public DbSet<Mark> Marks { get; set; }
+
+        public DbSet<Module> Modules { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
