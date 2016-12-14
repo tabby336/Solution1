@@ -16,10 +16,11 @@ namespace DataAccess.Repositories
             context = platformManagement;
         }
 
-        public void Create(T p)
+        public T Create(T p)
         {
             context.Add(p);
             context.SaveChanges();
+            return p;
         }
 
         public void Update(T p)
@@ -34,12 +35,12 @@ namespace DataAccess.Repositories
             context.SaveChanges();
         }
 
-        public IEnumerable<T> GetById(Guid id)
+        public T GetById(Guid id)
         {
             var queryResult = from R in context.Set<T>()
                                 where R.Id == id
                                 select R;
-            return queryResult;
+            return queryResult.FirstOrDefault();
         }
 
         public IEnumerable<T> GetAll()
