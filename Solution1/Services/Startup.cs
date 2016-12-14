@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Services.Services;
 using DataAccess.Models;
 using DataAccess;
+using System;
 
 namespace Services
 {
@@ -43,8 +44,8 @@ namespace Services
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<PlatformManagement>()
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<PlatformManagement, Guid>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
