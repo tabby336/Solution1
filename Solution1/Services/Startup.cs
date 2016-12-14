@@ -38,11 +38,11 @@ namespace Services
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            //services.AddDbContext<PlatformManagement>(options =>
-            //    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<PlatformManagement>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDbContext<PlatformManagement>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<PlatformManagement, Guid>()

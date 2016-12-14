@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-//using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace DataAccess
 {
@@ -11,18 +11,22 @@ namespace DataAccess
 
         public DbSet<Mark> Marks { get; set; }
 
+        public DbSet<Module> Modules { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = "Server = (localdb)\\mssqllocaldb; Database = FiiStudyPlatform; Trusted_Connection = True; MultipleActiveResultSets = true";
-            //optionsBuilder.UseNpgsql(connectionString);
-            optionsBuilder.UseSqlServer(connectionString);
+            string connectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
+            optionsBuilder.UseNpgsql(connectionString);
             base.OnConfiguring(optionsBuilder);
             
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.HasPostgresExtension("uuid-ossp");
+            //Obs: Requires running 'CREATE EXTENSION "uuid-ossp";' on the database
+            builder.HasPostgresExtension("uuid-ossp");
 
             MarkSetUp(builder);
 
