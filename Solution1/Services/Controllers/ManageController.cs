@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Services.Models;
 using Services.Models.ManageViewModels;
 using Services.Services;
+using DataAccess.Models;
 
 namespace Services.Controllers
 {

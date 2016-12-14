@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Services.Models;
 using Services.Models.AccountViewModels;
 using Services.Services;
+using DataAccess.Models;
 
 namespace Services.Controllers
 {

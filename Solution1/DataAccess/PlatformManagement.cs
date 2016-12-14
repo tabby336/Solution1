@@ -1,24 +1,27 @@
 ﻿using DataAccess;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
+using System;
+//using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace Services.Data
 {
-    public class PlatformManagement : DbContext
+    public class PlatformManagement : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public DbSet<Mark> Marks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=proiect;Pooling=true;";
-            optionsBuilder.UseNpgsql(connectionString);
+            string connectionString = "Server = (localdb)\\mssqllocaldb; Database = FiiStudyPlatform; Trusted_Connection = True; MultipleActiveResultSets = true";
+            //optionsBuilder.UseNpgsql(connectionString);
+            optionsBuilder.UseSqlServer(connectionString);
             base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.HasPostgresExtension("uuid-ossp");
+            //builder.HasPostgresExtension("uuid-ossp");
 
             markSetUp(builder);
 

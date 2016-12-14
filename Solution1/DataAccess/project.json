@@ -11,7 +11,10 @@
     "Microsoft.Extensions.Configuration.Json": "1.0.0",
     "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0",
     "Npgsql.EntityFrameworkCore.PostgreSQL": "1.0.2",
-    "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.0.2"
+    "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.0.2",
+
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0"
   },
 
   "tools": {
