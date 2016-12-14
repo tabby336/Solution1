@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Services.Data;
+using DataAccess;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PlatformManagement))]
-    [Migration("20161214145055_CreateUserTables")]
+    [Migration("20161214173200_CreateUserTables")]
     partial class CreateUserTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,8 +19,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.ApplicationUser", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<int>("AccessFailedCount");
 
@@ -86,10 +85,9 @@ namespace DataAccess.Migrations
                     b.ToTable("Marks");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -108,7 +106,7 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -117,7 +115,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<Guid>("RoleId");
+                    b.Property<string>("RoleId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -126,7 +125,7 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -135,7 +134,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -144,7 +144,7 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -152,7 +152,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -161,11 +162,11 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<Guid>("RoleId");
+                    b.Property<string>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -176,9 +177,9 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserToken<string>", b =>
                 {
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -191,15 +192,15 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole<System.Guid>")
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
                         .WithMany("Claims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("DataAccess.Models.ApplicationUser")
                         .WithMany("Claims")
@@ -207,7 +208,7 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("DataAccess.Models.ApplicationUser")
                         .WithMany("Logins")
@@ -215,9 +216,9 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole<System.Guid>")
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);

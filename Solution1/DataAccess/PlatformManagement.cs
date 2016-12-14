@@ -1,14 +1,16 @@
-﻿using DataAccess;
-using DataAccess.Models;
+﻿using DataAccess.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 //using Npgsql.EntityFrameworkCore.PostgreSQL;
 
-namespace Services.Data
+namespace DataAccess
 {
-    public class PlatformManagement : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+    public class PlatformManagement : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {
+
         public DbSet<Mark> Marks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -17,13 +19,15 @@ namespace Services.Data
             //optionsBuilder.UseNpgsql(connectionString);
             optionsBuilder.UseSqlServer(connectionString);
             base.OnConfiguring(optionsBuilder);
+
+            //RolesSeed();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //builder.HasPostgresExtension("uuid-ossp");
 
-            markSetUp(builder);
+            MarkSetUp(builder);
 
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
@@ -31,9 +35,28 @@ namespace Services.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        private void markSetUp(ModelBuilder builder)
+        private void MarkSetUp(ModelBuilder builder)
         {
             builder.Entity<Mark>().HasKey(mark => new { mark.ModuleId, mark.UserId });
+        }
+
+        private async void RolesSeed()
+        {
+            this.Database.EnsureCreated();
+
+            var store = new RoleStore<IdentityRole<Guid>, PlatformManagement, Guid>(this);
+            var _roleManager = new RoleManager<IdentityRole<Guid>>(store, null, null, null, null, null);
+
+            var roleNames = new List<string> { "Admin", "Student", "Professor" };
+            foreach(var roleName in roleNames)
+            {
+                if(!await _roleManager.RoleExistsAsync(roleName))
+                {
+                    var role = new IdentityRole<Guid>();
+                    role.Name = roleName;
+                    await _roleManager.CreateAsync(role);
+                }
+            }
         }
     }
 }

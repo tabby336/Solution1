@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Services.Data;
 using Services.Services;
 using DataAccess.Models;
+using DataAccess;
 
 namespace Services
 {
@@ -36,8 +36,12 @@ namespace Services
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            //services.AddDbContext<PlatformManagement>(options =>
+            //    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDbContext<PlatformManagement>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<PlatformManagement>()
