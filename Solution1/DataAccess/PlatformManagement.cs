@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using DataAccess;
+﻿using DataAccess;
+using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace Services.Data
@@ -29,7 +30,7 @@ namespace Services.Data
 
         private void markSetUp(ModelBuilder builder)
         {
-            builder.Entity<Mark>().HasKey(mark => new { mark.HomeworkId, mark.StudentId });
+            builder.Entity<Mark>().HasKey(mark => new { mark.ModuleId, mark.UserId });
         }
     }
 }
