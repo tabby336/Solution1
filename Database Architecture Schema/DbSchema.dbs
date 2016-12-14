@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Schema1" id="Project_1b544e79" template="Default" database="PostgreSQL" >
+	<comment><![CDATA[This is the database schema for our awesome .Net Project!]]></comment>
+	<schema name="schema1" schemaname="schema1" >
+		<table name="Announcements" >
+			<column name="Text" type="varchar" length="250" jt="12" />
+			<column name="ADate" type="date" jt="91" />
+			<column name="CourseId" type="integer" jt="4" mandatory="y" />
+			<index name="idx_Announcements" unique="NORMAL" >
+				<column name="CourseId" />
+			</index>
+			<fk name="fk_announcements_courses" to_schema="schema1" to_table="Courses" >
+				<fk_column name="CourseId" pk="CourseId" />
+			</fk>
+		</table>
+		<table name="Courses" >
+			<comment><![CDATA[This table contains informations about courses we offer]]></comment>
+			<column name="CourseId" type="integer" jt="4" mandatory="y" />
+			<column name="UserId" type="integer" jt="4" mandatory="y" />
+			<column name="Title" type="varchar" jt="12" mandatory="y" />
+			<column name="Description" type="varchar" jt="12" />
+			<column name="Hashtag" type="varchar" jt="12" />
+			<column name="Author" type="varchar" jt="12" mandatory="y" />
+			<column name="PhotoUrl" type="varchar" jt="12" />
+			<column name="DataLink" type="varchar" jt="12" />
+			<column name="Timestamp" type="timestamp" jt="93" mandatory="y" />
+			<index name="Pk_Courses" unique="PRIMARY_KEY" >
+				<column name="CourseId" />
+			</index>
+			<index name="idx_Courses" unique="NORMAL" >
+				<column name="UserId" />
+			</index>
+			<fk name="fk_courses_users" to_schema="schema1" to_table="Users" >
+				<fk_column name="UserId" pk="UserId" />
+			</fk>
+		</table>
+		<table name="Homeworks" >
+			<column name="HomeworkId" type="integer" jt="4" mandatory="y" />
+			<column name="ModuleId" type="integer" jt="4" mandatory="y" />
+			<column name="UserId" type="integer" jt="4" mandatory="y" />
+			<column name="Url" type="varchar" jt="12" mandatory="y" />
+			<column name="Timestamp" type="timestamp" jt="93" mandatory="y" />
+			<column name="Observations" type="varchar" jt="12" />
+			<column name="OwesMeMoney" type="bool" jt="-7" />
+			<index name="Pk_Homeworks" unique="PRIMARY_KEY" >
+				<column name="HomeworkId" />
+			</index>
+			<index name="idx_Homeworks" unique="NORMAL" >
+				<column name="ModuleId" />
+			</index>
+			<index name="idx_Homeworks_0" unique="NORMAL" >
+				<column name="UserId" />
+			</index>
+			<fk name="fk_homeworks_modules" to_schema="schema1" to_table="Modules" >
+				<fk_column name="ModuleId" pk="ModuleId" />
+			</fk>
+			<fk name="fk_homeworks_users" to_schema="schema1" to_table="Users" >
+				<fk_column name="UserId" pk="UserId" />
+			</fk>
+		</table>
+		<table name="Marks" >
+			<column name="MarkId" type="integer" jt="4" mandatory="y" />
+			<column name="HomeworkId" type="integer" jt="4" mandatory="y" />
+			<column name="UserId" type="integer" jt="4" mandatory="y" />
+			<column name="Value" type="integer" jt="4" mandatory="y" />
+			<column name="Description" type="integer" jt="4" />
+			<column name="Timestamp" type="timestamp" jt="93" mandatory="y" />
+			<column name="CreatorId" type="integer" jt="4" mandatory="y" />
+			<column name="HasComment" type="bool" jt="-7" />
+			<column name="HasContestation" type="bool" jt="-7" />
+			<index name="Pk_Marks" unique="PRIMARY_KEY" >
+				<column name="MarkId" />
+			</index>
+			<index name="idx_Marks" unique="NORMAL" >
+				<column name="HomeworkId" />
+			</index>
+			<index name="idx_Marks_0" unique="NORMAL" >
+				<column name="UserId" />
+			</index>
+			<fk name="fk_marks_homeworks" to_schema="schema1" to_table="Homeworks" >
+				<fk_column name="HomeworkId" pk="HomeworkId" />
+			</fk>
+			<fk name="fk_marks_users" to_schema="schema1" to_table="Users" >
+				<fk_column name="UserId" pk="UserId" />
+			</fk>
+		</table>
+		<table name="Modules" >
+			<column name="ModuleId" type="integer" jt="4" mandatory="y" />
+			<column name="CourseId" type="integer" jt="4" mandatory="y" />
+			<column name="Title" type="varchar" jt="12" mandatory="y" />
+			<column name="Description" type="varchar" jt="12" />
+			<column name="LinkToPdf" type="varchar" jt="12" />
+			<column name="HasHomework" type="bool" jt="-7" mandatory="y" />
+			<column name="HasTest" type="bool" jt="-7" mandatory="y" />
+			<index name="Pk_Modules" unique="PRIMARY_KEY" >
+				<column name="ModuleId" />
+			</index>
+			<index name="idx_Modules" unique="NORMAL" >
+				<column name="CourseId" />
+			</index>
+			<fk name="CourseId" to_schema="schema1" to_table="Courses" >
+				<fk_column name="CourseId" pk="CourseId" />
+			</fk>
+		</table>
+		<table name="Observations" >
+			<column name="ObsId" type="integer" jt="4" mandatory="y" />
+			<column name="UserId" type="integer" jt="4" mandatory="y" />
+			<column name="HomeworkId" type="integer" jt="4" mandatory="y" />
+			<column name="Title" type="varchar" jt="12" mandatory="y" />
+			<column name="Text" type="varchar" length="250" jt="12" />
+			<column name="Timestamp" type="timestamp" jt="93" mandatory="y" />
+			<index name="Pk_Observations" unique="PRIMARY_KEY" >
+				<column name="ObsId" />
+			</index>
+			<index name="idx_Observations" unique="NORMAL" >
+				<column name="UserId" />
+			</index>
+			<index name="idx_Observations_0" unique="NORMAL" >
+				<column name="HomeworkId" />
+			</index>
+			<fk name="fk_observations_users" to_schema="schema1" to_table="Users" >
+				<fk_column name="UserId" pk="UserId" />
+			</fk>
+			<fk name="fk_observations_homeworks" to_schema="schema1" to_table="Homeworks" >
+				<fk_column name="HomeworkId" pk="HomeworkId" />
+			</fk>
+		</table>
+		<table name="Questions" >
+			<column name="QuestionId" type="integer" jt="4" mandatory="y" />
+			<column name="TestId" type="integer" jt="4" mandatory="y" />
+			<column name="Text" type="varchar" length="250" jt="12" mandatory="y" />
+			<column name="AnswerA" type="varchar" jt="12" mandatory="y" />
+			<column name="AnswerB" type="varchar" jt="12" mandatory="y" />
+			<column name="AnswerC" type="varchar" jt="12" mandatory="y" />
+			<column name="AnswerD" type="varchar" jt="12" mandatory="y" />
+			<column name="CorrectAnswer" type="varchar" jt="12" mandatory="y" />
+			<index name="Pk_Questions" unique="PRIMARY_KEY" >
+				<column name="QuestionId" />
+			</index>
+			<index name="idx_Questions" unique="NORMAL" >
+				<column name="TestId" />
+			</index>
+			<fk name="fk_questions_tests" to_schema="schema1" to_table="Tests" >
+				<fk_column name="TestId" pk="TestId" />
+			</fk>
+		</table>
+		<table name="Tests" >
+			<column name="TestId" type="integer" jt="4" mandatory="y" />
+			<column name="ModuleID" type="integer" jt="4" mandatory="y" />
+			<column name="NoQuestions" type="integer" jt="4" mandatory="y" />
+			<column name="Points" type="integer" jt="4" mandatory="y" />
+			<column name="MinimumPoints" type="integer" jt="4" mandatory="y" />
+			<column name="Time" type="integer" jt="4" mandatory="y" />
+			<index name="Pk_Tests" unique="PRIMARY_KEY" >
+				<column name="TestId" />
+			</index>
+			<index name="idx_Tests" unique="NORMAL" >
+				<column name="ModuleID" />
+			</index>
+			<fk name="fk_tests_modules" to_schema="schema1" to_table="Modules" >
+				<fk_column name="ModuleID" pk="ModuleId" />
+			</fk>
+		</table>
+		<table name="Users" >
+			<comment><![CDATA[This table contains informations about our users]]></comment>
+			<column name="UserId" type="integer" jt="4" mandatory="y" />
+			<column name="CourseId" type="integer" jt="4" mandatory="y" />
+			<column name="FirstName" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="LastName" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="DateOfBirth" type="date" jt="91" mandatory="y" />
+			<column name="CollegeId" type="integer" jt="4" mandatory="y" />
+			<column name="Semester" type="integer" jt="4" mandatory="y" />
+			<column name="PhotoUrl" type="integer" jt="4" />
+			<index name="Pk_Users" unique="PRIMARY_KEY" >
+				<column name="UserId" />
+			</index>
+			<index name="idx_Users" unique="NORMAL" >
+				<column name="CourseId" />
+			</index>
+			<fk name="fk_users_courses" to_schema="schema1" to_table="Courses" >
+				<fk_column name="CourseId" pk="CourseId" />
+			</fk>
+		</table>
+	</schema>
+	<connector name="" database="MySql" host="localhost" port="3306" user="root" />
+	<connector name="" database="MySql" host="localhost" port="3306" user="root" />
+	<layout name="Default Layout" id="Layout_acbe35c" joined_routing="y" show_relation="columns" >
+		<entity schema="schema1" name="Modules" color="c1d8ee" x="480" y="45" />
+		<entity schema="schema1" name="Tests" color="c1d8ee" x="690" y="270" />
+		<entity schema="schema1" name="Questions" color="c1d8ee" x="840" y="255" />
+		<entity schema="schema1" name="Announcements" color="c1d8ee" x="735" y="120" />
+		<entity schema="schema1" name="Users" color="c1d8ee" x="45" y="45" />
+		<entity schema="schema1" name="Courses" color="c1d8ee" x="285" y="45" />
+		<entity schema="schema1" name="Observations" color="c1d8ee" x="45" y="270" />
+		<entity schema="schema1" name="Marks" color="c1d8ee" x="270" y="270" />
+		<entity schema="schema1" name="Homeworks" color="c1d8ee" x="480" y="270" />
+	</layout>
+</project>
