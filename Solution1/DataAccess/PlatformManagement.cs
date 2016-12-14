@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using DataAccess.Repositories.CourseManagement;
 using DataAccess.Repositories.ModuleManagement;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
@@ -10,6 +11,8 @@ namespace DataAccess
         public DbSet<Mark> Marks { get; set; }
 
         public DbSet<Module> Modules { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
