@@ -8,35 +8,15 @@ using DataAccess;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PlatformManagement))]
-    [Migration("20161214181043_CoursesMigration")]
-    partial class CoursesMigration
+    partial class PlatformManagementModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:PostgresExtension:.uuid-ossp", "'uuid-ossp', '', ''")
                 .HasAnnotation("ProductVersion", "1.0.1");
 
-            modelBuilder.Entity("DataAccess.Models.Mark", b =>
-                {
-                    b.Property<Guid>("ModuleId");
-
-                    b.Property<Guid>("UserId");
-
-                    b.Property<Guid>("Id");
-
-                    b.Property<string>("Notes");
-
-                    b.Property<DateTime>("Timestamp");
-
-                    b.Property<float>("Value");
-
-                    b.HasKey("ModuleId", "UserId");
-
-                    b.ToTable("Marks");
-                });
-
-            modelBuilder.Entity("DataAccess.Repositories.CourseManagement.Course", b =>
+            modelBuilder.Entity("DataAccess.Models.Course", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -64,7 +44,26 @@ namespace DataAccess.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("DataAccess.Repositories.ModuleManagement.Module", b =>
+            modelBuilder.Entity("DataAccess.Models.Mark", b =>
+                {
+                    b.Property<Guid>("ModuleId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.Property<Guid>("Id");
+
+                    b.Property<string>("Notes");
+
+                    b.Property<DateTime>("Timestamp");
+
+                    b.Property<float>("Value");
+
+                    b.HasKey("ModuleId", "UserId");
+
+                    b.ToTable("Marks");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Module", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();

@@ -7,7 +7,7 @@ using System.Linq;
 namespace DataAccess.Repositories
 {
     public abstract class Repository<T> : IRepository<T> 
-    where T : BaseModel
+    where T : ModelBase
     {
         protected readonly PlatformManagement context;
 

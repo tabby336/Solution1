@@ -1,4 +1,7 @@
-﻿namespace DataAccess.Repositories.CourseManagement
+﻿using DataAccess.Models;
+using DataAccess.Repositories.Interfaces;
+
+namespace DataAccess.Repositories
 {
     public class CourseRepository : Repository<Course>, ICourseRepository
     {

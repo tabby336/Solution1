@@ -2,7 +2,7 @@
 
 namespace DataAccess.Models
 {
-    public class Mark: BaseModel
+    public class Mark: ModelBase
     {
         public Guid ModuleId { get; set; }
         

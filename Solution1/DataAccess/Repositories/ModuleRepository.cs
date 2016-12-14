@@ -1,4 +1,6 @@
-﻿namespace DataAccess.Repositories.ModuleManagement
+﻿using DataAccess.Models;
+
+namespace DataAccess.Repositories
 {
     public class ModuleRepository : Repository<Module>
     {

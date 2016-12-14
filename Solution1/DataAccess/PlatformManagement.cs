@@ -1,6 +1,4 @@
 ﻿using DataAccess.Models;
-using DataAccess.Repositories.CourseManagement;
-using DataAccess.Repositories.ModuleManagement;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 
@@ -16,13 +14,14 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=proiect;Pooling=true;";
+            string connectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
             optionsBuilder.UseNpgsql(connectionString);
             base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //Obs: Requires running 'CREATE EXTENSION "uuid-ossp";' on the database
             builder.HasPostgresExtension("uuid-ossp");
 
             markSetUp(builder);

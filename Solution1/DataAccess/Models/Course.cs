@@ -1,10 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using DataAccess.Models;
 
-namespace DataAccess.Repositories.CourseManagement
+namespace DataAccess.Models
 {
-    public class Course : BaseModel
+    public class Course : ModelBase
     {
         [Required]
         [StringLength(255)]

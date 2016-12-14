@@ -1,14 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using DataAccess.Models;
 
-namespace DataAccess.Repositories.ModuleManagement
+namespace DataAccess.Models
 {
-    public class Module : BaseModel
+    public class Module : ModelBase
     {
-        [Required]
-        public new Guid Id { get; set; }
-
         [Required]
         public Guid CourseId { get; set; }
 
