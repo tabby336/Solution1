@@ -10,7 +10,7 @@ namespace DataAccess.Repositories
     where T : BaseModel
     {
         protected readonly PlatformManagement context;
-
+         
         protected Repository(PlatformManagement platformManagement)
         {
             context = platformManagement;
