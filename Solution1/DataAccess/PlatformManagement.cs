@@ -1,13 +1,14 @@
 ﻿using DataAccess.Models;
-using DataAccess.Repositories.CourseManagement;
-using DataAccess.Repositories.ModuleManagement;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace DataAccess
 {
-    public class PlatformManagement : DbContext
+    public class PlatformManagement : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
+
         public DbSet<Mark> Marks { get; set; }
 
         public DbSet<Module> Modules { get; set; }
@@ -16,16 +17,18 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=proiect;Pooling=true;";
+            string connectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
             optionsBuilder.UseNpgsql(connectionString);
             base.OnConfiguring(optionsBuilder);
+            
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //Obs: Requires running 'CREATE EXTENSION "uuid-ossp";' on the database
             builder.HasPostgresExtension("uuid-ossp");
 
-            markSetUp(builder);
+            MarkSetUp(builder);
 
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
@@ -33,9 +36,10 @@ namespace DataAccess
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        private void markSetUp(ModelBuilder builder)
+        private void MarkSetUp(ModelBuilder builder)
         {
             builder.Entity<Mark>().HasKey(mark => new { mark.ModuleId, mark.UserId });
         }
+
     }
 }

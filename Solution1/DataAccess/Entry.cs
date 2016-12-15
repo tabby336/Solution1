@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Business
+namespace DataAccess
 {
-    public class Class1
+    public class Entry
     {
-        public Class1()
+        public static void Main(string[] args)
         {
         }
     }

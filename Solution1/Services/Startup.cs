@@ -1,13 +1,15 @@
-﻿using DataAccess;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Services.Models;
 using Services.Services;
+using DataAccess.Models;
+using DataAccess;
+using System;
+using Services.Models;
 
 namespace Services
 {
@@ -39,8 +41,11 @@ namespace Services
             services.AddDbContext<PlatformManagement>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<PlatformManagement>()
+            //services.AddDbContext<PlatformManagement>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<PlatformManagement, Guid>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
@@ -53,6 +58,7 @@ namespace Services
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -79,6 +85,8 @@ namespace Services
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DatabaseInitializer.RolesSeed(app.ApplicationServices);
         }
     }
 }
