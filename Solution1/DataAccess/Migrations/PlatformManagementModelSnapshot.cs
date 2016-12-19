@@ -96,19 +96,25 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.Mark", b =>
                 {
-                    b.Property<Guid>("ModuleId");
+                    b.Property<Guid>("HomeworkId");
 
                     b.Property<Guid>("UserId");
 
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("CreatorId");
 
-                    b.Property<string>("Notes");
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("HasComment");
+
+                    b.Property<bool>("HasContestation");
+
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("Timestamp");
 
                     b.Property<float>("Value");
 
-                    b.HasKey("ModuleId", "UserId");
+                    b.HasKey("HomeworkId", "UserId");
 
                     b.ToTable("Marks");
                 });

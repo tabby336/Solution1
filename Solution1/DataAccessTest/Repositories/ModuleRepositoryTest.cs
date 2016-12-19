@@ -10,7 +10,7 @@ using Microsoft.DotNet.ProjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DataAccessTest
+namespace DataAccessTest.Repositories
 {
     [TestClass]
     public class ModuleRepositoryTest
@@ -46,7 +46,7 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void When_TestModuleIsCreated_ShouldReturnitByFindAll()
+        public void When_TestModuleIsCreated_ShouldReturnItByFindAll()
         {
 
             _testModule = _moduleRepository.Create(_testModule);
@@ -67,20 +67,20 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void When_TestModuleIsDeleted_ShouldNotReturnItByFindAll()
-        {
-            _moduleRepository.Delete(_testModule);
-
-            List<Module> all = _moduleRepository.GetAll().ToList();
-            all.Should().NotContain(_testModule);
-        }
-
-        [TestMethod]
         public void When_SearchingByTestModuleId_ShouldReturnTestModule()
         {
             Module result = _moduleRepository.GetById(Guid.Parse("0842f5b0-0ea3-4e16-143a-08d424682a17"));
 
             result.Id.Should().Be(_testModule.Id);
         }
+
+        [TestMethod]
+        public void When_TestModuleIsDeleted_ShouldNotReturnItByFindAll()
+        {
+            _moduleRepository.Delete(_testModule);
+
+            List<Module> all = _moduleRepository.GetAll().ToList();
+            all.Should().NotContain(_testModule);
+        }        
     }
 }

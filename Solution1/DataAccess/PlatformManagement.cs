@@ -36,7 +36,7 @@ namespace DataAccess
 
         private void MarkSetUp(ModelBuilder builder)
         {
-            builder.Entity<Mark>().HasKey(mark => new { mark.ModuleId, mark.UserId });
+            builder.Entity<Mark>().HasKey(mark => new { mark.HomeworkId, mark.UserId });
         }
 
     }

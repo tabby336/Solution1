@@ -8,8 +8,8 @@ using DataAccess;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PlatformManagement))]
-    [Migration("20161218123711_DatabaseSetup")]
-    partial class DatabaseSetup
+    [Migration("20161219211138_UserMigration")]
+    partial class UserMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,19 +97,25 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Models.Mark", b =>
                 {
-                    b.Property<Guid>("ModuleId");
+                    b.Property<Guid>("HomeworkId");
 
                     b.Property<Guid>("UserId");
 
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("CreatorId");
 
-                    b.Property<string>("Notes");
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("HasComment");
+
+                    b.Property<bool>("HasContestation");
+
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("Timestamp");
 
                     b.Property<float>("Value");
 
-                    b.HasKey("ModuleId", "UserId");
+                    b.HasKey("HomeworkId", "UserId");
 
                     b.ToTable("Marks");
                 });

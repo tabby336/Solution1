@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class DatabaseSetup : Migration
+    public partial class UserMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,16 +58,19 @@ namespace DataAccess.Migrations
                 name: "Marks",
                 columns: table => new
                 {
-                    ModuleId = table.Column<Guid>(nullable: false),
+                    HomeworkId = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    HasComment = table.Column<bool>(nullable: false),
+                    HasContestation = table.Column<bool>(nullable: false),
                     Id = table.Column<Guid>(nullable: false),
-                    Notes = table.Column<string>(nullable: true),
                     Timestamp = table.Column<DateTime>(nullable: false),
                     Value = table.Column<float>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Marks", x => new { x.ModuleId, x.UserId });
+                    table.PrimaryKey("PK_Marks", x => new { x.HomeworkId, x.UserId });
                 });
 
             migrationBuilder.CreateTable(

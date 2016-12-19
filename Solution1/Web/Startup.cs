@@ -1,8 +1,11 @@
 ﻿using System;
 using Business.Services;
 using Business.Services.CommunicationServices;
+using Business.Services.Interfaces;
 using DataAccess;
 using DataAccess.Models;
+using DataAccess.Repositories;
+using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -53,6 +56,8 @@ namespace Web
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IMarkService, MarkService>();
+            services.AddTransient<IMarkRepository, MarkRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
