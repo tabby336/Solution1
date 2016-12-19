@@ -20,14 +20,16 @@ namespace DataAccessTest.Repositories
 
         private Module CreateSUT()
         {
-            Module newModule = new Module();
-            newModule.Id = Guid.Parse("0842f5b0-0ea3-4e16-143a-08d424682a17");
-            newModule.CourseId = Guid.Empty;
-            newModule.Description = "Test Module";
-            newModule.HasHomework = true;
-            newModule.HasTest = false;
-            newModule.Title = "Test Module";
-            newModule.UrlPdf = "http://pdf.com";
+            var newModule = new Module
+            {
+                Id = Guid.Parse("0842f5b0-0ea3-4e16-143a-08d424682a17"),
+                CourseId = Guid.Empty,
+                Description = "Test Module",
+                HasHomework = true,
+                HasTest = false,
+                Title = "Test Module",
+                UrlPdf = "http://pdf.com"
+            };
             return newModule;
         }
 

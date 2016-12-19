@@ -1,0 +1,83 @@
+﻿
+<!-- The user data / details row -->
+<li class="user-details cyan darken-2">
+    <div class="row">
+        <!-- profile picture -->
+        <div class="col col s4 m4 l4">
+            <img src="images/avatars/defaultPlayer.png" alt="Default Player" class="circle responsive-img valign profile-image" data-pin-nopin="true" style="min-height: 50px;">
+        </div>
+
+        <div class="col col s8 m8 l8">
+            <!-- Name with dropdown-menu -->
+            <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn profile-btn-wrapped" href="#" data-activates="profile-dropdown">
+                <i class="material-icons">toc</i>
+                Default User
+            </a>
+
+            <!-- Drop down menu with links to profile -->
+            <ul id="profile-dropdown" class="dropdown-content" style="width: 128px; position: absolute; top: 57px; left: 101.234px; opacity: 1; display: none;">
+                <li>
+                    <a href="#" class="loadProfileButton" profileid="#1">
+                        <i class="large material-icons">settings</i>Profile
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="/logout">
+                        <i class="material-icons">settings_power</i>Log out
+                    </a>
+                </li>
+            </ul>
+
+            <!-- User level -->
+            @*<p class="user-level">
+                <b>Level 2</b>
+                <span class="right">
+                    200 /
+                    <b>300</b>
+                </span>
+            </p>*@
+        </div>
+    </div>
+</li>
+
+<!-- Information about user here -->
+<!-- COURSES -->
+<li class="no-padding">
+    <ul class="collapsible collapsible-accordion">
+        <li class="bold">
+            <a class="collapsible-header waves-effect waves-cyan">
+                <i class="mdi-communication-live-help"></i>
+                Courses
+            </a>
+            <div class="collapsible-body">
+                <ul>
+                    <li>
+                        <a href="#">You've studied nothing.</a>
+                    </li>
+
+                    @*{% if data.courses.length > 0 %}
+                    {% for entry in data.courses %}
+                    <li class="no-padding">
+                        <ul class="collapsible collapsible-accordion">
+                            <li class="bold">
+                                <a class="collapsible-header waves-effect waves-cyan">
+                                    {{ entry.course.title }}
+                                </a>
+                                <div class="collapsible-body">
+                                    <ul>
+                                        {% for round in entry.rounds %}
+                                        <li><a lessonId="{{ round.roundid }}" class="lessonLoader" style="color: black; cursor: pointer;">{{ round.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    {% endfor %}
+                    {% endif %}*@
+                </ul>
+            </div>
+        </li>
+    </ul>
+</li>

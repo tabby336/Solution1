@@ -1,0 +1,67 @@
+﻿.animated {
+  -webkit-animation-name: buttonPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes buttonPulse {
+0% { opacity: 0.5 }
+
+50% { opacity: 1 }
+
+100% { opacity: 0.5 }
+}
+
+@media only screen and (max-width: 600px) {
+    .modal {
+      margin-left: 0px !important;
+      width: 100% !important;
+    }
+}
+
+@media only screen and (min-width: 993px) {
+    .modal {
+      margin-left: 240px !important;
+      width: 100% !important;
+    }
+}
+
+.modalsize{
+  margin-left: 10% !important;
+  margin-right: 10% !important;
+  width: 80% !important;
+}
+
+
+.resizeimg {
+      max-height: 100px;
+    }
+
+.imagewrap {
+  display: inline-block;
+  position: relative;
+}
+
+.card-image {
+  padding-top: 10px !important;
+}
+
+.fullo {
+    height: 100% !important;
+}
+
+.donate-li {
+    margin-top: 10px !important; 
+    border-top: 1px solid grey !important; 
+    padding-top: 10px !important; 
+    text-align: center !important;
+}
+
+.profile-btn-wrapped {
+    font-size: 14px !important;
+    height: auto !important;
+    word-wrap: normal;
+    line-height: 17px !important;
+    text-align: right;
+}
