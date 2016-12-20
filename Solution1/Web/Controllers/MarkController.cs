@@ -1,6 +1,7 @@
 using Business.Services.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
@@ -17,11 +18,14 @@ namespace Web.Controllers
         public IActionResult Index(string uid = null)
         {
             ViewData["Message"] = "Trecem si noi anul asta?";
-            if (uid != null) 
+            var marks = _markService.FilterMarksByUser(uid);
+            if (marks == null || marks.Count == 0) 
             {
-                ViewData["Marks"] = _markService.FilterMarksByUser(uid);
+                return NotFound();
             }
+            ViewBag.Marks = marks;
             return View();
+            
         }
 
 

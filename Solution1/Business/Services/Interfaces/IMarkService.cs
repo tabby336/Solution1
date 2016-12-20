@@ -1,7 +1,10 @@
+using DataAccess.Models;
+using System.Collections.Generic;
+
 namespace Business.Services.Interfaces
 {
     public interface IMarkService
     {
-        string FilterMarksByUser(string uid);
+        List<Mark> FilterMarksByUser(string uid);
     }
 }

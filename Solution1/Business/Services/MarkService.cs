@@ -17,15 +17,16 @@ namespace Business.Services
             _markRepository = repository;
         }
 
-        public string FilterMarksByUser(string uid) 
+        public List<Mark> FilterMarksByUser(string uid)
         {
-            string ret = "";
-            List<Mark> marks = _markRepository.GetMarksByUserId(Guid.Parse(uid)).ToList();
-            foreach(Mark m in marks)
+            IEnumerable<Mark> marks = _markRepository.GetMarksByUserId(Guid.Parse(uid));
+            if (marks == null)
             {
-                ret = ret + m.Value + " ";
+                return null;
             }
-            return ret;
+#pragma warning disable CS1701 // Assuming assembly reference matches identity
+                return marks.ToList();
+#pragma warning restore CS1701 // Assuming assembly reference matches identity
         }
     }
 }
