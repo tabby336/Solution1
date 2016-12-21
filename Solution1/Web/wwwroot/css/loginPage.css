@@ -1,0 +1,52 @@
+﻿html,
+body {
+    height: 100%;
+}
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+  display: table-cell;
+  vertical-align: middle;
+  background-color: #00acc1;
+}
+
+.login-form {
+    width: 300px
+}
+
+.login-form-text {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem
+}
+
+.righted {
+    float: right;
+}
+
+.input-field div.error{
+  position: relative;
+  top: -1rem;
+  left: 0rem;
+  font-size: 0.8rem;
+  color:#FF4081;
+  -webkit-transform: translateY(0%);
+  -ms-transform: translateY(0%);
+  -o-transform: translateY(0%);
+  transform: translateY(0%);
+}
+.input-field label.active{
+    width:100%;
+}
+
+
+.righted{
+	float: right;
+}
+
+.lefted {
+	float: left;
+}
