@@ -37,7 +37,7 @@ namespace DataAccess.Repositories
 
         public T GetById(Guid id)
         {
-            return context.Set<T>().Where(p => p.Id == id).FirstOrDefault();
+            return context.Set<T>().FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<T> GetAll()

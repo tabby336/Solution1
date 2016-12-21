@@ -58,6 +58,8 @@ namespace Web
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<IMarkService, MarkService>();
             services.AddTransient<IMarkRepository, MarkRepository>();
+            services.AddTransient<ICourseRepository, CourseRepository>();
+            services.AddTransient<ICourseService, CourseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
