@@ -1,0 +1,34 @@
+@{
+    Layout = "_HomeLayout";
+}
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>
+            Homework ID
+        </th>
+        <th>
+            Has Comment
+        </th>
+        <th>
+            Value
+        </th>
+    </tr>
+    @{
+        var marks = ViewBag.Marks as IEnumerable<Mark>;
+        foreach (var mark in marks)
+        {
+            <tr>
+                <td>
+                    @mark.HomeworkId
+                </td>
+                <td>
+                    @mark.HasComment
+                </td>
+                <td>
+                    @mark.Value
+                </td>
+            </tr>
+        }
+    }
+</table>  

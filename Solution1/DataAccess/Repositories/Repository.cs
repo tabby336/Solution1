@@ -37,17 +37,12 @@ namespace DataAccess.Repositories
 
         public T GetById(Guid id)
         {
-            var queryResult = from R in context.Set<T>()
-                                where R.Id == id
-                                select R;
-            return queryResult.FirstOrDefault();
+            return context.Set<T>().Where(p => p.Id == id).FirstOrDefault();
         }
 
         public IEnumerable<T> GetAll()
         {
-            var queryResult = from R in context.Set<T>()
-                                select R;
-            return queryResult;
+            return context.Set<T>();
         }
     }
 }

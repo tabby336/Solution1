@@ -8,17 +8,15 @@ namespace DataAccess
 {
     public class PlatformManagement : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
+        private const string ConnectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
 
         public DbSet<Mark> Marks { get; set; }
-
         public DbSet<Module> Modules { get; set; }
-
         public DbSet<Course> Courses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
-            optionsBuilder.UseNpgsql(connectionString);
+            optionsBuilder.UseNpgsql(ConnectionString);
             base.OnConfiguring(optionsBuilder);
             
         }
@@ -38,7 +36,7 @@ namespace DataAccess
 
         private void MarkSetUp(ModelBuilder builder)
         {
-            builder.Entity<Mark>().HasKey(mark => new { mark.ModuleId, mark.UserId });
+            builder.Entity<Mark>().HasKey(mark => new { mark.HomeworkId, mark.UserId });
         }
 
     }

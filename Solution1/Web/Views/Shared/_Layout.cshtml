@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<!--================================================================================
+Name:  Main template for Solution1.
+Version: 0.0.1
+Author: FX & Co.
+Author URL: https://github.com/tabby336/Solution1
+================================================================================ -->
+
+<head>
+    <!-- METADATA -->
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="description" content="Solution1 - The Best Centralized Platform for all your college courses.">
+    <meta name="keywords" content="solution, 1, solution1, platform, centralized, college, courses">
+    <!-- METADATA END -->
+    
+    <title>@ViewData["Title"] - Solution1</title>
+    
+    <!-- FAVICONS -->
+    <link rel="icon" href="images/icon/favicon_32.png" sizes="32x32">
+    <!-- Favicons - for iPhone -->
+    <link rel="apple-touch-icon-precomposed" href="images/icon/favicon_152.png">
+    <!-- Favicons - For Windows Phone -->
+    <meta name="msapplication-TileColor" content="#00bcd4">
+    <meta name="msapplication-TileImage" content="images/icon/favicon_144.png">
+    <!-- FAVICONS END -->
+    
+    <!-- STYLES -->
+    <!-- Import Google Icon Font -->
+    <link type="text/css" rel="stylesheet" href="lib/materialize/font.css">
+    <!-- Import materialize.css -->
+    <link type="text/css" rel="stylesheet" href="lib/materialize/materialize.css" media="screen" />
+    <!-- Import sweetalert(swal).css -->
+    <link type="text/css" rel="stylesheet" href="lib/sweetalert/sweetalert.css" media="screen" />
+    <!-- Import perfect scrollbar.css -->
+    <link type="text/css" rel="stylesheet" href="lib/perfect-scrollbar/perfect-scrollbar.css">
+
+    @RenderSection("styles", required: false)
+    <!-- STYLES END -->
+    
+</head>
+<body>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Services</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </ul>
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+        </div>
+    </div>*@
+
+    @RenderBody()
+        
+    <!-- Should put this into a view -->
+    @*<hr />
+    <footer style="bottom: 0px;">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_donations">
+            <input type="hidden" name="business" value="albertocieri@mail.com">
+            <input type="hidden" name="lc" value="US">
+            <input type="hidden" name="item_name" value="solution1Slayers">
+            <input type="hidden" name="no_note" value="0">
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+        <p>&copy; 2016 - Solution1</p>
+    </footer>*@
+
+    <!-- SCRIPTS -->
+    <script src="lib/jquery/dist/jquery-2.1.1.min.js"></script>
+    <script src="lib/materialize/materialize.js"></script>
+    <script src="lib/sweetalert/sweetalert.min.js"></script>
+    <script src="lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+    
+    @RenderSection("scripts", required: false)
+    <!-- SCRIPTS END -->
+</body>
+</html>
