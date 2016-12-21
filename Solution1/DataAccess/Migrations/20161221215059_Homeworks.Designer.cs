@@ -8,8 +8,8 @@ using DataAccess;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PlatformManagement))]
-    [Migration("20161221184437_DatabaseSetup")]
-    partial class DatabaseSetup
+    [Migration("20161221215059_Homeworks")]
+    partial class Homeworks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,6 +93,30 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("DataAccess.Models.Homework", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ModuleId");
+
+                    b.Property<string>("Observations")
+                        .HasAnnotation("MaxLength", 2048);
+
+                    b.Property<bool>("OwesMeMoney");
+
+                    b.Property<DateTime>("Timestamp");
+
+                    b.Property<string>("Url")
+                        .HasAnnotation("MaxLength", 1024);
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Homeworks");
                 });
 
             modelBuilder.Entity("DataAccess.Models.Mark", b =>
