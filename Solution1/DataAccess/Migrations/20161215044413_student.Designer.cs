@@ -8,9 +8,10 @@ using DataAccess;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PlatformManagement))]
-    partial class PlatformManagementModelSnapshot : ModelSnapshot
+    [Migration("20161215044413_student")]
+    partial class student
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:PostgresExtension:.uuid-ossp", "'uuid-ossp', '', ''")
