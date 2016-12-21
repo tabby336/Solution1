@@ -50,3 +50,7 @@ body {
 .lefted {
 	float: left;
 }
+
+.profile-image-login {
+    width: 64px;
+}
