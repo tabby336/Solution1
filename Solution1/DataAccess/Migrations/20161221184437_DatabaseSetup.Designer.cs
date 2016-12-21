@@ -8,7 +8,7 @@ using DataAccess;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PlatformManagement))]
-    [Migration("20161221184437_DatabaseSetup")]
+    [Migration("20161221145559_DatabaseSetup")]
     partial class DatabaseSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

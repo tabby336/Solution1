@@ -13,6 +13,7 @@ namespace DataAccess
         public DbSet<Mark> Marks { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Anouncement> Anouncements { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

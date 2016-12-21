@@ -8,14 +8,34 @@ using DataAccess;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(PlatformManagement))]
-    [Migration("20161221145559_DatabaseSetup")]
-    partial class DatabaseSetup
+    [Migration("20161221211659_AnouncementMigration")]
+    partial class AnouncementMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:PostgresExtension:.uuid-ossp", "'uuid-ossp', '', ''")
                 .HasAnnotation("ProductVersion", "1.0.1");
+
+            modelBuilder.Entity("DataAccess.Models.Anouncement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("CourseId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Text")
+                        .HasAnnotation("MaxLength", 8064);
+
+                    b.Property<string>("Title")
+                        .HasAnnotation("MaxLength", 1024);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Anouncements");
+                });
 
             modelBuilder.Entity("DataAccess.Models.ApplicationUser", b =>
                 {

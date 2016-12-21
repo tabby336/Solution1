@@ -60,6 +60,8 @@ namespace Web
             services.AddTransient<IMarkRepository, MarkRepository>();
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<IAnouncementRepository, AnouncementRepository>();
+            services.AddTransient<IAnouncementService, AnouncementService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
