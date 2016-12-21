@@ -1,7 +1,9 @@
 using Business.Services.Interfaces;
+using DataAccess.Models;
 
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Web.Controllers
@@ -18,13 +20,13 @@ namespace Web.Controllers
         public IActionResult Index(string uid = null)
         {
             ViewData["Message"] = "Trecem si noi anul asta?";
-            var marks = _markService.FilterMarksByUser(uid);
-            if (marks == null || marks.Count == 0) 
+            if (uid == null) 
             {
-                return NotFound();
+                 return View();
             }
-            ViewBag.Marks = marks;
-            return View();
+            IEnumerable<Mark> marks = _markService.FilterMarksByUser(uid);
+            ViewBag.Marks = marks;  
+            return View("Marks");
             
         }
 

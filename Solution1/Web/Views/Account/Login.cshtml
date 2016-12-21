@@ -6,88 +6,64 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Log in";
 }
 
-<h2>@ViewData["Title"].</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section>
-            <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Email" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            <label asp-for="RememberMe">
-                                <input asp-for="RememberMe" />
-                                @Html.DisplayNameFor(m => m.RememberMe)
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-default">Log in</button>
-                    </div>
-                </div>
-                <p>
-                    <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
-                </p>
-                <p>
-                    <a asp-action="ForgotPassword">Forgot your password?</a>
-                </p>
-            </form>
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
-            @{
-                var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
-                if (loginProviders.Count == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in loginProviders)
-                                {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
-</div>
 
-@section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-}
+<link type="text/css" rel="stylesheet" href="~/css/loginPage.css">
+
+<div id="login-page" class="row">
+    <div class="col s12 z-depth-4 card-panel">
+        <form id="loginForm" class="login-form">
+
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <img src="~/images/icon/logo.png" alt="" class="circle responsive-img valign profile-image-login">
+                    <p class="center login-form-text">Log into the Fun Web</p>
+                </div>
+            </div>
+
+            <div class="row margin">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">perm_identity</i>
+                    <label class="center-align" for="userTB">Username</label>
+                    <input id="userTB" name="userTB" type="text" data-error=".errorTxt1">
+                    <div class="errorTxt1 righted"></div>
+                </div>
+            </div>
+
+            <div class="row margin">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">lock</i>
+                    <label class="center-align" for="passTB">Password</label>
+                    <input id="passTB" name="passTB" type="password" data-error=".errorTxt2">
+                    <div class="errorTxt2 righted"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field  col s12">
+                    <a id="submitBtn" class="btn waves-effect waves-light col s12 red darken-2">Login</a>
+                </div>
+                <div class="input-field  col s12">
+                    <a href="/auth/facebook/" id="facebookBtn" class="btn btn-small waves-effect waves-light col s12 blue darken-3">Facebook</a>
+                </div>
+                <div class="input-field col s12">
+                    <p class="margin center medium-small sign-up">
+                        Don't have an account?
+                        <a href="/signup">Register</a>
+                    </p>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+   
+    <!--Import script for this page-->
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.min.js"></script>
+    <script type="text/javascript" src="~/js/loginPage.js"></script>
+    
+</div>
