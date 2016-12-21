@@ -114,6 +114,30 @@ namespace DataAccess.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("DataAccess.Models.Homework", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ModuleId");
+
+                    b.Property<string>("Observations")
+                        .HasAnnotation("MaxLength", 2048);
+
+                    b.Property<bool>("OwesMeMoney");
+
+                    b.Property<DateTime>("Timestamp");
+
+                    b.Property<string>("Url")
+                        .HasAnnotation("MaxLength", 1024);
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Homeworks");
+                });
+
             modelBuilder.Entity("DataAccess.Models.Mark", b =>
                 {
                     b.Property<Guid>("HomeworkId");

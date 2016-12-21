@@ -11,6 +11,7 @@ namespace DataAccess
         private const string ConnectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
 
         public DbSet<Mark> Marks { get; set; }
+        public DbSet<Homework> Homeworks { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Anouncement> Anouncements { get; set; }
