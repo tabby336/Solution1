@@ -81,7 +81,7 @@ namespace Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            
             app.UseStaticFiles();
 
             app.UseIdentity();

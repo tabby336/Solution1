@@ -11,6 +11,7 @@ namespace Business.Services
         private static readonly string[] RolesNames = new string[] { "Admin", "Student", "Professor" };
 
         private const string AdminEmail = "admin@mail.com";
+        private const string AdminUsername = "admin";
         private const string AdminPassword = "Passw0rd.";
 
         public static async void RolesSeed(IServiceProvider serviceProvider)
@@ -32,7 +33,7 @@ namespace Business.Services
             var admin = new ApplicationUser
             {
                 Email = AdminEmail,
-                UserName = AdminEmail,
+                UserName = AdminUsername,
                 Id = new Guid()
             };
 
