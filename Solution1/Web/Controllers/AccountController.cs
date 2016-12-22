@@ -61,6 +61,7 @@ namespace Web.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
+                    returnUrl = "/Home/Index";
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

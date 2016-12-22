@@ -9,6 +9,7 @@ namespace DataAccess
     public class PlatformManagement : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         private const string ConnectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
+        //private const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=FiiStudyPlatform;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public DbSet<Mark> Marks { get; set; }
         public DbSet<Homework> Homeworks { get; set; }
@@ -19,6 +20,7 @@ namespace DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(ConnectionString);
+            //optionsBuilder.UseSqlServer(ConnectionString);
             base.OnConfiguring(optionsBuilder);
             
         }

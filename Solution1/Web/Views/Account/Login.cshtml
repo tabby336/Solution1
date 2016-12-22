@@ -2,8 +2,8 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Authentication
 @using Web.Models.AccountViewModels
-@model Web.Models.AccountViewModels.LoginViewModel
-@inject SignInManager<ApplicationUser> SignInManager
+@model LoginViewModel
+@*@inject SignInManager<ApplicationUser> SignInManager*@
 
 @{
     Layout = "_Layout";
@@ -15,7 +15,7 @@
 
 <div id="login-page" class="row">
     <div class="col s12 z-depth-4 card-panel">
-        <form id="loginForm" class="login-form">
+        <form id="loginForm" class="login-form" asp-controller="Account" asp-action="Login" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
 
             <div class="row">
                 <div class="input-field col s12 center">
@@ -25,10 +25,11 @@
             </div>
 
             <div class="row margin">
-                <div class="input-field col s12">
+                <div class="input-field col">
                     <i class="material-icons prefix">perm_identity</i>
-                    <label class="center-align" for="userTB">Username</label>
-                    <input id="userTB" name="userTB" type="text" data-error=".errorTxt1">
+                    <label asp-for="Email" class="center-align">Email</label>
+                    <input asp-for="Email" data-error=".errorTxt1">
+                    <span asp-validation-for="Email" class="text-danger"></span>
                     <div class="errorTxt1 righted"></div>
                 </div>
             </div>
@@ -36,15 +37,16 @@
             <div class="row margin">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">lock</i>
-                    <label class="center-align" for="passTB">Password</label>
-                    <input id="passTB" name="passTB" type="password" data-error=".errorTxt2">
+                    <label asp-for="Password" class="center-align">Password</label>
+                    <input asp-for="Password" data-error=".errorTxt2">
+                    <span asp-validation-for="Password" class="text-danger"></span>
                     <div class="errorTxt2 righted"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="input-field  col s12">
-                    <a id="submitBtn" class="btn waves-effect waves-light col s12 red darken-2">Login</a>
+                    <button type="submit" class="btn waves-effect waves-light col s12 red darken-2">Login</button>
                 </div>
                
             </div>
@@ -52,10 +54,9 @@
 
         </form>
     </div>
-   
-    <!--Import script for this page-->
-    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.min.js"></script>
-    <script type="text/javascript" src="~/js/loginPage.js"></script>
     
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
