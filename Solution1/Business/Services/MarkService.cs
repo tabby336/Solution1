@@ -19,14 +19,18 @@ namespace Business.Services
 
         public List<Mark> FilterMarksByUser(string uid)
         {
-            IEnumerable<Mark> marks = _markRepository.GetMarksByUserId(Guid.Parse(uid));
-            if (marks == null)
+            try
+            {
+                IEnumerable<Mark> marks = _markRepository.GetMarksByUserId(Guid.Parse(uid));
+                if (marks != null)
+                {
+                    return marks.ToList();
+                }
+                return null;
+            } catch(Exception e)
             {
                 return null;
             }
-#pragma warning disable CS1701 // Assuming assembly reference matches identity
-                return marks.ToList();
-#pragma warning restore CS1701 // Assuming assembly reference matches identity
         }
     }
 }
