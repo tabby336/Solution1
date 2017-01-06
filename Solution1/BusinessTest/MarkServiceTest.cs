@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace BusinessTest
 { 
     [TestClass]
-    public class ExampleClass
+    public class MarkServiceTest
     {
         private string test;
 
