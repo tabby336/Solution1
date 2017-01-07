@@ -90,8 +90,13 @@ namespace Web
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("{controller=Mark}/{action=Index}/{id?}",
-                    "{controller=Account}/{action=Login}");
+                routes.MapRoute(
+                       name: "default",
+                       template: "{controller=Home}/{action=Index}");
+                
+                //routes.MapRoute(
+                //    "{controller=Mark}/{action=Index}/{id?}",
+                //    "{controller=Account}/{action=Login}");
             });
 
             DatabaseInitializer.RolesSeed(app.ApplicationServices);
