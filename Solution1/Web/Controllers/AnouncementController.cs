@@ -2,8 +2,7 @@
 using Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-
-namespace Web.Controllers.ApiController
+namespace Web.Controllers
 {
     public class AnouncementController : Controller
     {

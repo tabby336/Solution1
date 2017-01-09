@@ -1,0 +1,132 @@
+﻿
+@using Microsoft.AspNetCore.Server.Kestrel
+@model Web.Models.CourseViewModels.CourseViewModel
+
+@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Browse Courses";
+}
+
+<!--CARD WIDGETS START-->
+<div id="card-widgets">
+    <div class="row" id="coursesContainer">
+        @for (var i = 0; i < Model.Courses.Count(); i++)
+        {
+            var course = Model.Courses[i];
+            var modules = course.Modules.ToList();
+            <!-- Course card-->
+            <div class="col s12 m3 l3">
+                <div class="course-card">
+                    <div class="card" style="margin-top: 10px; padding-bottom: 20px; margin-bottom: 20px;">
+                        <!-- Card image -->
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img src="@Url.Content(course.PhotoUrl)" alt="blog-img">
+                        </div>
+                        <!-- The special info button -->
+                        <ul class="card-action-buttons">
+                            <li>
+                                <a class="btn-floating tooltipped waves-effect waves-light light-blue" data-position="top" data-tooltip="See info">
+                                    <i class="mdi-action-info activator"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- Card info text -->
+                        <div class="card-content">
+                            <!-- Master course title and date added -->
+                            <p class="row">
+                                <span class="left">
+                                    <b>@course.HashTag</b>
+                                </span>
+                                <span class="right">
+                                    @course.TimeStamp.ToString("g")
+                                </span>
+                            </p>
+                            <!-- All the rouds -->
+                            <div class="row center-align" style="padding-left: 50px;">
+
+                                @for (var j = 0; j < course.Modules.Count; j++)
+                                {
+                                    var module = modules[j];
+                                    <!-- Finished course -->
+                                    if(false)
+                                    {
+                                        <div class="fixed-action-btn" style="position: relative; display: inline-block; bottom: 0px;">
+                                            <a class="btn-floating green unlocked">
+                                                <i class="mdi-action-done"></i>
+                                            </a>
+                                            <ul class="center-align" style="bottom: 70%; margin-left: -1px;">
+                                                <li>
+                                                    <a lessonId="@module.Id" class="btn-floating tooltipped lessonLoader" data-position="right" data-tooltip="Read lesson">
+                                                        <i class="material-icons green">attach_file</i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                    <!-- Current course -->
+                                    if (true)
+                                    {
+                                        <div class="fixed-action-btn" style="position: relative; display: inline-block; bottom: 0px;">
+                                            <a class="btn-floating red darken-2 animated unlocked">
+                                                <i class="mdi-av-play-arrow"></i>
+                                            </a>
+                                            <ul class="center-align" style="bottom: 70%; margin-left: -1px;">
+                                                <li>
+                                                    <a lessonId="@module.Id" class="btn-floating tooltipped lessonLoader" data-position="right" data-tooltip="Read lesson">
+                                                        <i class="material-icons cyan darken-1">attach_file</i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a lessonId="@module.Id" class="btn-floating playable">
+                                                        <i class="material-icons red darken-1">query_builder</i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    }
+                                    <!-- Future locked course -->
+                                    if (false)
+                                    {
+                                        <div class="fixed-action-btn locked" style="position: relative; display: inline-block; bottom: 0px;">
+                                            <a class="btn-floating tooltipped grey darken-1" data-position="top" data-tooltip="Locked">
+                                                <i class="mdi-action-lock"></i>
+                                            </a>
+                                        </div>
+                                    }
+
+                                }
+                            </div>
+                            <!-- Course title and author -->
+                            <div class="row col s12">
+                                <h4 class="card-title grey-text text-darken-4">
+                                    @course.Title
+                                </h4>
+                            </div>
+                            <div class="row col s12">
+                                By
+                                <a href="#">@course.Author</a>
+                            </div>
+                        </div>
+                        <!-- Course short description -->
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">
+                                <i class="mdi-navigation-close right"></i>
+                                @course.Title
+                            </span>
+                            <p>
+                                @course.Description
+                            </p>
+                            <p>
+                                <a href="@course.DataLink">Useful Link</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/course.js"></script>
+}

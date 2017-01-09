@@ -16,12 +16,12 @@ namespace Business.Services
             _courseRepository = courseRepository;
         }
 
-        public IList<Course> GetAllCourses()
+        public IEnumerable<Course> GetAllCourses(bool includeModules = false)
         {
-            return _courseRepository.GetAll().ToList();
+            return includeModules ? _courseRepository.GetAllWithModules() : _courseRepository.GetAll().ToList();
         }
 
-        public IList<string> GetAllCourseNames()
+        public IEnumerable<string> GetAllCourseNames()
         {
             return _courseRepository.GetCourseNames();
         }

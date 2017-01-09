@@ -5,6 +5,7 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface ICourseRepository : IRepository<Course>
     {
-        IList<string> GetCourseNames();
+        IEnumerable<Course> GetAllWithModules();
+        IEnumerable<string> GetCourseNames();
     }
 }
