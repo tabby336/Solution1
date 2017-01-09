@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Web.Models;
 
 namespace Web
 {
@@ -56,10 +57,13 @@ namespace Web
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
-            services.AddTransient<IMarkService, MarkService>();
+
+            services.AddTransient<IPlayerRepository, PlayerRepository>();
             services.AddTransient<IMarkRepository, MarkRepository>();
+            services.AddTransient<IMarkService, MarkService>();
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<IModuleRepository, ModuleRepository>();
             services.AddTransient<IAnouncementRepository, AnouncementRepository>();
             services.AddTransient<IAnouncementService, AnouncementService>();
             services.AddTransient<IHomeworkRepository, HomeworkRepository>();
