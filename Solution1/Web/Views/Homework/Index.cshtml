@@ -1,0 +1,19 @@
+@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Homework Upload";
+    
+    string UserId = "67c99f70-f6af-4f66-bd08-67692b54b430";
+    string ModuleId = "1f0b4daa-3a7e-4a94-a5de-9dcf707d9ab0";
+}
+
+<h6>@ViewData["Message"]</h6>
+
+<form action = "/Homework/Upload"  
+      method = "post"
+      enctype="multipart/form-data">
+    <input type="file" name="files" multiple />
+    <input type="hidden" name="uid" value=@UserId />
+    <input type="hidden" name="mid" value=@ModuleId />
+    <input type="text" name="obs">
+    <input type="submit" value = "Upload Selected Files" />
+</form>

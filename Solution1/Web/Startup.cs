@@ -62,6 +62,8 @@ namespace Web
             services.AddTransient<ICourseService, CourseService>();
             services.AddTransient<IAnouncementRepository, AnouncementRepository>();
             services.AddTransient<IAnouncementService, AnouncementService>();
+            services.AddTransient<IHomeworkRepository, HomeworkRepository>();
+            services.AddTransient<IHomeworkService, HomeworkService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
