@@ -5,6 +5,7 @@
 @section Styles {
     <link type="text/css" rel="stylesheet" href="~/css/home.css">
     <link type="text/css" rel="stylesheet" href="~/css/site.css">
+    @RenderSection("styles", required: false)
 }
 
 <!-- START HEADER NAV -->
@@ -48,6 +49,7 @@
             <ul id="slide-out" class="side-nav fixed leftside-navigation">
                 <!-- The user data atached here -->
                 @{ await Html.RenderPartialAsync("../Home/Profile"); }
+                @{ await Html.RenderPartialAsync("../Home/LeftMenu"); }
                 @{ await Html.RenderPartialAsync("../Home/Donate"); }
             </ul>
             <!-- Button displayed only on small screens (phones) -->
@@ -119,7 +121,8 @@
             </div>
 
         </div>
-
+        
+        <!-- Example modal with buttons -->
         <div class="modal-footer">
 
             <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat" id="exitLuckButton">Exit</a>
@@ -131,4 +134,5 @@
 
 @section Scripts {
     <script src="~/js/site.js"></script>
+    @RenderSection("scripts", required: false)
 }

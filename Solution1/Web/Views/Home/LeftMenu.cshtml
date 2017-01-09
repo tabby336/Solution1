@@ -1,0 +1,69 @@
+﻿<!-- Information about user here -->
+<!-- COURSES -->
+<li class="no-padding">
+    <ul class="collapsible collapsible-accordion">
+        <li class="bold">
+            <a class="collapsible-header waves-effect waves-cyan">
+                <i class="mdi-file-folder"></i>
+                Courses
+            </a>
+            <div class="collapsible-body">
+                <ul>
+                    <li>
+                        <a href="/Course/All">Browse All</a>
+                    </li>
+                    <li>
+                        <a href="#">Browse Mine</a>
+                    </li>
+
+                    @*{% if data.courses.length > 0 %}
+                        {% for entry in data.courses %}
+                        <li class="no-padding">
+                            <ul class="collapsible collapsible-accordion">
+                                <li class="bold">
+                                    <a class="collapsible-header waves-effect waves-cyan">
+                                        {{ entry.course.title }}
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            {% for round in entry.rounds %}
+                                            <li><a lessonId="{{ round.roundid }}" class="lessonLoader" style="color: black; cursor: pointer;">{{ round.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endfor %}
+                        {% endif %}*@
+                </ul>
+            </div>
+        </li>
+        <li class="bold">
+            <a class="collapsible-header waves-effect waves-cyan">
+                <i class="mdi-image-looks-5"></i>
+                Marks
+            </a>
+            <div class="collapsible-body">
+                <ul>
+                    <li>
+                        <a href="/Mark">View My Marks</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="bold">
+            <a class="collapsible-header waves-effect waves-cyan">
+                <i class="mdi-image-looks-5"></i>
+                Homeworks
+            </a>
+            <div class="collapsible-body">
+                <ul>
+                    <li>
+                        <a href="/Homework">View Homework</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</li>

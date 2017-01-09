@@ -28,56 +28,6 @@
                     </a>
                 </li>
             </ul>
-
-            <!-- User level -->
-            @*<p class="user-level">
-                <b>Level 2</b>
-                <span class="right">
-                    200 /
-                    <b>300</b>
-                </span>
-            </p>*@
         </div>
     </div>
-</li>
-
-<!-- Information about user here -->
-<!-- COURSES -->
-<li class="no-padding">
-    <ul class="collapsible collapsible-accordion">
-        <li class="bold">
-            <a class="collapsible-header waves-effect waves-cyan">
-                <i class="mdi-communication-live-help"></i>
-                Courses
-            </a>
-            <div class="collapsible-body">
-                <ul>
-                    <li>
-                        <a href="#">You've studied nothing.</a>
-                    </li>
-
-                    @*{% if data.courses.length > 0 %}
-                    {% for entry in data.courses %}
-                    <li class="no-padding">
-                        <ul class="collapsible collapsible-accordion">
-                            <li class="bold">
-                                <a class="collapsible-header waves-effect waves-cyan">
-                                    {{ entry.course.title }}
-                                </a>
-                                <div class="collapsible-body">
-                                    <ul>
-                                        {% for round in entry.rounds %}
-                                        <li><a lessonId="{{ round.roundid }}" class="lessonLoader" style="color: black; cursor: pointer;">{{ round.name }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    {% endfor %}
-                    {% endif %}*@
-                </ul>
-            </div>
-        </li>
-    </ul>
 </li>
