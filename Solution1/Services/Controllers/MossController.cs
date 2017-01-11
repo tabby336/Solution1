@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Business.MossService;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.MossViewModel;
 
@@ -24,9 +25,7 @@ namespace Web.Controllers
     }
     public class MossController : Controller
     {
-        private const string OptionsFormatString = "G";
-        private const string FileUploadFormat = "file {0} {1} {2} {3}\n";
-
+    
         // GET: /Moss
         [HttpGet]
         public IActionResult Index()
@@ -36,7 +35,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendRequest(SendRequestViewModel mossModel)
+        public IActionResult SendRequest(SendRequestViewModel mossModel, [FromServices]IMossService mossService)
         {
             try
             {
@@ -48,34 +47,36 @@ namespace Web.Controllers
                 using (var socket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp))
                 {
                     socket.Connect(ipe);
+                    const string OptionsFormatString = "G";
                     ViewData["debug1"] = mossModel.UserId;
-                    SendOption(
+
+                    mossService.SetSocket(socket);
+
+                     mossService.SendOption(
                         Options.Moss.ToString(OptionsFormatString),
-                        mossModel.UserId.ToString(CultureInfo.InvariantCulture),
-                        socket);
+                        mossModel.UserId.ToString(CultureInfo.InvariantCulture));
                   
-                    SendOption(
+                    mossService.SendOption(
                         Options.Directory.ToString(OptionsFormatString),
-                        mossModel.IsDirectoryMode ? "1" : "0",
-                        socket);
-                    SendOption(
+                        mossModel.IsDirectoryMode ? "1" : "0");
+
+                    mossService.SendOption(
                         Options.X.ToString(OptionsFormatString),
-                        mossModel.IsBetaRequest ? "1" : "0",
-                        socket);
-                    SendOption(
+                        mossModel.IsBetaRequest ? "1" : "0");
+
+                    mossService.SendOption(
                         Options.Maxmatches.ToString(OptionsFormatString),
-                        mossModel.MaxMatches.ToString(CultureInfo.InvariantCulture),
-                        socket);
-                    SendOption(
+                        mossModel.MaxMatches.ToString(CultureInfo.InvariantCulture));
+
+                     mossService.SendOption(
                         Options.Show.ToString(OptionsFormatString),
-                        mossModel.NumberOfResultsToShow.ToString(CultureInfo.InvariantCulture),
-                        socket);
-                    /*
+                        mossModel.NumberOfResultsToShow.ToString(CultureInfo.InvariantCulture));
+                    
                     if (mossModel.BaseFiles.Count != 0)
                     {
                         foreach (var file in mossModel.BaseFiles)
                         {
-                            SendFile(file, socket, mossModel.Language, mossModel.IsDirectoryMode, 0);
+                            mossService.SendFile(file, mossModel.Language, mossModel.IsDirectoryMode, 0);
                         }
                     } // else, no base files to send DoNothing();
 
@@ -84,18 +85,17 @@ namespace Web.Controllers
                         var fileCount = 1;
                         foreach (var file in mossModel.Files)
                         {
-                            SendFile(file, socket, mossModel.Language, mossModel.IsDirectoryMode, fileCount++);
+                            mossService.SendFile(file, mossModel.Language, mossModel.IsDirectoryMode, fileCount++);
                         }
                     } // else, no files to send DoNothing();
-                    */
-                    SendOption("query 0", mossModel.Comments, socket);
+                    mossService.SendOption("query 0", mossModel.Comments);
                     
                     var bytes = new byte[512];
                     socket.Receive(bytes);
 
                     result = Encoding.UTF8.GetString(bytes);
                     ViewData["Response2"] = result;
-                    SendOption(Options.End.ToString(OptionsFormatString), string.Empty, socket);
+                    mossService.SendOption(Options.End.ToString(OptionsFormatString), string.Empty);
                 }
                 Uri url;
                 if (Uri.TryCreate(result, UriKind.Absolute, out url))
@@ -115,31 +115,6 @@ namespace Web.Controllers
                 ViewData["Response1"] = ex.Message;
                 return View("Index");
             }
-        }
-
-        private static void SendOption(string option, string value, Socket socket)
-        {
-            socket.Send(Encoding.UTF8.GetBytes(string.Format("{0} {1}\n", option, value)));
-        }
-
-        private static void SendFile(string file, Socket socket, string Language, bool IsDirectoryMode, int number)
-        {
-            var fileInfo = new FileInfo(file);
-            socket.Send(
-                IsDirectoryMode
-                    ? Encoding.UTF8.GetBytes(
-                        string.Format(
-                            FileUploadFormat,
-                            number,
-                            Language,
-                            fileInfo.Length,
-                            fileInfo.FullName.Replace("\\", "/")))
-                    : Encoding.UTF8.GetBytes(
-                        string.Format(FileUploadFormat, number, Language, fileInfo.Length, fileInfo.Name)));
-
-            var fileBytes = Encoding.UTF8.GetBytes(System.IO.File.ReadAllText(file));
-     
-            socket.Send(fileBytes);
         }
     }
 }
