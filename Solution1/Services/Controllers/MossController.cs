@@ -42,18 +42,18 @@ namespace Web.Controllers
             {
                 var hostEntry = Dns.GetHostAddressesAsync("moss.stanford.edu");
                 var address = hostEntry.Result.First();
-               // ViewData["address"] = address;
+                ViewData["address"] = address;
                 var ipe = new IPEndPoint(address, 7690);
                 string result;
                 using (var socket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp))
                 {
                     socket.Connect(ipe);
-                    ViewData["debug1"] = "I am here";
+                    ViewData["debug1"] = mossModel.UserId;
                     SendOption(
                         Options.Moss.ToString(OptionsFormatString),
                         mossModel.UserId.ToString(CultureInfo.InvariantCulture),
                         socket);
-                    
+                  
                     SendOption(
                         Options.Directory.ToString(OptionsFormatString),
                         mossModel.IsDirectoryMode ? "1" : "0",
@@ -70,6 +70,7 @@ namespace Web.Controllers
                         Options.Show.ToString(OptionsFormatString),
                         mossModel.NumberOfResultsToShow.ToString(CultureInfo.InvariantCulture),
                         socket);
+                    /*
                     if (mossModel.BaseFiles.Count != 0)
                     {
                         foreach (var file in mossModel.BaseFiles)
@@ -86,31 +87,32 @@ namespace Web.Controllers
                             SendFile(file, socket, mossModel.Language, mossModel.IsDirectoryMode, fileCount++);
                         }
                     } // else, no files to send DoNothing();
-
+                    */
                     SendOption("query 0", mossModel.Comments, socket);
                     
                     var bytes = new byte[512];
                     socket.Receive(bytes);
 
                     result = Encoding.UTF8.GetString(bytes);
+                    ViewData["Response2"] = result;
                     SendOption(Options.End.ToString(OptionsFormatString), string.Empty, socket);
                 }
                 Uri url;
                 if (Uri.TryCreate(result, UriKind.Absolute, out url))
                 {
-                    ViewData["Response"] = url.ToString().IndexOf("\n", StringComparison.Ordinal) > 0 ? url.ToString().Split('\n')[0] : url.ToString();
-                    return View("Index");
+                    ViewData["Response1"] = url.ToString().IndexOf("\n", StringComparison.Ordinal) > 0 ? url.ToString().Split('\n')[0] : url.ToString();
+                    return View("Index");          
                 }
                 else
                 {
-                    ViewData["Response"] = "Not a valid url";
+                    ViewData["Response1"] = "Not a valid url";
                     return View("Index");
                 }
             }
             catch (Exception ex)
             {
                 ViewData["debug2"] = "Exception Response";
-                ViewData["Response"] = ex.Message;
+                ViewData["Response1"] = ex.Message;
                 return View("Index");
             }
         }
