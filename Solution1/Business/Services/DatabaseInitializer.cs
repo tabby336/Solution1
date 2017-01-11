@@ -37,7 +37,7 @@ namespace Business.Services
             {
                 Email = AdminEmail,
                 UserName = AdminUsername,
-                Id = new Guid()
+                Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee")
             };
 
             var userManager = serviceProvider.GetService(typeof(UserManager<ApplicationUser>))

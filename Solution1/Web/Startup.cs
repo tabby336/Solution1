@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Web.Controllers;
 using Web.Models;
 
 namespace Web
@@ -55,10 +56,8 @@ namespace Web
             services.AddMvc();
 
             // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-
             services.AddTransient<IPlayerRepository, PlayerRepository>();
+            services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IMarkRepository, MarkRepository>();
             services.AddTransient<IMarkService, MarkService>();
             services.AddTransient<ICourseRepository, CourseRepository>();
@@ -68,6 +67,10 @@ namespace Web
             services.AddTransient<IAnouncementService, AnouncementService>();
             services.AddTransient<IHomeworkRepository, HomeworkRepository>();
             services.AddTransient<IHomeworkService, HomeworkService>();
+
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,6 +109,8 @@ namespace Web
             });
 
             DatabaseInitializer.RolesSeed(app.ApplicationServices);
+
+            UpDownController udc = new UpDownController();
         }
     }
 }

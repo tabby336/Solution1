@@ -10,7 +10,7 @@ namespace Web.Controllers
         {
             return View();
         }
-        
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -18,7 +18,7 @@ namespace Web.Controllers
             return View();
         }
 
-        
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -30,5 +30,5 @@ namespace Web.Controllers
         {
             return View();
         }
-    }
+}
 }

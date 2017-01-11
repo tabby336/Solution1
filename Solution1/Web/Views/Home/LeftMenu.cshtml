@@ -10,7 +10,7 @@
             <div class="collapsible-body">
                 <ul>
                     <li>
-                        <a href="/Course/All">Browse All</a>
+                        <a href="@Url.Action("GetAll", "Course")">Browse All</a>
                     </li>
                     <li>
                         <a href="#">Browse Mine</a>
@@ -47,20 +47,20 @@
             <div class="collapsible-body">
                 <ul>
                     <li>
-                        <a href="/Mark">View My Marks</a>
+                        <a href="@Url.Action("Index", "Mark")">View My Marks</a>
                     </li>
                 </ul>
             </div>
         </li>
         <li class="bold">
             <a class="collapsible-header waves-effect waves-cyan">
-                <i class="mdi-image-looks-5"></i>
+                <i class="mdi-action-favorite"></i>
                 Homeworks
             </a>
             <div class="collapsible-body">
                 <ul>
                     <li>
-                        <a href="/Homework">View Homework</a>
+                        <a href="@Url.Action("Index", "Homework")">View Homework</a>
                     </li>
                 </ul>
             </div>

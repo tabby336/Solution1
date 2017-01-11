@@ -18,8 +18,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Route("Course/All")]
-        public IActionResult GetAllCourseData()
+        public IActionResult GetAll()
         {
             var courses = _courseService.GetAllCourses(true);
             var cvm = new CourseViewModel() {Courses = courses.ToList()};
