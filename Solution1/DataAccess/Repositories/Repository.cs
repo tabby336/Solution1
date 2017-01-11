@@ -16,7 +16,7 @@ namespace DataAccess.Repositories
             context = platformManagement;
         }
 
-        public T Create(T p)
+        public virtual T Create(T p)
         {
             context.Add(p);
             context.SaveChanges();

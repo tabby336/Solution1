@@ -19,11 +19,11 @@ namespace DataAccess.Repositories
             return context.Homeworks.Where(homework => homework.UserId == uid);
         }
 
-        public bool Upload(Homework homework)
+        public override Homework Create(Homework homework)
         {
             homework.Id = Guid.NewGuid();
-            Homework hw = this.Create(homework);
-            return homework.Equals(hw);
+            Homework hw = base.Create(homework);
+            return homework;
         }
     }
 }

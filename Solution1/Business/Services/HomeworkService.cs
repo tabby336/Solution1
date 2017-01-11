@@ -32,8 +32,8 @@ namespace Business.Services
                              .Parse(file.ContentDisposition)
                              .FileName
                              .Trim('"');
-                // TBD: root of uploaded homeworks directory
-                string directoryPath = Path.Combine(_hostingEnv.WebRootPath, "homeworks", mid, uid);
+                string root = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+                string directoryPath = Path.Combine(root, "Data", "homeworks", mid, uid);
                 Directory.CreateDirectory(directoryPath);
                 string filePath = Path.Combine(directoryPath, filename);
 
@@ -43,9 +43,8 @@ namespace Business.Services
                     fs.Flush();
                 }
                 homework.Url = filePath;
-                bool successful = _homeworkRepository.Upload(homework); 
-                // TBD: what/if to return
-                if (successful) 
+                Homework hw = _homeworkRepository.Create(homework); 
+                if (hw != null) 
                 {
                     res += String.Join(" ", filename, "uploaded");
                 }   
