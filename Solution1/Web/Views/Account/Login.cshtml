@@ -6,7 +6,6 @@
 @*@inject SignInManager<ApplicationUser> SignInManager*@
 
 @{
-    Layout = "_Layout";
     ViewData["Title"] = "Log in";
 }
 
@@ -24,23 +23,36 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col s12">
+                    <span class="red-text">
+                        @Html.ValidationSummary(excludePropertyErrors: true)
+                    </span>
+                </div>
+            </div>
+
             <div class="row margin">
-                <div class="input-field col">
-                    <i class="material-icons prefix">perm_identity</i>
-                    <label asp-for="Username" class="center-align">Username</label>
-                    <input asp-for="Username" data-error=".errorTxt1">
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                    <div class="errorTxt1 righted"></div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">account_circle</i>
+                    <label asp-for="Username" class="center-align"></label>
+                    <input asp-for="Username"/>
+                    <span asp-validation-for="Username" class="red-text"></span>
                 </div>
             </div>
 
             <div class="row margin">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">lock</i>
-                    <label asp-for="Password" class="center-align">Password</label>
-                    <input asp-for="Password" data-error=".errorTxt2">
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                    <div class="errorTxt2 righted"></div>
+                    <label asp-for="Password" class="center-align"></label>
+                    <input asp-for="Password"/>
+                    <span asp-validation-for="Password" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row margin">
+                <div class="col s12">
+                    <input asp-for="RememberMe" value="false"/>
+                    <label asp-for="RememberMe"></label>
                 </div>
             </div>
 
@@ -48,9 +60,7 @@
                 <div class="input-field  col s12">
                     <button type="submit" class="btn waves-effect waves-light col s12 red darken-2">Login</button>
                 </div>
-               
             </div>
-
 
         </form>
     </div>
