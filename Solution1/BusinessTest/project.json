@@ -7,7 +7,8 @@
     "FluentAssertions": "4.14.0",
     "Microsoft.CodeCoverage": "1.0.2",
     "Business": "1.0.0-*",
-    "dotnet-test-mstest": "1.1.2-preview"
+    "dotnet-test-mstest": "1.1.2-preview",
+    "Moq": "4.6.38-alpha"
   },
 
   "frameworks": {

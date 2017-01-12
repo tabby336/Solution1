@@ -5,8 +5,8 @@ namespace Business.Services.Interfaces
 {
     public interface ICourseService
     {
-        IList<Course> GetAllCourses();
-        IList<string> GetAllCourseNames();
+        IEnumerable<Course> GetAllCourses(bool includeModules = false);
+        IEnumerable<string> GetAllCourseNames();
         void CreateCourse(Course course);
         void UpdateCourse(Course course);
         void DeleteCourse(Course course);

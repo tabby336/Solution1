@@ -7,20 +7,24 @@ namespace DataAccess.Models
     {
         [Required]
         public Guid CourseId { get; set; }
+        public virtual Course Course { get; set; }
 
         [Required]
-        [StringLength(255)]
+        [StringLength(256)]
         public string Title { get; set; }
 
-        [StringLength(1024)]
+        [Required]
+        [StringLength(4096)]
         public string Description { get; set; }
 
-        [StringLength(1024)]
-        public string UrlPdf { get; set; }
+        [StringLength(2048)]
+        public string UrlPdf { get; set; } = "#";
 
-        public bool HasHomework { get; set; }
+        [Required]
+        public bool HasHomework { get; set; } = true;
 
-        public bool HasTest { get; set; }
+        [Required]
+        public bool HasTest { get; set; } = false;
 
 
     }

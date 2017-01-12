@@ -18,5 +18,12 @@ namespace DataAccess.Repositories
         {
             return context.Homeworks.Where(homework => homework.UserId == uid);
         }
+
+        public override Homework Create(Homework homework)
+        {
+            homework.Id = Guid.NewGuid();
+            Homework hw = base.Create(homework);
+            return homework;
+        }
     }
 }

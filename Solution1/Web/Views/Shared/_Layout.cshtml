@@ -45,46 +45,8 @@ Author URL: https://github.com/tabby336/Solution1
     
 </head>
 <body>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Services</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
-        </div>
-    </div>*@
 
     @RenderBody()
-        
-    <!-- Should put this into a view -->
-    @*<hr />
-    <footer style="bottom: 0px;">
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_donations">
-            <input type="hidden" name="business" value="albertocieri@mail.com">
-            <input type="hidden" name="lc" value="US">
-            <input type="hidden" name="item_name" value="solution1Slayers">
-            <input type="hidden" name="no_note" value="0">
-            <input type="hidden" name="currency_code" value="USD">
-            <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">
-            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-        </form>
-        <p>&copy; 2016 - Solution1</p>
-    </footer>*@
 
     <!-- SCRIPTS -->
     <script src="~/lib/jquery/dist/jquery-2.1.1.min.js"></script>

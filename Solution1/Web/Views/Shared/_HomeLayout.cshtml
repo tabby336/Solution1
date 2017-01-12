@@ -5,6 +5,7 @@
 @section Styles {
     <link type="text/css" rel="stylesheet" href="~/css/home.css">
     <link type="text/css" rel="stylesheet" href="~/css/site.css">
+    @RenderSection("styles", required: false)
 }
 
 <!-- START HEADER NAV -->
@@ -47,9 +48,11 @@
         <aside id="left-sidebar-nav">
             <ul id="slide-out" class="side-nav fixed leftside-navigation">
                 <!-- The user data atached here -->
-                @{ await Html.RenderPartialAsync("../Home/Profile"); }
+                @*@{ await Html.RenderPartialAsync("../Home/Profile"); }*@
+                <li id="profiledata" class="user-details cyan darken-2"></li>
+                @{ await Html.RenderPartialAsync("../Home/LeftMenu"); }
                 @{ await Html.RenderPartialAsync("../Home/Donate"); }
-            </ul>
+</ul>
             <!-- Button displayed only on small screens (phones) -->
             <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="material-icons">toc</i></a>
         </aside>
@@ -119,7 +122,8 @@
             </div>
 
         </div>
-
+        
+        <!-- Example modal with buttons -->
         <div class="modal-footer">
 
             <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat" id="exitLuckButton">Exit</a>
@@ -131,4 +135,6 @@
 
 @section Scripts {
     <script src="~/js/site.js"></script>
+    <script src="~/js/player.js"></script>
+    @RenderSection("scripts", required: false)
 }

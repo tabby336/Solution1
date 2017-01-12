@@ -18,6 +18,7 @@ namespace Web.Controllers
             return View();
         }
 
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -29,5 +30,5 @@ namespace Web.Controllers
         {
             return View();
         }
-    }
+}
 }

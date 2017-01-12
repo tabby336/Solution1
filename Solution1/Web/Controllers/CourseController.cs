@@ -1,9 +1,13 @@
-﻿using Business.Services.Interfaces;
+﻿using System.Linq;
+using Business.Services.Interfaces;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.Models.CourseViewModels;
 
-namespace Web.Controllers.ApiController
+namespace Web.Controllers
 {
+    [Authorize]
     public class CourseController : Controller
     {
         private readonly ICourseService _courseService;
@@ -12,6 +16,15 @@ namespace Web.Controllers.ApiController
         {
             _courseService = courseService;
         }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var courses = _courseService.GetAllCourses(true);
+            var cvm = new CourseViewModel() {Courses = courses.ToList()};
+            return View("Courses",  cvm);
+        }
+
         [HttpGet]
         [Route("api/Course/GetCourseNames")]
         public IActionResult GetCourseNames()
