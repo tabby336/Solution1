@@ -8,9 +8,9 @@ namespace DataAccess.Repositories
 {
     public class AnouncementRepository : Repository<Anouncement>, IAnouncementRepository
     {
-        private readonly PlatformManagement _platformManagement;
+        private readonly IPlatformManagement _platformManagement;
 
-        public AnouncementRepository(PlatformManagement platformManagement) : base(platformManagement)
+        public AnouncementRepository(IPlatformManagement platformManagement) : base(platformManagement)
         {
             _platformManagement = platformManagement;
         }

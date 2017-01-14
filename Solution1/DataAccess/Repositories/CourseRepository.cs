@@ -8,8 +8,8 @@ namespace DataAccess.Repositories
 {
     public class CourseRepository : Repository<Course>, ICourseRepository
     {
-        private readonly PlatformManagement _platformManagement;
-        public CourseRepository(PlatformManagement platformManagement) : base(platformManagement)
+        private readonly IPlatformManagement _platformManagement;
+        public CourseRepository(IPlatformManagement platformManagement) : base(platformManagement)
         {
            this._platformManagement = platformManagement;
         }

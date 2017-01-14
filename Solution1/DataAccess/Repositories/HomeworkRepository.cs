@@ -10,7 +10,7 @@ namespace DataAccess.Repositories
     public class HomeworkRepository : Repository<Homework>, IHomeworkRepository
 
     {
-        public HomeworkRepository(PlatformManagement platformManagement) : base(platformManagement)
+        public HomeworkRepository(IPlatformManagement platformManagement) : base(platformManagement)
         {
         }
 

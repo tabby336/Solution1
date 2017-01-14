@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace DataAccess
 {
-    public class PlatformManagement : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+    public class PlatformManagement : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>, IPlatformManagement
     {
         private const string ConnectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
         //private const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=FiiStudyPlatform;Trusted_Connection=True;MultipleActiveResultSets=true";

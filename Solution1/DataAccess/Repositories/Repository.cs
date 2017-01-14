@@ -9,9 +9,9 @@ namespace DataAccess.Repositories
     public abstract class Repository<T> : IRepository<T> 
     where T : ModelBase
     {
-        protected readonly PlatformManagement context;
+        protected readonly IPlatformManagement context;
          
-        protected Repository(PlatformManagement platformManagement)
+        protected Repository(IPlatformManagement platformManagement)
         {
             context = platformManagement;
         }
