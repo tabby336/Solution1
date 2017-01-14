@@ -12,8 +12,6 @@ namespace BusinessTest
     [TestClass]
     public class MarkServiceTest
     {
-        private string test;
-
         private List<Mark> CreateSUT()
         {
             Mark first_element = new Mark
