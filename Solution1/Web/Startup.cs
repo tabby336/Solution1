@@ -67,6 +67,7 @@ namespace Web
             services.AddTransient<IAnouncementService, AnouncementService>();
             services.AddTransient<IHomeworkRepository, HomeworkRepository>();
             services.AddTransient<IHomeworkService, HomeworkService>();
+            services.AddTransient<IPlatformManagement, PlatformManagement>();
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
