@@ -9,6 +9,8 @@ using Services.Services;
 using DataAccess.Models;
 using DataAccess;
 using System;
+using Business.MossService;
+using Business.MossService.Interfaces;
 using Services.Models;
 
 namespace Services
@@ -53,6 +55,9 @@ namespace Services
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IMossService, MossService>();
+            services.AddTransient<IMossFileService, MossFileService>();
+            services.AddTransient<IMossConnectionService,MossConnectionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

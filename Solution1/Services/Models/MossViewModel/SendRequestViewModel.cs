@@ -13,7 +13,6 @@ namespace Web.Models.MossViewModel
 
         public string Language { get; set; }
 
-        [Required]
         public List<string> Files { get; set; }
 
         public Uri Response { get; set; }
