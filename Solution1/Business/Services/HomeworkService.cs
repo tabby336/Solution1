@@ -1,6 +1,8 @@
 using Business.Services.Interfaces;
 using DataAccess.Models;
 using DataAccess.Repositories.Interfaces;
+using Business.CommonInfrastructure.Interfaces;
+using Business.CommonInfrastructure;
 
 using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
@@ -26,27 +28,21 @@ namespace Business.Services
         {
             Homework homework = CreateHomeworkModel(uid, mid, obs);
             string res = "";
-            foreach (var file in files)
-            {
-                string filename = ContentDispositionHeaderValue
-                             .Parse(file.ContentDisposition)
-                             .FileName
-                             .Trim('"');
-                string root = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-                string directoryPath = Path.Combine(root, "Data", "homeworks", mid, uid);
-                Directory.CreateDirectory(directoryPath);
-                string filePath = Path.Combine(directoryPath, filename);
 
-                using (FileStream fs = System.IO.File.Create(filePath))
-                {
-                    file.CopyTo(fs);
-                    fs.Flush();
-                }
-                homework.Url = filePath;
+            string root = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            root = Path.Combine(root, "Data", "homeworks", mid, uid);
+            Directory.CreateDirectory(root);
+
+            IUpload upload = new Upload(new FileDataSource());
+            IList<string> uploadedPaths = upload.UploadFiles(files, root);
+
+            foreach (var path in uploadedPaths)
+            {
+                homework.Url = path;
                 Homework hw = _homeworkRepository.Create(homework); 
                 if (hw != null) 
                 {
-                    res += String.Join(" ", filename, "uploaded");
+                    res += String.Join(" ", Path.GetFileName(path), "uploaded");
                 }   
             }
             return res;
