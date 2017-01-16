@@ -24,7 +24,7 @@ namespace Business.Services
 
         public string Upload(IUpload upload, IList<IFormFile> files, string uid, string mid, string obs)
         {
-            if (upload == null || files == null || uid == null || mid == null || obs == null)
+            if (upload == null || files == null || uid == null || mid == null)
             {
                 throw new ArgumentNullException();
             }

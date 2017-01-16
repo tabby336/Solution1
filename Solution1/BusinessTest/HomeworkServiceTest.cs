@@ -164,22 +164,6 @@ namespace BusinessTest
         }
 
         [TestMethod]
-        public void When_UploadIsCalledWithNullObservations_Then_ArgumentNullExceptionIsThrown()
-        {
-            var homeworkRepository = mockHomeworkRepositoryExpectedBehaviour();
-            HomeworkService homeworkService = new HomeworkService(homeworkRepository);
-            List<string> expectedUrls = new List<string>(new string[] { "test" });
-            try
-            {
-                homeworkService.Upload(CreateUpload(expectedUrls), new List<IFormFile>(), "f3610178-09ca-497d-927f-3edff8ab2ea1", "f3610178-09ca-497d-927f-3edff8ab2ea2", null);
-                Assert.Fail();
-            }
-            catch
-            {
-            }
-        }
-
-        [TestMethod]
         public void When_UploadIsCalledWithInvalidMid_Then_FormatErrorIsThown()
         {
             var homeworkRepository = mockHomeworkRepositoryExpectedBehaviour();

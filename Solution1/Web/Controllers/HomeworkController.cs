@@ -30,7 +30,14 @@ namespace Web.Controllers
         public IActionResult Upload(IList<IFormFile> files, string uid, string mid, string obs)
         {
             IUpload uploadHelper = new Upload(new FileDataSource());
-            ViewData["Message"] += _homeworkService.Upload(uploadHelper, files, uid, mid, obs);   
+            try
+            {
+                ViewData["Message"] += _homeworkService.Upload(uploadHelper, files, uid, mid, obs);
+            } 
+            catch
+            {
+                ViewData["Message"] = "Something went wrong.";
+            }   
             return View("Index");
         }
     }
