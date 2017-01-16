@@ -6,12 +6,7 @@
 }
 
 
-<h3>@ViewData["Comments"]</h3>
-<h3>@ViewData["resLength"] </h3>
-<h3>@ViewData["ExperimentResponse"]</h3>
-<h3>@ViewData["offset"]</h3>
-<h3>@ViewData["GoodResponse"]</h3>
-<h3>@ViewData["InvalidUrl"]</h3>
+<h3>@ViewData["Response"]</h3>
 <h3>@ViewData["Exception"]</h3>
 <h3>@ViewData["ExceptionM"]</h3>
 
@@ -24,7 +19,7 @@
                 <div class="form-group">
                     <label asp-for="UserId" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="UserId" value="986988321" class="form-control" />
+                        <input asp-for="UserId" value="933388321" class="form-control" />
                         <span asp-validation-for="UserId" class="text-danger"></span>
                     </div>
                 </div>
@@ -45,7 +40,7 @@
                 <div class="form-group">
                     <label asp-for="MaxMatches" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="MaxMatches" class="form-control" />
+                        <input asp-for="MaxMatches" class="form-control" value="1" />
                         <span asp-validation-for="MaxMatches" class="text-danger"></span>
                     </div>
                 </div>

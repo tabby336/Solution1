@@ -8,18 +8,31 @@ namespace Business.MossService
 {
     public enum Options
     {
-        Moss,
-        Directory,
+        moss,
+        directory,
         X,
-        Maxmatches,
-        Show,
-        End
-    }
+        maxmatches,
+        show,
+        query,
+        end
+    };
 
     public class MossService : IMossService
     {
         private const string OptionsFormatString = "G";
         private int _offset = 0;
+
+        public string GetUrl(string response)
+        {
+            Uri url;
+            if (Uri.TryCreate(response, UriKind.Absolute, out url))
+            {
+                return url.ToString().IndexOf("\n", StringComparison.Ordinal) > 0
+                    ? url.ToString().Split('\n')[0]
+                    : url.ToString();
+            }
+            return "Invalid response";
+        }
 
         public int GetOff()
         {
@@ -48,11 +61,11 @@ namespace Business.MossService
             int numberOfResultsToShow, NetworkStream stream)
         {
                 SendOption(
-                        Options.Moss.ToString(OptionsFormatString),
+                        Options.moss.ToString(OptionsFormatString),
                         userId.ToString(CultureInfo.InvariantCulture), stream);
 
                 SendOption(
-                    Options.Directory.ToString(OptionsFormatString),
+                    Options.directory.ToString(OptionsFormatString),
                     isDirectoryMode ? "1" : "0", stream);
 
                 SendOption(
@@ -60,11 +73,11 @@ namespace Business.MossService
                     isBetaRequest ? "1" : "0", stream);
 
                 SendOption(
-                    Options.Maxmatches.ToString(OptionsFormatString),
+                    Options.maxmatches.ToString(OptionsFormatString),
                     maxMatches.ToString(CultureInfo.InvariantCulture), stream);
 
                 SendOption(
-                   Options.Show.ToString(OptionsFormatString),
+                   Options.show.ToString(OptionsFormatString),
                    numberOfResultsToShow.ToString(CultureInfo.InvariantCulture), stream);
 
         }

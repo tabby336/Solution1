@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 
 namespace Business.MossService.Interfaces
 {
@@ -9,6 +10,8 @@ namespace Business.MossService.Interfaces
 
         void SendOptions(long userId, bool isDirectoryMode, bool isBetaRequest, int maxMatches,
             int numberOfResultsToShow, NetworkStream stream);
+
+        string GetUrl(string response);
 
         // for debugging 
         int GetOff();

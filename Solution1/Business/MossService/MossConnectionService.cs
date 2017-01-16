@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
 using Business.MossService.Interfaces;
 
 namespace Business.MossService
@@ -13,11 +16,14 @@ namespace Business.MossService
             var address = hostEntry.Result.First();
             return new IPEndPoint(address, port);
         }
-        public byte[] ReadBytes(NetworkStream stream)
+
+
+        public string GetResponse(NetworkStream stream)
         {
-            var buffer = new byte[512];
-            stream.Read(buffer, 0, buffer.Length);
-            return buffer;
+            var responseBytes = new byte[512];
+            var bytesRead = stream.Read(responseBytes, 0, 512);
+            var response = Encoding.UTF8.GetString(responseBytes, 0, bytesRead);
+            return response;
         }
     }
 }

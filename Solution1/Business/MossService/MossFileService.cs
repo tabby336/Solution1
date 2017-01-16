@@ -18,12 +18,6 @@ namespace Business.MossService
             {
                 var fileInfo = new FileInfo(file);
 
-                Stream fs = File.OpenRead(file);
-
-                var fileBuffer = new byte[fs.Length];
-
-                fs.Read(fileBuffer, 0, (int)fs.Length);
-
                 var package = isDirectoryMode
                     ? Encoding.UTF8.GetBytes(
                         string.Format(
@@ -35,19 +29,37 @@ namespace Business.MossService
                     : Encoding.UTF8.GetBytes(
                         string.Format(fileUploadFormat, number, language, fileInfo.Length, fileInfo.Name));
 
-                var size = package.GetLength(0);
+                stream.Write(package, 0, package.Length);
 
-                stream.Write(package, 0, size);
-              
-                // var fileB = File.ReadAllBytes(file);
+                var fileBytes = Encoding.UTF8.GetBytes(File.ReadAllText(file));
 
-                stream.Write(fileBuffer, 0, fileBuffer.Length);
+                stream.Write(fileBytes, 0, fileBytes.Length);
 
             }
             catch (Exception exception)
             {
                 //haha 
                 throw exception;
+            }
+        }
+
+        public void SendFiles(List<string> files, string language, bool isDirectoryMode, NetworkStream stream, List<string> baseFiles= null)
+        {
+
+            if (baseFiles != null)
+            {
+                foreach (var file in baseFiles)
+                {
+                    SendFile(file, language, isDirectoryMode, 0, stream);
+                }
+            }
+            if (files.Count == 0) return;
+            {
+                var fileCount = 1;
+                foreach (var file in files)
+                {
+                    SendFile(file, language, isDirectoryMode, fileCount++, stream);
+                }
             }
         }
 

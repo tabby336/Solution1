@@ -18,27 +18,32 @@ namespace Web.Controllers
 {
     public class MossController : Controller
     {
-    
+
         // GET: /Moss
         [HttpGet]
         public IActionResult Index()
         {
             return View();
-          //  return "Not Implemented View";
+            //  return "Not Implemented View";
         }
 
         [HttpPost]
         public IActionResult SendRequest(
-            [FromForm]SendRequestViewModel mossModel, 
-            [FromServices]IMossService mossService, 
+            [FromForm]SendRequestViewModel mossModel,
+            [FromServices]IMossService mossService,
             [FromServices]IMossFileService fileService,
             [FromServices]IMossConnectionService connectionService)
         {
+          
             try
             {
+                //make connection to Moss
                 var ipe = connectionService.GetEndPoint("moss.stanford.edu", 7690);
                 var socket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
                 socket.Connect(ipe);
+
+                //System.IO.File.WriteAllText("C:\\Users\\alber\\Desktop\\socket.txt", "connected socked");
 
                 const string optionsFormatString = "G";
 
@@ -47,50 +52,29 @@ namespace Web.Controllers
                 mossService.SendOptions(mossModel.UserId, mossModel.IsDirectoryMode, mossModel.IsBetaRequest, mossModel.MaxMatches,
                         mossModel.NumberOfResultsToShow, stream);
 
+              //  System.IO.File.WriteAllText("C:\\Users\\alber\\Desktop\\options.txt", "Options Send");
+
                 mossModel.Files = fileService.GetFiles("C:\\Users\\alber\\Desktop\\mocksub");
 
-                //mossModel.BaseFiles = (List<string>) fileService.GetFiles("caca");
+               // mossModel.BaseFiles = fileService.GetFiles("C:\\Users\\alber\\Desktop\\mocksub\\base");
 
-                /*
-                if (mossModel.BaseFiles.Count != 0)
-                {
-                    foreach (var file in mossModel.BaseFiles)
-                    {
-                        fileService.SendFile(file, mossModel.Language, mossModel.IsDirectoryMode, 0, stream);
-                    }
-                } // else, no base files to send DoNothing();
-                */
+                fileService.SendFiles(mossModel.Files, mossModel.Language, mossModel.IsDirectoryMode, stream);
+               
+                 mossService.SendOption("query 0", mossModel.Comments, stream);
 
-                if (mossModel.Files.Count != 0)
-                {
-                    var fileCount = 1;
-                    foreach (var file in mossModel.Files)
-                    {
-                        fileService.SendFile(file, mossModel.Language, mossModel.IsDirectoryMode, fileCount++, stream);
-                    }
-                }
 
-                // mossService.SendOption("query 0", mossModel.Comments);
+                var response = connectionService.GetResponse(stream);
 
-                var memStream = connectionService.ReadBytes(stream);
+              //  System.IO.File.WriteAllText("C:\\Users\\alber\\Desktop\\receive.txt", "Response read: ");
 
-                ViewData["resLength"] = memStream.Length.ToString();
+            //    System.IO.File.WriteAllText("C:\\Users\\alber\\Desktop\\receiveR.txt", response);
 
-                var result = Encoding.UTF8.GetString(memStream);
-
-                ViewData["ExperimentResponse"] = result;
-                mossService.SendOption(Options.End.ToString(optionsFormatString), string.Empty, stream);
+                mossService.SendOption(Options.end.ToString(optionsFormatString), string.Empty, stream);
 
                 socket.Dispose();
 
-                Uri url;
-                if (Uri.TryCreate(result, UriKind.Absolute, out url))
-                {
-                    ViewData["GoodResponse"] = url.ToString().IndexOf("\n", StringComparison.Ordinal) > 0 ? url.ToString().Split('\n')[0] : url.ToString();
-                    return View("Index");
-                }
-                ViewData["InvalidUrl"] = "Not a valid url";
-                ViewData["offset"] = mossService.GetOff().ToString();
+                var urlResponse = mossService.GetUrl(response);
+                ViewData["Response"] = urlResponse;
                 return View("Index");
             }
             catch (Exception ex)
@@ -101,5 +85,5 @@ namespace Web.Controllers
             }
         }
     }
-    
+
 }
