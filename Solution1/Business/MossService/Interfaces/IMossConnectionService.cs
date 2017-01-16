@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 
 namespace Business.MossService.Interfaces
 {
@@ -9,5 +8,7 @@ namespace Business.MossService.Interfaces
         IPEndPoint GetEndPoint(string server, int port);
 
         string GetResponse(NetworkStream stream);
+
+        string GetUrl(string response);
     }
 }

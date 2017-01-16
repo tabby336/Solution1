@@ -55,7 +55,7 @@ namespace Services
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
-            services.AddTransient<IMossService, MossService>();
+            services.AddTransient<IMossOptionService, MossOptionService>();
             services.AddTransient<IMossFileService, MossFileService>();
             services.AddTransient<IMossConnectionService,MossConnectionService>();
         }

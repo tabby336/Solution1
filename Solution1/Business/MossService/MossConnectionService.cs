@@ -1,9 +1,8 @@
-﻿using System.IO;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using Business.MossService.Interfaces;
 
 namespace Business.MossService
@@ -24,6 +23,18 @@ namespace Business.MossService
             var bytesRead = stream.Read(responseBytes, 0, 512);
             var response = Encoding.UTF8.GetString(responseBytes, 0, bytesRead);
             return response;
+        }
+
+        public string GetUrl(string response)
+        {
+            Uri url;
+            if (Uri.TryCreate(response, UriKind.Absolute, out url))
+            {
+                return url.ToString().IndexOf("\n", StringComparison.Ordinal) > 0
+                    ? url.ToString().Split('\n')[0]
+                    : url.ToString();
+            }
+            return "Invalid response";
         }
     }
 }
