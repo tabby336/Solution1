@@ -7,6 +7,8 @@ using System.IO;
 
 using Business.Services.Interfaces;
 using Business.Services;
+using Business.CommonInfrastructure;
+using Business.CommonInfrastructure.Interfaces;
 
 namespace Web.Controllers
 {
@@ -27,7 +29,8 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Upload(IList<IFormFile> files, string uid, string mid, string obs)
         {
-            ViewData["Message"] += _homeworkService.Upload(files, uid, mid, obs);   
+            IUpload uploadHelper = new Upload(new FileDataSource());
+            ViewData["Message"] += _homeworkService.Upload(uploadHelper, files, uid, mid, obs);   
             return View("Index");
         }
     }

@@ -19,6 +19,11 @@ namespace Business.CommonInfrastructure
 
         public IList<string> UploadFiles(IList<IFormFile> files, string root)
         {
+            if (files == null || root == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             IList<string> uploaded = new List<string>();
             foreach (var file in files)
             {
