@@ -43,11 +43,11 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddDbContext<PlatformManagement>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
             //services.AddDbContext<PlatformManagement>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<PlatformManagement>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<PlatformManagement, Guid>()
@@ -94,6 +94,7 @@ namespace Web
             app.UseStaticFiles();
 
             app.UseIdentity();
+
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 

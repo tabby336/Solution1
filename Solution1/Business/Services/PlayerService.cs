@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using Business.Services.Interfaces;
 using DataAccess.Models;
 using DataAccess.Repositories.Interfaces;

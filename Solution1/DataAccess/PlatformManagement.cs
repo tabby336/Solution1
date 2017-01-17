@@ -8,8 +8,8 @@ namespace DataAccess
 {
     public class PlatformManagement : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
-        private const string ConnectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
-        //private const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=FiiStudyPlatform;Trusted_Connection=True;MultipleActiveResultSets=true";
+        //private const string ConnectionString = "User ID=student;Password=student;Host=localhost;Port=5432;Database=solution;Pooling=true;";
+        private const string ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=FiiStudyPlatform;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public DbSet<Player> Players { get; set; }
         public DbSet<Course> Courses { get; set; }
@@ -20,8 +20,8 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(ConnectionString);
-            //optionsBuilder.UseSqlServer(ConnectionString);
+            //optionsBuilder.UseNpgsql(ConnectionString);
+            optionsBuilder.UseSqlServer(ConnectionString);
             base.OnConfiguring(optionsBuilder);
             
         }
@@ -43,6 +43,5 @@ namespace DataAccess
         {
             builder.Entity<Mark>().HasKey(mark => new { mark.HomeworkId, mark.UserId });
         }
-
     }
 }

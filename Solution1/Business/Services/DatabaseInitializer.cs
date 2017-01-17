@@ -22,7 +22,7 @@ namespace Business.Services
             var context = serviceProvider.GetService(typeof(PlatformManagement)) as PlatformManagement;
 
             var roleManager = serviceProvider.GetService(typeof(RoleManager<IdentityRole<Guid>>))
-                as RoleManager<IdentityRole<Guid>>;
+                    as RoleManager<IdentityRole<Guid>>;
 
             foreach (var roleName in RolesNames)
             {

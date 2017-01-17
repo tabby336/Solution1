@@ -50,7 +50,14 @@
                 <!-- The user data atached here -->
                 @*@{ await Html.RenderPartialAsync("../Home/Profile"); }*@
                 <li id="profiledata" class="user-details cyan darken-2"></li>
-                @{ await Html.RenderPartialAsync("../Home/LeftMenu"); }
+
+                @if(User.IsInRole("Admin"))
+                {
+                    await Html.RenderPartialAsync("../Home/AdminSideMenu");
+
+                }
+                else { await Html.RenderPartialAsync("../Home/LeftMenu"); }
+                
                 @{ await Html.RenderPartialAsync("../Home/Donate"); }
 </ul>
             <!-- Button displayed only on small screens (phones) -->

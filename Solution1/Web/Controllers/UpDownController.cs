@@ -1,11 +1,11 @@
-﻿
-
-using System;
+﻿using System;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class UpDownController : Controller
     {
         public IActionResult Download(string path)

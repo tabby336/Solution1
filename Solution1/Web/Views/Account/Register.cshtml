@@ -1,42 +1,100 @@
 ﻿@using Web.Models.AccountViewModels
 @model Web.Models.AccountViewModels.RegisterViewModel
 @{
+    Layout = "_HomeLayout";
     ViewData["Title"] = "Register";
 }
 
-<h2>@ViewData["Title"].</h2>
+<h4>@ViewData["Title"].</h4>
+<h6>Create a new user.</h6>
 
-<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-    <h4>Create a new account.</h4>
-    <hr />
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Email" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
+<div class="row">
+
+    <div class="col s12">
+        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+            
+            <div class="row">
+                <div class="col s12">
+                    <span class="red-text left-align">
+                        @Html.ValidationSummary(excludePropertyErrors: true)
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s4">
+                    <label asp-for="FirstName" class="center-align"></label>
+                    <input asp-for="FirstName" />
+                    <span asp-validation-for="FirstName" class="left-align red-text"></span>
+                </div>
+
+                <div class="col s4">
+                    <label asp-for="LastName" class="center-align"></label>
+                    <input asp-for="LastName" />
+                    <span asp-validation-for="LastName" class="left-align red-text"></span>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col s4">
+                    <label asp-for="CollegeId" class="center-align"></label>
+                    <input asp-for="CollegeId" />
+                    <span asp-validation-for="CollegeId" class="left-align red-text"></span>
+                </div>
+
+                <div class="col s4">
+                    <label asp-for="Semester" class="center-align"></label>
+                    <input asp-for="Semester" />
+                    <span asp-validation-for="Semester" class="left-align red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s4">
+                    <label asp-for="Email" class="center-align"></label>
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email" class="red-text"></span>
+                </div>
+
+                <div class="col s4">
+                    <label asp-for="DateOfBirth" class="center-align"></label>
+                    <input asp-for="DateOfBirth" />
+                    <span asp-validation-for="DateOfBirth" class="red-text left-align"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s4">
+                    <label asp-for="Password" class="center-align"></label>
+                    <input asp-for="Password" />
+                    <span asp-validation-for="Password" class="red-text"></span>
+                </div>
+
+                <div class="col s4">
+                    <label asp-for="ConfirmPassword" class="center-align"></label>
+                    <input asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s4">
+                    <label asp-for="UserRole" class="center-align"></label>
+                    @Html.DropDownList("UserRole", (SelectList)ViewBag.UserRole)
+                    <span asp-validation-for="UserRole" class="red-text"></span>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col s2">
+                    <button type="submit" class="btn waves-effect waves-light col s12 red darken-2">Register</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label asp-for="Password" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Register</button>
-        </div>
-    </div>
-</form>
+</div>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }

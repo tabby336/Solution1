@@ -1,15 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
-using System;
-using System.IO;
 
 using Business.Services.Interfaces;
-using Business.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class HomeworkController : Controller
     {
         private IHomeworkService _homeworkService;

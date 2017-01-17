@@ -9,30 +9,42 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Web.Models.AccountViewModels;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
+using DataAccess.Repositories.Interfaces;
 
 namespace Web.Controllers
 {
+    //should move most of the logic in Services and eliminate the dependency on Identity?
     [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
 
+        private readonly IPlayerRepository _playerRepo;
+
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole<Guid>> roleManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IPlayerRepository playerRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+
+            _playerRepo = playerRepo;
         }
 
         //
@@ -89,9 +101,11 @@ namespace Web.Controllers
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult Register(string returnUrl = null)
-        {
+        {   
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            ViewBag.UserRole = new SelectList(_roleManager.Roles.ToList(), "Name", "Name", "Student");
+
+            return PartialView();
         }
 
         //
@@ -104,7 +118,9 @@ namespace Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                // Username generation logic - should move it somewhere else?
+                var username = model.FirstName.ToLower().Split(' ').First() + "." + model.LastName.ToLower();
+                var user = new ApplicationUser { UserName = username, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -114,8 +130,23 @@ namespace Web.Controllers
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User created a new account with password.");
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    await _userManager.AddToRoleAsync(user, model.UserRole);
+
+                    var player = new Player
+                    {
+                        Id = user.Id,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        CollegeId = model.CollegeId,
+                        DateOfBirth = model.DateOfBirth,
+                        Semester = model.Semester
+                    };
+
+                    _playerRepo.Create(player);
+                    
+                    _logger.LogInformation(3, "Admin created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
