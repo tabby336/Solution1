@@ -9,17 +9,25 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using System;
+using System.Linq;
 using System.IO;
+using System.IO.Compression;
 
 namespace Business.Services
 {
     public class HomeworkService : IHomeworkService
     {
         private IHomeworkRepository _homeworkRepository;
+        private string _root;
+        private string _tmp;
 
         public HomeworkService(IHomeworkRepository repository)
         {
             _homeworkRepository = repository;
+            _root = Directory.GetCurrentDirectory();
+            _tmp = Path.Combine(_root, "Data", "tmp");
+            _root = Path.Combine(_root, "Data", "homeworks");
+            Directory.CreateDirectory(_tmp);
         }       
 
         public string Upload(IUpload upload, IList<IFormFile> files, string uid, string mid, string obs)
@@ -28,11 +36,10 @@ namespace Business.Services
             {
                 throw new ArgumentNullException();
             }
-            string root = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-            root = Path.Combine(root, "Data", "homeworks", mid, uid);
-            Directory.CreateDirectory(root);
+            
+            string hwdir = Path.Combine(_root, mid, uid);
 
-            IList<string> uploadedPaths = upload.UploadFiles(files, root);
+            IList<string> uploadedPaths = upload.UploadFiles(files, hwdir);
             string notUploadedFiles = "Not uploaded files:";
             foreach (var path in uploadedPaths)
             {
@@ -48,6 +55,23 @@ namespace Business.Services
                 return "Upload successfully!";
             }
             return notUploadedFiles.TrimEnd(' ', ',');
+        }
+
+        public string Archive(string uid, string mid)
+        {
+            string hwpath = Path.Combine(_root, mid, uid);
+    
+            // empty the temp folder
+            Directory.EnumerateFiles(_tmp).ToList().ForEach(f => System.IO.File.Delete(f));
+            
+            //TODO: change with actual student name
+            string relativeTmpPath = Path.Combine("Data", "tmp");
+            string archiveName = uid + ".zip";
+            string archivePath = Path.Combine(_tmp, archiveName);
+            ZipFile.CreateFromDirectory(hwpath, archivePath, CompressionLevel.Fastest, true);
+
+            string relativeArchivePath = Path.Combine("Data", "tmp", archiveName);
+            return relativeArchivePath;
         }
 
         private Homework CreateHomeworkModel(string uid, string mid, string obs, string url)

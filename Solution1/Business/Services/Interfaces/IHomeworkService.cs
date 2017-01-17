@@ -8,5 +8,6 @@ namespace Business.Services.Interfaces
     public interface IHomeworkService 
     {
         string Upload(IUpload upload, IList<IFormFile> files, string uid, string mid, string obs);
+        string Archive(string uid, string mid);
     }
 }

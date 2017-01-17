@@ -31,9 +31,6 @@ namespace Business.CommonInfrastructure
                 string filename = ContentDispositionHeaderValue
                              .Parse(file.ContentDisposition)
                              .FileName.Trim('"');
-                Console.WriteLine(ContentDispositionHeaderValue.Parse(file.ContentDisposition));
-                Console.WriteLine("\n\n\n");
-
                 string path = Path.Combine(root, filename);
 
                 using (FileStream fs = _fileDataSource.Stream(path))

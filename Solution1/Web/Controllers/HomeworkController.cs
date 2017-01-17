@@ -26,9 +26,20 @@ namespace Web.Controllers
             return View();
         }
 
+        public IActionResult Upload()
+        {
+            return View("Upload");
+        }
+
         [HttpPost]
         public IActionResult Upload(IList<IFormFile> files, string uid, string mid, string obs)
         {
+            if (uid == null)
+            {
+                uid = this.GetLoggedInUserId();
+                if(uid == null)
+                    return NotFound();
+            }
             IUpload uploadHelper = new Upload(new FileDataSource());
             try
             {
@@ -38,7 +49,25 @@ namespace Web.Controllers
             {
                 ViewData["Message"] = "Something went wrong.";
             }   
-            return View("Index");
+            return View("Upload");
+        }
+
+        public IActionResult Download(string uid = null, string mid = null)
+        {
+            if (uid == null)
+            {
+                uid = this.GetLoggedInUserId();
+                if(uid == null)
+                    return NotFound();
+            }
+            if(uid != null && mid != null)
+            {
+                string path = _homeworkService.Archive(uid, mid);
+                var redirectUrl = string.Format(@"/UpDown/Download?path={0}", path);
+                return Redirect(redirectUrl);
+
+            }
+            return View("Download");
         }
     }
 }
