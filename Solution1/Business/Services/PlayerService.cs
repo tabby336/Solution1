@@ -30,5 +30,10 @@ namespace Business.Services
             var player = _playerRepository.GetById(playerId);
             return player == null ? null : @"Data\Avatars\" + player.PhotoUrl;
         }
+
+        public void UpdatePlayer(Player player)
+        {
+            _playerRepository.Update(player);
+        }
     }
 }

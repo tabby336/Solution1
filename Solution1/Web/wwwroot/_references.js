@@ -1,5 +1,6 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="js/course.js" />
+/// <reference path="js/dropify.js" />
 /// <reference path="js/loginpage.js" />
 /// <reference path="js/player.js" />
 /// <reference path="js/site.js" />

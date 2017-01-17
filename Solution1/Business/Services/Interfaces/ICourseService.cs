@@ -7,7 +7,7 @@ namespace Business.Services.Interfaces
     {
         IEnumerable<Course> GetAllCourses(bool includeModules = false);
         IEnumerable<string> GetAllCourseNames();
-        void CreateCourse(Course course);
+        Course CreateCourse(Course course, Player creator);
         void UpdateCourse(Course course);
         void DeleteCourse(Course course);
 

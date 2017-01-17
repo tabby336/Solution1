@@ -7,5 +7,6 @@ namespace Business.Services.Interfaces
     {
         Player GetPlayerData(string id);
         string GetImagePathForPlayerId(string id);
+        void UpdatePlayer(Player player);
     }
 }

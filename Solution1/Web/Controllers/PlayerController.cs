@@ -21,17 +21,12 @@ namespace Web.Controllers
             _playerService = playerService;
         }
 
-        private string GetLoggedInUserId()
-        {
-            return User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        }
-
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         public IActionResult Index(string id = null)
         { 
             if (id == null)
             {
-                id = GetLoggedInUserId();
+                id = this.GetLoggedInUserId();
                 if(id == null)
                     return NotFound();
             }
