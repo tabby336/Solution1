@@ -69,3 +69,7 @@
 .dropify-message p {
     text-align: center !important;
 }
+
+.container {
+    padding-bottom: 10px !important;
+}

@@ -24,8 +24,9 @@ namespace DataAccess.Models
 
         [Required]
         [StringLength(1024)]
-        public string PhotoUrl { get; set; } = "~/images/courses/defaultCourse.png";
+        public string PhotoUrl { get; set; } = "defaultCourse.png";
 
+        [Required]
         [StringLength(2048)]
         public string DataLink { get; set; } = "#";
 

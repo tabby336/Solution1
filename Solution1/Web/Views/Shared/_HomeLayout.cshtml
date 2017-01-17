@@ -56,7 +56,16 @@
                     await Html.RenderPartialAsync("../Home/AdminSideMenu");
 
                 }
-                else { await Html.RenderPartialAsync("../Home/LeftMenu"); }
+
+                @if (User.IsInRole("Professor"))
+                {
+                    await Html.RenderPartialAsync("../Home/LeftMenu");
+                }
+
+                @if (User.IsInRole("Student"))
+                {
+                    
+                }
                 
                 @{ await Html.RenderPartialAsync("../Home/Donate"); }
 </ul>

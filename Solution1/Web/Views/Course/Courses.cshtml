@@ -20,7 +20,7 @@
                     <div class="card" style="margin-top: 10px; padding-bottom: 20px; margin-bottom: 20px;">
                         <!-- Card image -->
                         <div class="card-image waves-effect waves-block waves-light">
-                            <img src="@Url.Content(course.PhotoUrl)" alt="blog-img">
+                            <img src="@Url.Action("Image", "Course", new {id = course.Id})" alt="blog-img">
                         </div>
                         <!-- The special info button -->
                         <ul class="card-action-buttons">

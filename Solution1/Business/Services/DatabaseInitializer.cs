@@ -11,7 +11,7 @@ namespace Business.Services
 {
     public class DatabaseInitializer
     {
-        private static readonly string[] RolesNames = new string[] { "Admin", "Student", "Professor" };
+        private static readonly string[] RolesNames = new string[] {"Admin", "Student", "Professor"};
 
         private const string AdminEmail = "admin@mail.com";
         private const string AdminUsername = "admin";
@@ -22,7 +22,7 @@ namespace Business.Services
             var context = serviceProvider.GetService(typeof(PlatformManagement)) as PlatformManagement;
 
             var roleManager = serviceProvider.GetService(typeof(RoleManager<IdentityRole<Guid>>))
-                    as RoleManager<IdentityRole<Guid>>;
+                as RoleManager<IdentityRole<Guid>>;
 
             foreach (var roleName in RolesNames)
             {
@@ -42,30 +42,33 @@ namespace Business.Services
 
             var userManager = serviceProvider.GetService(typeof(UserManager<ApplicationUser>))
                 as UserManager<ApplicationUser>;
-            
+
             var user = userManager.FindByEmailAsync(AdminEmail).Result;
 
             if (user == null)
             {
                 await userManager.CreateAsync(admin, AdminPassword);
                 await userManager.AddToRoleAsync(admin, "Admin");
+                await userManager.AddToRoleAsync(admin, "Professor");
+                await userManager.AddToRoleAsync(admin, "Student");
             }
 
             await context.SaveChangesAsync();
 
             // insert sample data here
-            InsertSamplesIntoTheDatabase(serviceProvider);
+            InsertUserSamples(serviceProvider);
+            InsertCourseSamples(serviceProvider);
             InsertSampleAnouncements(serviceProvider);
             context.Dispose();
         }
 
-        public static void InsertSamplesIntoTheDatabase(IServiceProvider serviceProvider)
+        public static void InsertUserSamples(IServiceProvider serviceProvider)
         {
-            var courseRepository = serviceProvider.GetService(typeof(ICourseRepository)) as ICourseRepository;
-            var playerRepository = serviceProvider.GetService(typeof(IPlayerRepository)) as IPlayerRepository;
-           
+
             try
             {
+                var playerRepository = serviceProvider.GetService(typeof(IPlayerRepository)) as IPlayerRepository;
+                
                 //add player
                 var p = new Player()
                 {
@@ -82,6 +85,18 @@ namespace Business.Services
                     Semester = 5
                 };
                 playerRepository.Create(p);
+
+            }
+            catch
+            {
+            }
+        }
+
+        public static void InsertCourseSamples(IServiceProvider serviceProvider)
+        {
+            try
+            {
+                var courseRepository = serviceProvider.GetService(typeof(ICourseRepository)) as ICourseRepository;
 
                 //add course
                 var c = new Course()
@@ -117,12 +132,10 @@ namespace Business.Services
                 c.Modules.Add(module2);
 
                 courseRepository.Create(c);
-
-               
             }
-            catch
+            catch (Exception)
             {
-            }
+            }   
         }
 
         public static void InsertSampleAnouncements(IServiceProvider serviceProvider)

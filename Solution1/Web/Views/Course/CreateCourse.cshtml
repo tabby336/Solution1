@@ -4,7 +4,7 @@
 
 @{
     Layout = "_HomeLayout";
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Create Course";
 }
 
 @section styles
@@ -13,7 +13,7 @@
 }
 
 <div class="row">
-    <form id="createCourseForm" class="col s12 m8 offset-m2" asp-controller="Course" asp-action="CreateCourse" method="post">
+    <form id="createCourseForm" class="col s12 m8 offset-m2" asp-controller="Course" asp-action="CreateCourse" method="post" enctype="multipart/form-data">
 
         <div class="row">
             <div class="input-field col s12 center">
@@ -43,7 +43,7 @@
             <div class="input-field col s12">
                 <i class="mdi-action-description prefix"></i>
                 <label asp-for="Description" class="center-align"></label>
-                <input asp-for="Description" />
+                <textarea class="materialize-textarea" asp-for="Description"></textarea>
                 <span asp-validation-for="Description" class="red-text"></span>
             </div>
         </div>
@@ -69,7 +69,7 @@
         <div class="row col s12">
             <div class="col s12 center-align">
                 <p>Upload a picture for the Course. Max size: 2MB</p>
-                <input type="file" id="input-file-max-fs" name="PhotoUrl" multiple="multiple" class="dropify" data-max-file-size="2M" />
+                <input type="file" id="input-file-max-fs" name="file" class="dropify" data-max-file-size="2M" />
             </div>
         </div>
 

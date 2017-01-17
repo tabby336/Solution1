@@ -16,10 +16,6 @@ namespace Web.Models.CourseViewModels
         [StringLength(128)]
         public string HashTag { get; set; } = "course";
 
-        [Required]
-        [StringLength(1024)]
-        public string PhotoUrl { get; set; } = "~/images/courses/defaultCourse.png";
-
         [StringLength(2048)]
         [Display(Name = "Additional info (link, optional)")]
         [DataType(DataType.Url)]

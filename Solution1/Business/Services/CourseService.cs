@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
+using Business.CommonInfrastructure;
+using Business.CommonInfrastructure.Interfaces;
 using Business.Services.Interfaces;
 using DataAccess.Models;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Business.Services
 {
@@ -12,6 +17,7 @@ namespace Business.Services
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IPlayerService _playerService;
+        private const string DefaultCourseAvatarPath = "defaultCourse.png";
 
         public CourseService(ICourseRepository courseRepository, IPlayerService playerService)
         {
@@ -29,19 +35,69 @@ namespace Business.Services
             return _courseRepository.GetCourseNames();
         }
 
-        public Course CreateCourse(Course course, Player creator)
+        public Course CreateCourse(string userid, string title, string description, string hashtag, string datalink, IList<IFormFile> files)
         {
             try
             {
-                var created = _courseRepository.Create(course);
-                creator.Courses.Add(created);
-                _playerService.UpdatePlayer(creator);
-                return created;
+                // step 1 - create course
+                var me = _playerService.GetPlayerData(userid);
+                var courseFromData = new Course()
+                {
+                    Title = title,
+                    Description = description,
+                    Author = me.FirstName + " " + me.LastName,
+                    TimeStamp = DateTime.Now
+                };
+                if (datalink != null) courseFromData.DataLink = datalink;
+                if (hashtag != null) courseFromData.HashTag = hashtag;
+                
+                me.Courses.Add(courseFromData);
+                _playerService.UpdatePlayer(me);
+
+                // step 2 - upload photo
+                IUpload uploader = new Upload(new FileDataSource());
+                var success = Upload(uploader, files, courseFromData.Id.ToString());
+                if (!success)
+                {
+                    me.Courses.Remove(courseFromData);
+                    _playerService.UpdatePlayer(me);
+                    throw new Exception();
+                }
+                
+                // finally set the image
+                courseFromData.PhotoUrl = files[0].FileName;
+                _courseRepository.Update(courseFromData);
+                return courseFromData;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }
+        }
+
+        public bool Upload(IUpload upload, IList<IFormFile> files, string courseId)
+        {
+            if (upload == null || courseId == null)
+                return false;
+            
+            var root = Path.Combine(Directory.GetCurrentDirectory(), "Data", "Avatars", "Courses", courseId);
+
+            var uploadedPaths = upload.UploadFiles(files, root);
+            return uploadedPaths.Count == files.Count;
+        }
+
+        public string GetImagePathForCourseId(string id)
+        {
+            Guid courseId;
+            Guid.TryParse(id, out courseId);
+            var course = _courseRepository.GetById(courseId);
+            if (course == null) return null;
+
+            var root = Path.Combine(Directory.GetCurrentDirectory(), @"Data\Avatars\Courses\");
+            var path = root + id + @"\" + course.PhotoUrl;
+            if (!File.Exists(path))
+                path = root + DefaultCourseAvatarPath;
+            return path;
         }
 
         public void UpdateCourse(Course course)

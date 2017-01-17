@@ -12,9 +12,8 @@ namespace Web.Controllers
         {
             try
             {
-                var fullPath = Path.Combine(Directory.GetCurrentDirectory(), path);
-                var name = Path.GetFileName(fullPath);
-                var fileType = MimeMapping.MimeTypes.GetMimeMapping(fullPath);
+                var name = Path.GetFileName(path);
+                var fileType = MimeMapping.MimeTypes.GetMimeMapping(path);
 
                 var result = new FileContentResult(System.IO.File.ReadAllBytes(path), fileType)
                 {

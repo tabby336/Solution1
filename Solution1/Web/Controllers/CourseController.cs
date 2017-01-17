@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Services.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.CourseViewModels;
@@ -31,41 +33,48 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Professor")]
+        [Authorize(Roles = "Professor")]
         public IActionResult CreateCourse()
         {
             return View("CreateCourse");
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Professor")]
-        public IActionResult CreateCourse(CreateCourseViewModel model)
+        [Authorize(Roles = "Professor")]
+        public IActionResult CreateCourse(IFormFile file, CreateCourseViewModel model)
         {
             if (!ModelState.IsValid) return View("CreateCourse", model);
-
-            var id = this.GetLoggedInUserId();
-            var me = _playerService.GetPlayerData(id);
-            var courseFromData = new Course()
+            if (file == null)
             {
-                Title = model.Title,
-                Description = model.Description,
-                HashTag = model.HashTag,
-                PhotoUrl = model.PhotoUrl,
-                DataLink = model.DataLink,
-                Author = me.FirstName + " " + me.LastName,
-                TimeStamp = DateTime.Now
-            };
-
-            var course = _courseService.CreateCourse(courseFromData, me);
-
-            if (course != null) //success
-            {
+                ModelState.AddModelError(string.Empty, "You must upload an image for the Course.");
                 return View("CreateCourse", model);
             }
 
+            var myId = this.GetLoggedInUserId();
+            var course = _courseService.CreateCourse(myId, model.Title, model.Description, model.HashTag, model.DataLink, new List<IFormFile> { file });
 
+            if (course != null) //success
+            {
+                return RedirectToAction("GetAll");
+            }
+            
             ModelState.AddModelError(string.Empty, "Cannot create Course. Please try again later.");
             return View("CreateCourse", model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Image(string id = null)
+        {
+            if (id == null)
+                return NotFound();
+
+            var filePath = _courseService.GetImagePathForCourseId(id);
+            if (filePath == null)
+                return NotFound();
+
+            var redirectUrl = string.Format(@"/UpDown/Download?path={0}", filePath);
+            return Redirect(redirectUrl);
         }
 
         [HttpGet]

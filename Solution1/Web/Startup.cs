@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Business.MossService;
 using Business.MossService.Interfaces;
 using Business.Services;
@@ -117,8 +118,6 @@ namespace Web
             });
 
             DatabaseInitializer.RolesSeed(app.ApplicationServices);
-
-            UpDownController udc = new UpDownController();
         }
     }
 }

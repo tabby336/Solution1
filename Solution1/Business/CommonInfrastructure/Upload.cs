@@ -24,6 +24,7 @@ namespace Business.CommonInfrastructure
                 throw new ArgumentNullException();
             }
 
+            Directory.CreateDirectory(root);
             IList<string> uploaded = new List<string>();
             foreach (var file in files)
             {
