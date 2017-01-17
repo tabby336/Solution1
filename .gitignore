@@ -4,6 +4,10 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 Solution1/DataAccess/Migrations/
+Solution1/Web/Data/Avatars/Players/*
+!Solution1/Web/Data/Avatars/Players/defaultPlayer.png
+Solution1/Web/Data/Avatars/Courses/*
+!Solution1/Web/Data/Avatars/Courses/defaultCourse.png
 
 # User-specific files
 *.suo
