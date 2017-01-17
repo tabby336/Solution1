@@ -1,4 +1,6 @@
 ﻿using System;
+using Business.MossService;
+using Business.MossService.Interfaces;
 using Business.Services;
 using Business.Services.CommunicationServices;
 using Business.Services.Interfaces;
@@ -71,6 +73,10 @@ namespace Web
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddTransient<IMossOptionService, MossOptionService>();
+            services.AddTransient<IMossFileService, MossFileService>();
+            services.AddTransient<IMossConnectionService, MossConnectionService>();
 
         }
 

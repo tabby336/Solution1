@@ -1,0 +1,82 @@
+﻿@using Web.Models.MossViewModel
+@model SendRequestViewModel
+
+@{
+    ViewData["Title"] = "Moss";
+}
+
+
+<h3>@ViewData["Response"]</h3>
+<h3>@ViewData["Exception"]</h3>
+<h3>@ViewData["ExceptionM"]</h3>
+
+@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Homework Upload";
+    string ModuleId = "1f0b4daa-3a7e-4a94-a5de-9dcf707d9ab0";
+}
+
+
+<div class="row">
+    <div class="col-md-8">
+        <section>
+            <form asp-controller="Moss" asp-action="SendRequest" method="post" class="form-horizontal">
+                <input type="hidden" name="mid" value=@ModuleId />
+                <div class="form-group">
+                    <label asp-for="UserId" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="UserId" value="994347907" class="form-control" />
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Language" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Language" class="form-control" value="c" />
+                        <span asp-validation-for="Language" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Comments" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Comments" class="form-control"  />
+                        <span asp-validation-for="Comments" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MaxMatches" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="MaxMatches" class="form-control" value="3" />
+                        <span asp-validation-for="MaxMatches" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsDirectoryMode" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="IsDirectoryMode" class="form-control" />
+                        <span asp-validation-for="IsDirectoryMode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsBetaRequest" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="IsBetaRequest" class="form-control" />
+                        <span asp-validation-for="IsBetaRequest" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumberOfResultsToShow" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="NumberOfResultsToShow" class="form-control" value="250" />
+                        <span asp-validation-for="NumberOfResultsToShow" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">Send</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
