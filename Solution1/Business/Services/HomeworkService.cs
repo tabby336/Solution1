@@ -70,8 +70,7 @@ namespace Business.Services
             string archivePath = Path.Combine(_tmp, archiveName);
             ZipFile.CreateFromDirectory(hwpath, archivePath, CompressionLevel.Fastest, true);
 
-            string relativeArchivePath = Path.Combine("Data", "tmp", archiveName);
-            return relativeArchivePath;
+            return archivePath;
         }
 
         private Homework CreateHomeworkModel(string uid, string mid, string obs, string url)

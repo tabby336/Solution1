@@ -1,9 +1,8 @@
+@model string
+
 @{
     Layout = "_HomeLayout";
     ViewData["Title"] = "Homework Upload";
-    
-    string UserId = "67c99f70-f6af-4f66-bd08-67692b54b430";
-    string ModuleId = "1f0b4daa-3a7e-4a94-a5de-9dcf707d9ab0";
 }
 
 @section styles
@@ -27,7 +26,7 @@
                 data-max-file-size="10M" />
 
             <input type="text" name="obs" placeholder="Share a thought">  
-            <input type="hidden" name="mid" value=@ModuleId /> 
+            <input type="hidden" name="moduleId" value=@Model /> 
             <input type="submit" class="btn waves-effect waves-light col s12 red darken-2" value="Upload" />         
         </div>
     </div>

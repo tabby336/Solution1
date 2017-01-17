@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System;
 using System.IO;
-
+using Microsoft.AspNetCore.Authorization;
 using Business.Services.Interfaces;
 using Business.Services;
 using Business.CommonInfrastructure;
@@ -21,19 +21,29 @@ namespace Web.Controllers
             _homeworkService = service;
         }
 
+        [HttpGet]
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Upload()
+        [HttpGet]
+        [Authorize(Roles = "Student")]
+        public IActionResult Upload(string moduleId)
         {
-            return View("Upload");
+            //Testing reasons, gets to be deleted
+            if (moduleId == null)
+            {
+                moduleId = "1f0b4daa-3a7e-4a94-a5de-9dcf707d9ab4";
+            }
+            return View("Upload", moduleId);
         }
 
         [HttpPost]
-        public IActionResult Upload(IList<IFormFile> files, string uid, string mid, string obs)
-        {
+        [Authorize(Roles = "Student")]
+        public IActionResult Upload(IList<IFormFile> files, string uid, string moduleId, string obs)
+        { 
             if (uid == null)
             {
                 uid = this.GetLoggedInUserId();
@@ -43,16 +53,18 @@ namespace Web.Controllers
             IUpload uploadHelper = new Upload(new FileDataSource());
             try
             {
-                ViewData["Message"] += _homeworkService.Upload(uploadHelper, files, uid, mid, obs);
+                ViewData["Message"] += _homeworkService.Upload(uploadHelper, files, uid, moduleId, obs);
             } 
             catch
             {
                 ViewData["Message"] = "Something went wrong.";
             }   
-            return View("Upload");
+            return View("Upload", moduleId);
         }
 
-        public IActionResult Download(string uid = null, string mid = null)
+        [HttpGet]
+        [Authorize(Roles = "Professor")]
+        public IActionResult Download(string uid = null, string moduleId = null)
         {
             if (uid == null)
             {
@@ -60,14 +72,14 @@ namespace Web.Controllers
                 if(uid == null)
                     return NotFound();
             }
-            if(uid != null && mid != null)
+            if(uid != null && moduleId != null)
             {
-                string path = _homeworkService.Archive(uid, mid);
+                string path = _homeworkService.Archive(uid, moduleId);
                 var redirectUrl = string.Format(@"/UpDown/Download?path={0}", path);
                 return Redirect(redirectUrl);
 
             }
-            return View("Download");
+            return View("Download", moduleId);
         }
     }
 }
