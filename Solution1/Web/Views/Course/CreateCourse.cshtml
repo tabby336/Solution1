@@ -1,0 +1,94 @@
+﻿
+@model Web.Models.CourseViewModels.CreateCourseViewModel
+@*@inject SignInManager<ApplicationUser> SignInManager*@
+
+@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Log in";
+}
+
+@section styles
+{
+    <link type="text/css" rel="stylesheet" href="~/css/dropify.css">
+}
+
+<div class="row">
+    <form id="createCourseForm" class="col s12 m8 offset-m2" asp-controller="Course" asp-action="CreateCourse" method="post">
+
+        <div class="row">
+            <div class="input-field col s12 center">
+                <img src="~/images/icon/logo.png" alt="" class="circle responsive-img valign profile-image-login">
+                <p class="center login-form-text">Create a new Course</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <span class="red-text center-align">
+                    @Html.ValidationSummary(excludePropertyErrors: true)
+                </span>
+            </div>
+        </div>
+
+        <div class="row margin">
+            <div class="input-field col s12">
+                <i class="mdi-action-grade prefix"></i>
+                <label asp-for="Title" class="center-align"></label>
+                <input asp-for="Title" />
+                <span asp-validation-for="Title" class="red-text"></span>
+            </div>
+        </div>
+
+        <div class="row margin">
+            <div class="input-field col s12">
+                <i class="mdi-action-description prefix"></i>
+                <label asp-for="Description" class="center-align"></label>
+                <input asp-for="Description" />
+                <span asp-validation-for="Description" class="red-text"></span>
+            </div>
+        </div>
+
+        <div class="row margin">
+            <div class="input-field col s12">
+                <i class="mdi-maps-local-offer prefix"></i>
+                <label asp-for="HashTag" class="center-align"></label>
+                <input asp-for="HashTag" />
+                <span asp-validation-for="HashTag" class="red-text"></span>
+            </div>
+        </div>
+
+        <div class="row margin">
+            <div class="input-field col s12">
+                <i class="mdi-editor-insert-link prefix"></i>
+                <label asp-for="DataLink" class="center-align"></label>
+                <input asp-for="DataLink" />
+                <span asp-validation-for="DataLink" class="red-text"></span>
+            </div>
+        </div>
+
+        <div class="row col s12">
+            <div class="col s12 center-align">
+                <p>Upload a picture for the Course. Max size: 2MB</p>
+                <input type="file" id="input-file-max-fs" name="PhotoUrl" multiple="multiple" class="dropify" data-max-file-size="2M" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6 offset-s3 center-align">
+                <button type="submit" class="btn waves-effect waves-light col s12 red darken-2">Create</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+@section Scripts {
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <!--Import script for this page-->
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/additional-methods.min.js"></script>
+    <script src="~/js/dropify.js"></script>
+    <script>
+        $('.dropify').dropify();
+    </script>
+}

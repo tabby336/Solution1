@@ -12,5 +12,6 @@ namespace DataAccess.Models
         [StringLength(8064)]
         public string Text { get; set; }
         public DateTime Date { get; set; }
+        public Course Course { get; set; }
     }
 }

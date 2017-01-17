@@ -1,6 +1,7 @@
 ﻿using System;
 using Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Web.Models.AnouncementViewModel;
 
 namespace Web.Controllers
 {
@@ -12,15 +13,19 @@ namespace Web.Controllers
         {
             _anouncementService = anouncementService;
         }
-        [HttpGet]
-        public IActionResult Get()
+
+        public IActionResult Index()
         {
             var anouncements = _anouncementService.GetAllAnouncements();
-            return Ok(anouncements);
-        }
+            var anouncementViewModel = new AnouncementViewModel
+            {
+                Anouncements = anouncements
+            };
 
+            return View(anouncementViewModel);
+        }
         [HttpGet]
-        [Route("api/Anouncement/GetAllByCourse")]
+        [Route("Anouncement/GetAllByCourse")]
         public IActionResult GetAllByCourse(Guid courseId)
         {
             var anouncements = _anouncementService.GetAllByCourse(courseId);
@@ -28,7 +33,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/Anouncement/GetAllForPeriod")]
+        [Route("Anouncement/GetAllForPeriod")]
         public IActionResult GetAllForPeriod(DateTime fromDate, DateTime toDate)
         {
             var anouncements = _anouncementService.GetAllByPeriod(fromDate, toDate);
@@ -36,7 +41,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/Anouncement/GetAllFilteredByPeriodAndCourse")]
+        [Route("Anouncement/GetAllFilteredByPeriodAndCourse")]
         public IActionResult GetAllFilteredByPeriodAndCourse(DateTime fromDate, DateTime toDate, Guid courseId)
         {
             var anouncements = _anouncementService.GetAllFilteredByCourseAndPeriod(fromDate, toDate, courseId);

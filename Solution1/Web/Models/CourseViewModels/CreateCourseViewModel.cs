@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.Models
+namespace Web.Models.CourseViewModels
 {
-    public class Course : ModelBase
+    public class CreateCourseViewModel
     {
         [Required]
         [StringLength(256)]
@@ -18,20 +17,12 @@ namespace DataAccess.Models
         public string HashTag { get; set; } = "course";
 
         [Required]
-        [StringLength(512)]
-        public string Author { get; set; }
-
-
-        [Required]
         [StringLength(1024)]
         public string PhotoUrl { get; set; } = "~/images/courses/defaultCourse.png";
 
         [StringLength(2048)]
+        [Display(Name = "Additional info (link, optional)")]
+        [DataType(DataType.Url)]
         public string DataLink { get; set; } = "#";
-
-        [Required]
-        public DateTime TimeStamp { get; set; } = DateTime.Now;
-        
-        public virtual ICollection<Module> Modules { get; set; } = new List<Module>();
     }
 }

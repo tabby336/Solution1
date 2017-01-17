@@ -55,6 +55,7 @@ namespace Business.Services
 
             // insert sample data here
             InsertSamplesIntoTheDatabase(serviceProvider);
+            InsertSampleAnouncements(serviceProvider);
             context.Dispose();
         }
 
@@ -116,9 +117,33 @@ namespace Business.Services
                 c.Modules.Add(module2);
 
                 courseRepository.Create(c);
+
+               
             }
             catch
             {
+            }
+        }
+
+        public static void InsertSampleAnouncements(IServiceProvider serviceProvider)
+        {
+            var anouncementRepository = serviceProvider.GetService(typeof(IAnouncementRepository)) as IAnouncementRepository;
+            var anouncement1 = new Anouncement
+            {
+                Id = Guid.NewGuid(),
+                CourseId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee"),
+                Date = DateTime.Now,
+                Text = "Cursul de ingineria programarii din data de 24.12.2017 va fi amanat!",
+                Title = "Amanare Curs!"
+            };
+
+            try
+            {
+                anouncementRepository.Create(anouncement1);
+            }
+            catch
+            {
+                
             }
         }
     }

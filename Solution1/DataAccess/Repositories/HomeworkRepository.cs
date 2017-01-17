@@ -10,7 +10,7 @@ namespace DataAccess.Repositories
     public class HomeworkRepository : Repository<Homework>, IHomeworkRepository
 
     {
-        public HomeworkRepository(PlatformManagement platformManagement) : base(platformManagement)
+        public HomeworkRepository(IPlatformManagement platformManagement) : base(platformManagement)
         {
         }
 
@@ -21,6 +21,10 @@ namespace DataAccess.Repositories
 
         public override Homework Create(Homework homework)
         {
+            if (homework == null)
+            {
+                throw new ArgumentNullException();
+            }
             homework.Id = Guid.NewGuid();
             Homework hw = base.Create(homework);
             return homework;

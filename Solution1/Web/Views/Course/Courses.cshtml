@@ -1,5 +1,5 @@
 ﻿
-@using Microsoft.AspNetCore.Server.Kestrel
+
 @model Web.Models.CourseViewModels.CourseViewModel
 
 @{
@@ -15,7 +15,7 @@
             var course = Model.Courses[i];
             var modules = course.Modules.ToList();
             <!-- Course card-->
-            <div class="col s12 m3 l3">
+            <div class="col s12 m6 l4">
                 <div class="course-card">
                     <div class="card" style="margin-top: 10px; padding-bottom: 20px; margin-bottom: 20px;">
                         <!-- Card image -->

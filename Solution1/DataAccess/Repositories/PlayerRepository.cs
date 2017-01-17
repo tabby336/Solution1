@@ -6,7 +6,7 @@ namespace DataAccess.Repositories
 {
     public class PlayerRepository : Repository<Player>, IPlayerRepository
     {
-        public PlayerRepository(PlatformManagement platformManagement) : base(platformManagement)
+        public PlayerRepository(IPlatformManagement platformManagement) : base(platformManagement)
         {
         }
     }

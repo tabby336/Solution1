@@ -65,3 +65,7 @@
     line-height: 17px !important;
     text-align: right;
 }
+
+.dropify-message p {
+    text-align: center !important;
+}

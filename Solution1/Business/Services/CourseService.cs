@@ -11,9 +11,12 @@ namespace Business.Services
     public class CourseService : ICourseService
     {
         private readonly ICourseRepository _courseRepository;
-        public CourseService(ICourseRepository courseRepository)
+        private readonly IPlayerService _playerService;
+
+        public CourseService(ICourseRepository courseRepository, IPlayerService playerService)
         {
             _courseRepository = courseRepository;
+            _playerService = playerService;
         }
 
         public IEnumerable<Course> GetAllCourses(bool includeModules = false)
@@ -26,9 +29,19 @@ namespace Business.Services
             return _courseRepository.GetCourseNames();
         }
 
-        public void CreateCourse(Course course)
+        public Course CreateCourse(Course course, Player creator)
         {
-            _courseRepository.Create(course);
+            try
+            {
+                var created = _courseRepository.Create(course);
+                creator.Courses.Add(created);
+                _playerService.UpdatePlayer(creator);
+                return created;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public void UpdateCourse(Course course)
@@ -42,3 +55,4 @@ namespace Business.Services
         }
     }
 }
+
