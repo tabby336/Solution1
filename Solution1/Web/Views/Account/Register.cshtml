@@ -5,101 +5,121 @@
     ViewData["Title"] = "Register";
 }
 
-<h4>@ViewData["Title"].</h4>
-@if (ViewData.ContainsKey("Success"))
-{
-    <h6>User created.</h6>
-}
-<h6>Create a new user.</h6>
-
 <div class="row">
-
-    <div class="col s12">
-        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+    <form class="col s12 m8 offset-m2" asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
             
-            <div class="row">
-                <div class="col s12">
-                    <span class="red-text left-align">
-                        @Html.ValidationSummary(excludePropertyErrors: true)
-                    </span>
-                </div>
+        <div class="row center">
+            <div class="input-field col s12">
+                <img src="~/images/icon/logo.png" alt="" class="circle responsive-img valign profile-image-login">
+                @if (ViewData.ContainsKey("Success"))
+                {
+                    <p class="center login-form-text">User created</p>
+                }
+                <p class="center login-form-text">Create new user</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <span class="red-text center-align">
+                    @Html.ValidationSummary(excludePropertyErrors: true)
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">account_circle</i>
+                <label asp-for="FirstName" class="center-align"></label>
+                <input asp-for="FirstName" />
+                <span asp-validation-for="FirstName" class="red-text"></span>
+            </div>
+            
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="material-icons prefix">account_circle</i>
+                <label asp-for="LastName" class="center-align"></label>
+                <input asp-for="LastName" />
+                <span asp-validation-for="LastName" class="red-text"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">loyalty</i>
+                <label asp-for="CollegeId" class="center-align"></label>
+                <input asp-for="CollegeId" />
+                <span asp-validation-for="CollegeId" class="left-align red-text"></span>
             </div>
 
-            <div class="row">
-                <div class="col s4">
-                    <label asp-for="FirstName" class="center-align"></label>
-                    <input asp-for="FirstName" />
-                    <span asp-validation-for="FirstName" class="left-align red-text"></span>
-                </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">assessment</i>
+                <label asp-for="Semester" class="center-align"></label>
+                <input asp-for="Semester" />
+                <span asp-validation-for="Semester" class="left-align red-text"></span>
+            </div>
+        </div>
 
-                <div class="col s4">
-                    <label asp-for="LastName" class="center-align"></label>
-                    <input asp-for="LastName" />
-                    <span asp-validation-for="LastName" class="left-align red-text"></span>
-                </div>
+        <div class="row">
+            <div class="col s12">
+                <i class="material-icons prefix">today</i>
+                <label asp-for="DateOfBirth" class="center-align"></label>
+                <input class="datepicker" asp-for="DateOfBirth" />
+                <span asp-validation-for="DateOfBirth" class="red-text left-align"></span>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col s12">
+                <i class="material-icons prefix">group_work</i>
+                <label asp-for="UserRole" class="center-align"></label>
+                @Html.DropDownList("UserRole", (SelectList)ViewBag.UserRole)
+                <span asp-validation-for="UserRole" class="red-text"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <i class="prefix material-icons">email</i>
+                <label asp-for="Email" class="center-align"></label>
+                <input asp-for="Email" />
+                <span asp-validation-for="Email" class="red-text"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">vpn_key</i>
+                <label asp-for="Password" class="center-align"></label>
+                <input asp-for="Password" />
+                <span asp-validation-for="Password" class="red-text"></span>
             </div>
 
-            <div class="row">
-                <div class="col s4">
-                    <label asp-for="CollegeId" class="center-align"></label>
-                    <input asp-for="CollegeId" />
-                    <span asp-validation-for="CollegeId" class="left-align red-text"></span>
-                </div>
-
-                <div class="col s4">
-                    <label asp-for="Semester" class="center-align"></label>
-                    <input asp-for="Semester" />
-                    <span asp-validation-for="Semester" class="left-align red-text"></span>
-                </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">vpn_key</i>
+                <label asp-for="ConfirmPassword" class="center-align"></label>
+                <input asp-for="ConfirmPassword" />
+                <span asp-validation-for="ConfirmPassword" class="red-text"></span>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col s4">
-                    <label asp-for="Email" class="center-align"></label>
-                    <input asp-for="Email" />
-                    <span asp-validation-for="Email" class="red-text"></span>
-                </div>
+        <div class="row">
 
-                <div class="col s4">
-                    <label asp-for="DateOfBirth" class="center-align"></label>
-                    <input asp-for="DateOfBirth" />
-                    <span asp-validation-for="DateOfBirth" class="red-text left-align"></span>
-                </div>
+            <div class="col s6 offset-s3 center-align">
+                <button type="submit" class="btn waves-effect waves-light col s12 red darken-2">Register</button>
             </div>
-
-            <div class="row">
-                <div class="col s4">
-                    <label asp-for="Password" class="center-align"></label>
-                    <input asp-for="Password" />
-                    <span asp-validation-for="Password" class="red-text"></span>
-                </div>
-
-                <div class="col s4">
-                    <label asp-for="ConfirmPassword" class="center-align"></label>
-                    <input asp-for="ConfirmPassword" />
-                    <span asp-validation-for="ConfirmPassword" class="red-text"></span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col s4">
-                    <label asp-for="UserRole" class="center-align"></label>
-                    @Html.DropDownList("UserRole", (SelectList)ViewBag.UserRole)
-                    <span asp-validation-for="UserRole" class="red-text"></span>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col s2">
-                    <button type="submit" class="btn waves-effect waves-light col s12 red darken-2">Register</button>
-                </div>
-            </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 50 // Creates a dropdown of 15 years to control year
+        });
+    </script>
 }
