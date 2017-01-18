@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
-using Business.MossService;
-using Business.MossService.Interfaces;
+using Business.Services;
+using Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.MossViewModel;
 
@@ -46,7 +46,7 @@ namespace Web.Controllers
                 mossOptionService.SendOptions(mossModel.UserId, mossModel.IsDirectoryMode, mossModel.IsBetaRequest, mossModel.MaxMatches,
                         mossModel.NumberOfResultsToShow, stream);
 
-                mossModel.Files = fileService.GetFiles(_root);
+                mossModel.Files = fileService.GetFiles("C:\\Users\\alber\\Desktop\\mocksub");
 
                 fileService.SendFiles(mossModel.Files, mossModel.Language, mossModel.IsDirectoryMode, stream);
                
