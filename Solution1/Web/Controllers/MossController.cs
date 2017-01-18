@@ -30,8 +30,8 @@ namespace Web.Controllers
           
             try
             {
-                var _root = Directory.GetCurrentDirectory();
-                _root = Path.Combine(_root, "Data", "homeworks", mid);
+                var root = Directory.GetCurrentDirectory();
+                root = Path.Combine(root, "Data", "homeworks", mid);
                 //make connection to Moss
                 
                 var ipe = connectionService.GetEndPoint("moss.stanford.edu", 7690);
@@ -46,7 +46,7 @@ namespace Web.Controllers
                 mossOptionService.SendOptions(mossModel.UserId, mossModel.IsDirectoryMode, mossModel.IsBetaRequest, mossModel.MaxMatches,
                         mossModel.NumberOfResultsToShow, stream);
 
-                mossModel.Files = fileService.GetFiles("C:\\Users\\alber\\Desktop\\mocksub");
+                mossModel.Files = fileService.GetFiles(root);
 
                 fileService.SendFiles(mossModel.Files, mossModel.Language, mossModel.IsDirectoryMode, stream);
                

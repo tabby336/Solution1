@@ -37,7 +37,6 @@ namespace Business.Services
             }
             catch (Exception exception)
             {
-                //haha 
                 throw exception;
             }
         }
