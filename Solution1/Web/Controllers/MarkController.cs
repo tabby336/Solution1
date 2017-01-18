@@ -1,6 +1,6 @@
 using Business.Services.Interfaces;
 using DataAccess.Models;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Collections.Generic;
@@ -18,6 +18,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Student")]
         public IActionResult Index(string uid = null)
         {
             if (uid == null)
