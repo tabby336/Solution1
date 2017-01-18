@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using Business.CommonInfrastructure;
@@ -17,12 +16,14 @@ namespace Business.Services
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IPlayerService _playerService;
+        private readonly IPlayerCourseRepository _playerCourseRepository;
         private const string DefaultCourseAvatarPath = "defaultCourse.png";
 
-        public CourseService(ICourseRepository courseRepository, IPlayerService playerService)
+        public CourseService(ICourseRepository courseRepository, IPlayerService playerService, IPlayerCourseRepository playerCourseRepository)
         {
             _courseRepository = courseRepository;
             _playerService = playerService;
+            _playerCourseRepository = playerCourseRepository;
         }
 
         public IEnumerable<Course> GetAllCourses(bool includeModules = false)
@@ -30,9 +31,16 @@ namespace Business.Services
             return includeModules ? _courseRepository.GetAllWithModules() : _courseRepository.GetAll().ToList();
         }
 
-        public IEnumerable<string> GetAllCourseNames()
+        public IEnumerable<Course> GetCoursesForPlayer(string playerId, bool includeModules = false)
         {
-            return _courseRepository.GetCourseNames();
+            var courses = _playerService.GetPlayerData(playerId, true, true).Courses;
+            return courses;
+        }
+
+        public IEnumerable<Course> GetCoursesForAuthor(string authorName)
+        {
+            var courses = _courseRepository.GetCoursesByAuthor(authorName);
+            return courses;
         }
 
         public Course CreateCourse(string userid, string title, string description, string hashtag, string datalink, IList<IFormFile> files)
@@ -55,17 +63,22 @@ namespace Business.Services
                         hashtag = hashtag.Substring(1);
                     courseFromData.HashTag = hashtag;
                 }
-                
-                me.Courses.Add(courseFromData);
-                _playerService.UpdatePlayer(me);
+
+                courseFromData = _courseRepository.Create(courseFromData);
+                var playerCourse = new PlayerCourse()
+                {
+                    CourseId = courseFromData.Id,
+                    PlayerId = me.Id
+                };
+                playerCourse = _playerCourseRepository.Create(playerCourse);
 
                 // step 2 - upload photo
                 IUpload uploader = new Upload(new FileDataSource());
                 var success = Upload(uploader, files, courseFromData.Id.ToString());
                 if (!success)
                 {
-                    me.Courses.Remove(courseFromData);
-                    _playerService.UpdatePlayer(me);
+                    _playerCourseRepository.Delete(playerCourse);
+                    _courseRepository.Delete(courseFromData);
                     throw new Exception();
                 }
                 
@@ -74,8 +87,9 @@ namespace Business.Services
                 _courseRepository.Update(courseFromData);
                 return courseFromData;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 return null;
             }
         }
@@ -112,17 +126,23 @@ namespace Business.Services
             Guid.TryParse(courseId, out courseGid);
             var course = _courseRepository.GetById(courseGid);
 
-            if (me.Courses.Contains(course))
+            var playerCourse = _playerCourseRepository.GetByPlayerAndCourse(me.Id, course.Id);
+
+            if (playerCourse != null)
                 throw new Exception("Already subscribed to the course.");
 
             try
             {
-                me.Courses.Add(course);
-                _playerService.UpdatePlayer(me);
+                playerCourse = new PlayerCourse()
+                {
+                    CourseId = course.Id,
+                    PlayerId = me.Id
+                };
+                _playerCourseRepository.Create(playerCourse);
             }
             catch
             {
-                throw new Exception("Cannot subscripe to the course.");
+                throw new Exception("Cannot subscribe to the course.");
             }
             
         }
@@ -136,6 +156,8 @@ namespace Business.Services
         {
             _courseRepository.Delete(course);
         }
+
+     
     }
 }
 

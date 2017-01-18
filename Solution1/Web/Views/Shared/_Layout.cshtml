@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http.Extensions
+<!DOCTYPE html>
 <html lang="en">
 
 <!--================================================================================
@@ -45,16 +46,24 @@ Author URL: https://github.com/tabby336/Solution1
     
 </head>
 <body>
+    <!-- Start Page Loading -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <!-- End Page Loading -->
 
+    <input type="hidden" id="hostName" value="@Url.ActionContext.HttpContext.Request.Host.Host:@Url.ActionContext.HttpContext.Request.Host.Port" />
     @RenderBody()
 
-    <!-- SCRIPTS -->
-    <script src="~/lib/jquery/dist/jquery-2.1.1.min.js"></script>
-    <script src="~/lib/materialize/materialize.js"></script>
-    <script src="~/lib/sweetalert/sweetalert.min.js"></script>
-    <script src="~/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
-    
-    @RenderSection("scripts", required: false)
-    <!-- SCRIPTS END -->
+<!-- SCRIPTS -->
+<script src="~/lib/jquery/dist/jquery-2.1.1.min.js"></script>
+<script src="~/lib/materialize/materialize.js"></script>
+<script src="~/lib/sweetalert/sweetalert.min.js"></script>
+<script src="~/lib/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+@RenderSection("scripts", required: false)
+<!-- SCRIPTS END -->
 </body>
 </html>

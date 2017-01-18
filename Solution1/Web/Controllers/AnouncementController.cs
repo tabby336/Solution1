@@ -17,12 +17,7 @@ namespace Web.Controllers
         public IActionResult Index()
         {
             var anouncements = _anouncementService.GetAllAnouncements();
-            var anouncementViewModel = new AnouncementViewModel
-            {
-                Anouncements = anouncements
-            };
-
-            return View(anouncementViewModel);
+            return Ok(anouncements);
         }
         [HttpGet]
         [Route("Anouncement/GetAllByCourse")]

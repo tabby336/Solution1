@@ -5,6 +5,6 @@ namespace DataAccess.Repositories.Interfaces
 {
     public interface IPlayerRepository : IRepository<Player>
     {
-        Player GetByIdWithCourses(Guid id);
+        Player GetByIdWithCourses(Guid id, bool includeModules = false);
     }
 }

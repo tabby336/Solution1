@@ -6,28 +6,28 @@
 <table class="table table-condensed table-hover">
     <tr>
         <th>
-            Homework ID
+            Course
         </th>
         <th>
-            Has Comment
+            Module
         </th>
         <th>
             Value
         </th>
     </tr>
     @{
-        var marks = ViewBag.Marks as IEnumerable<Mark>;
+        var marks = ViewBag.Marks as List<Dictionary<string,string>>;
         foreach (var mark in marks)
         {
             <tr>
                 <td>
-                    @mark.HomeworkId
+                    <p class="login-form-text" style="font-size:100%;"> @mark["CourseName"] </p>
                 </td>
                 <td>
-                    @mark.HasComment
+                    <p class="login-form-text" style="font-size:100%;"> @mark["ModuleName"] </p>
                 </td>
                 <td>
-                    @mark.Value
+                    <p class="login-form-text" style="font-size:100%;"> @mark["Value"] </p>
                 </td>
             </tr>
         }

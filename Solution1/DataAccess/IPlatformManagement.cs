@@ -12,6 +12,7 @@ namespace DataAccess
     {
         DbSet<Player> Players { get; set; }
         DbSet<Course> Courses { get; set; }
+        DbSet<PlayerCourse> PlayerCourses { get; set; }
         DbSet<Module> Modules { get; set; }
         DbSet<Mark> Marks { get; set; }
         DbSet<Homework> Homeworks { get; set; }

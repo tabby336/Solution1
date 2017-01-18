@@ -10,6 +10,14 @@
 <!--CARD WIDGETS START-->
 <div id="card-widgets">
     <div class="row" id="coursesContainer">
+        
+        @if (Model.Courses.Count == 0)
+        {
+            <div class="col s12 center-align">
+                <img alt="Nothing here to display." src="~/images/nothinghere.gif" style="width: 100%;" />
+            </div>
+        }
+
         @for (var i = 0; i < Model.Courses.Count(); i++)
         {
             var course = Model.Courses[i];
@@ -29,9 +37,12 @@
                                     <i class="mdi-communication-live-help activator"></i>
                                 </a>
                             </li>
-                            <li>
-                                <a href="@Url.Action("Partikip", "Course", new { courseId = course.Id })" class="btn waves-effect teal darken-2 white-text flow-text" data-position="top" data-tooltip="Follow this course">Partikip</a>
-                            </li>
+                            @if (User.IsInRole("Student") && !Model.MyCourses.Any(c => c.Id == course.Id))
+                            {
+                                <li>
+                                    <a href="@Url.Action("Partikip", "Course", new {courseId = course.Id})" class="btn waves-effect cyan white-text flow-text  tooltipped" data-position="top" data-tooltip="Follow this course" style="font-size: 12px;"><strong>Partikip</strong></a>
+                                </li>
+                            }
                         </ul>
                         <!-- Card info text -->
                         <div class="card-content">
@@ -50,41 +61,11 @@
                                 @for (var j = 0; j < course.Modules.Count; j++)
                                 {
                                     var module = modules[j];
-                                    <!-- Finished course -->
-                                    if(false)
-                                    {
-                                        <div class="fixed-action-btn" style="position: relative; display: inline-block; bottom: 0px;">
-                                            <a class="btn-floating green unlocked">
-                                                <i class="mdi-action-done"></i>
-                                            </a>
-                                            <ul class="center-align" style="bottom: 70%; margin-left: -1px;">
-                                                <li>
-                                                    <a lessonId="@module.Id" class="btn-floating tooltipped lessonLoader" data-position="right" data-tooltip="Read lesson">
-                                                        <i class="material-icons green">attach_file</i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    }
-                                    <!-- Current course -->
-                                    if (true)
-                                    {
-                                        <div class="fixed-action-btn" style="position: relative; display: inline-block; bottom: 0px;">
-                                            <a href="@Url.Action("Index", "Module", new { moduleId = module.Id})" class="btn-floating tooltipped red darken-2 animated unlocked" data-position="top" data-tooltip="@module.Title">
-                                                #@(j + 1)
-                                            </a>
-                                        </div>
-                                    }
-                                    <!-- Future locked course -->
-                                    if (false)
-                                    {
-                                        <div class="fixed-action-btn locked" style="position: relative; display: inline-block; bottom: 0px;">
-                                            <a class="btn-floating tooltipped grey darken-1" data-position="top" data-tooltip="Locked">
-                                                <i class="mdi-action-lock"></i>
-                                            </a>
-                                        </div>
-                                    }
-
+                                    <div class="fixed-action-btn" style="position: relative; display: inline-block; bottom: 0px;">
+                                        <a href="@Url.Action("Index", "Module", new {moduleId = module.Id})" class="btn-floating tooltipped red darken-2 animated unlocked" data-position="top" data-tooltip="@module.Title">
+                                            #@(j + 1)
+                                        </a>
+                                    </div>
                                 }
                             </div>
                             <!-- Course title and author -->
@@ -95,7 +76,7 @@
                             </div>
                             <div class="row col s12">
                                 By
-                                <a href="#">@course.Author</a>
+                                <a href = "@Url.Action("GetCoursesByAuthor", "Course", new { author = course.Author})">@course.Author</a>
                             </div>
                         </div>
                         <!-- Course short description -->

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Business.Services.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.CourseViewModels;
 
@@ -28,15 +26,28 @@ namespace Web.Controllers
         public IActionResult GetAll()
         {
             var courses = _courseService.GetAllCourses(true);
-            var cvm = new CourseViewModel() {Courses = courses.ToList()};
+            var myId = this.GetLoggedInUserId();
+            var myCourses = _courseService.GetCoursesForPlayer(myId);
+            var cvm = new CourseViewModel() {Courses = courses.ToList(), MyCourses = myCourses.ToList()};
             return View("Courses",  cvm);
         }
 
         [HttpGet]
         public IActionResult GetMine()
         {
-            var courses = _courseService.GetAllCourses(true);
-            var cvm = new CourseViewModel() { Courses = courses.ToList() };
+            var myId = this.GetLoggedInUserId();
+            var courses = _courseService.GetCoursesForPlayer(myId);
+            var enumerable = courses as IList<Course> ?? courses.ToList();
+            var cvm = new CourseViewModel() { Courses = enumerable.ToList(), MyCourses = enumerable.ToList()};
+            return View("Courses", cvm);
+        }
+
+        [HttpGet]
+        public IActionResult GetCoursesByAuthor(string author)
+        {
+            var courses = _courseService.GetCoursesForAuthor(author);
+            var enumerable = courses as IList<Course> ?? courses.ToList();
+            var cvm = new CourseViewModel() { Courses = enumerable.ToList(), MyCourses = enumerable.ToList()};
             return View("Courses", cvm);
         }
 
@@ -44,7 +55,7 @@ namespace Web.Controllers
         [Authorize(Roles = "Professor")]
         public IActionResult CreateCourse()
         {
-            return View("CreateCourse");
+            return View("CreateCourse", new CreateCourseViewModel());
         }
 
         [HttpPost]
@@ -63,7 +74,7 @@ namespace Web.Controllers
 
             if (course != null) //success
             {
-                return RedirectToAction("GetAll");
+                return RedirectToAction("GetMine");
             }
             
             ModelState.AddModelError(string.Empty, "Cannot create Course. Please try again later.");

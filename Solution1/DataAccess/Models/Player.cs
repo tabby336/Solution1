@@ -6,11 +6,6 @@ namespace DataAccess.Models
 {
     public class Player: ModelBase
     {
-        public Player()
-        {
-            this.Courses = new List<Course>();
-        }
-
         [Required]
         [MinLength(2)]
         public string CollegeId { get; set; }
@@ -33,6 +28,6 @@ namespace DataAccess.Models
         [Required]
         public string PhotoUrl { get; set; } = "defaultPlayer.png";
 
-        public virtual ICollection<Course> Courses { get; set; }
+        public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }

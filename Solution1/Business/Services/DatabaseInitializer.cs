@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using DataAccess;
 using DataAccess.Models;
-using DataAccess.Repositories;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -56,20 +55,23 @@ namespace Business.Services
             await context.SaveChangesAsync();
 
             // insert sample data here
-            InsertUserSamples(serviceProvider);
+            InsertAdminSample(serviceProvider);
+            await InsertStudentSample(serviceProvider);
+            await InsertProfessorSample(serviceProvider);
             InsertCourseSamples(serviceProvider);
+            InsertMarkSamples(serviceProvider);
             InsertSampleAnouncements(serviceProvider);
             context.Dispose();
         }
 
-        public static void InsertUserSamples(IServiceProvider serviceProvider)
+        public static void InsertAdminSample(IServiceProvider serviceProvider)
         {
 
             try
             {
                 var playerRepository = serviceProvider.GetService(typeof(IPlayerRepository)) as IPlayerRepository;
-                
-                //add player
+
+                //add admin player 
                 var p = new Player()
                 {
                     Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee")
@@ -85,18 +87,102 @@ namespace Business.Services
                     Semester = 5
                 };
                 playerRepository.Create(p);
-
             }
             catch
             {
             }
         }
 
+        public static async Task InsertStudentSample(IServiceProvider serviceProvider)
+        {
+
+            try
+            {
+                var playerRepository = serviceProvider.GetService(typeof(IPlayerRepository)) as IPlayerRepository;
+                var userManager = serviceProvider.GetService(typeof(UserManager<ApplicationUser>))
+                    as UserManager<ApplicationUser>;
+
+                //add student
+                var student = new ApplicationUser
+                {
+                    Email = "student@fii.com",
+                    UserName = "student",
+                    Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
+                };
+
+                await userManager.CreateAsync(student, "Student0.");
+                await userManager.AddToRoleAsync(student, "Student");
+
+                var s = new Player()
+                {
+                    Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
+                    ,
+                    CollegeId = "6968"
+                    ,
+                    DateOfBirth = DateTime.Parse("09/09/1992")
+                    ,
+                    FirstName = "Student"
+                    ,
+                    LastName = "Valoros"
+                    ,
+                    Semester = 5
+                };
+                playerRepository.Create(s);
+            }
+            catch
+            {
+            }
+        }
+
+        public static async Task InsertProfessorSample(IServiceProvider serviceProvider)
+        {
+
+            try
+            {
+                var playerRepository = serviceProvider.GetService(typeof(IPlayerRepository)) as IPlayerRepository;
+                var userManager = serviceProvider.GetService(typeof(UserManager<ApplicationUser>))
+                    as UserManager<ApplicationUser>;
+
+                //add professor
+                var professor = new ApplicationUser
+                {
+                    Email = "prof@fii.com",
+                    UserName = "profu",
+                    Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb")
+                };
+
+                await userManager.CreateAsync(professor, "Professor0.");
+                await userManager.AddToRoleAsync(professor, "Professor");
+
+                var t = new Player()
+                {
+                    Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb")
+                    ,
+                    CollegeId = "6967"
+                    ,
+                    DateOfBirth = DateTime.Parse("09/09/1982")
+                    ,
+                    FirstName = "Professor"
+                    ,
+                    LastName = "Valuable"
+                    ,
+                    Semester = 5
+                };
+                playerRepository.Create(t);
+            }
+            catch
+            {
+            }
+        }
+
+
         public static void InsertCourseSamples(IServiceProvider serviceProvider)
         {
             try
             {
                 var courseRepository = serviceProvider.GetService(typeof(ICourseRepository)) as ICourseRepository;
+                var playerCourseRepository =
+                    serviceProvider.GetService(typeof(IPlayerCourseRepository)) as IPlayerCourseRepository;
 
                 //add course
                 var c = new Course()
@@ -114,30 +200,77 @@ namespace Business.Services
                 //add modules to course
                 var module1 = new Module()
                 {
-                    //CourseId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee")
-                    //,
+                    Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee")
+                    ,
                     Description = "The first ever module of the application."
                     ,
-                    Title = "No title provided."
+                    Title = "Awesome First Module."
                 };
                 var module2 = new Module()
                 {
-                    //CourseId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee")
-                    //,
+                    Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
+                    ,
                     Description = "The second ever module of the application."
                     ,
-                    Title = "No title provided."
+                    Title = "Awesome second module."
                 };
                 c.Modules.Add(module1);
                 c.Modules.Add(module2);
 
                 courseRepository.Create(c);
+
+
+                // assign course to teacher
+                var playerCourse = new PlayerCourse()
+                {
+                    PlayerId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb"),
+                    CourseId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee")
+                };
+                playerCourseRepository.Create(playerCourse);
             }
-            catch (Exception)
+            catch
             {
             }   
         }
 
+        public static void InsertMarkSamples(IServiceProvider serviceProvider)
+        {
+            try
+            {
+                var markRepository = serviceProvider.GetService(typeof(IMarkRepository)) as IMarkRepository;
+                var mark1 = new Mark()
+                {
+                    HomeworkId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee"),
+                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef"),
+                    CreatorId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb"),
+                    Description = "la",
+                    HasComment = false,
+                    HasContestation = false,
+                    Id = Guid.Parse("abde8051-f56d-4187-9726-8694c9ca6aef"),
+                    Timestamp = DateTime.Now,
+                    Value = 10
+                };
+
+                var mark2 = new Mark()
+                {
+                    HomeworkId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef"),
+                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef"),
+                    CreatorId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb"),
+                    Description = "la",
+                    HasComment = false,
+                    HasContestation = false,
+                    Id = Guid.Parse("aade8051-f56d-4187-9726-8694c9ca6aef"),
+                    Timestamp = DateTime.Now,
+                    Value = 7
+                };
+                markRepository.Create(mark1);
+                markRepository.Create(mark2);
+            }
+            catch
+            {
+            }
+        }
+            
         public static void InsertSampleAnouncements(IServiceProvider serviceProvider)
         {
             var anouncementRepository = serviceProvider.GetService(typeof(IAnouncementRepository)) as IAnouncementRepository;

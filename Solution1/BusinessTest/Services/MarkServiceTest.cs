@@ -54,8 +54,10 @@ namespace BusinessTest
         public void When_FilterMarksByUserIsCalledWithAnUserIdThatHasAMark_Then_ReturnItsMarks() {
             List<Mark> marks = CreateSUT();
             var mockDataAccess = new Mock<IMarkRepository>();
+            var mockCourseRepository = new Mock<ICourseRepository>();
+            var mockModuleRepository = new Mock<IModuleRepository>();
             mockDataAccess.Setup(m => m.GetMarksByUserId(Guid.Parse("89e4dcb2-3f25-4f7c-bb3f-b2a96ae4b6e6"))).Returns(marks);
-            var productBusiness = new MarkService(mockDataAccess.Object);
+            var productBusiness = new MarkService(mockDataAccess.Object, mockCourseRepository.Object, mockModuleRepository.Object);
             productBusiness.FilterMarksByUser("89e4dcb2-3f25-4f7c-bb3f-b2a96ae4b6e6").Should().BeEquivalentTo(marks);
         }
 
@@ -63,8 +65,10 @@ namespace BusinessTest
         public void When_FilterMarksByUserIsCalledWithAnUserIdThatDoesNotHasAMark_Then_ReturnNull()
         {
             var mockDataAccess = new Mock<IMarkRepository>();
+            var mockCourseRepository = new Mock<ICourseRepository>();
+            var mockModuleRepository = new Mock<IModuleRepository>();
             mockDataAccess.Setup(m => m.GetMarksByUserId(Guid.Parse("89e4dcb2-3f25-4f7c-bb3f-b2a96ae4b6e6"))).Returns((List<Mark>)null);
-            var productBusiness = new MarkService(mockDataAccess.Object);
+            var productBusiness = new MarkService(mockDataAccess.Object, mockCourseRepository.Object, mockModuleRepository.Object);
             productBusiness.FilterMarksByUser("89e4dcb2-3f25-4f7c-bb3f-b2a96ae4b6e6").Should().Equal(null);
         }
 
@@ -72,7 +76,9 @@ namespace BusinessTest
         public void When_FilterMarksByUserIsCalledWithANullId_Then_ReturnNull()
         {
             var mockDataAccess = new Mock<IMarkRepository>();
-            var productBusiness = new MarkService(mockDataAccess.Object);
+            var mockCourseRepository = new Mock<ICourseRepository>();
+            var mockModuleRepository = new Mock<IModuleRepository>();
+            var productBusiness = new MarkService(mockDataAccess.Object, mockCourseRepository.Object, mockModuleRepository.Object);
             productBusiness.FilterMarksByUser(null).Should().Equal(null);
         }
 
@@ -80,7 +86,9 @@ namespace BusinessTest
         public void When_FilterMarksByUserIsCalledWithAnInvalidId_Then_ReturnNull()
         {
             var mockDataAccess = new Mock<IMarkRepository>();
-            var productBusiness = new MarkService(mockDataAccess.Object);
+            var mockCourseRepository = new Mock<ICourseRepository>();
+            var mockModuleRepository = new Mock<IModuleRepository>();
+            var productBusiness = new MarkService(mockDataAccess.Object, mockCourseRepository.Object, mockModuleRepository.Object);
             productBusiness.FilterMarksByUser("test").Should().Equal(null);
         }
 

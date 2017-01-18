@@ -16,11 +16,11 @@ namespace Business.Services
             this._playerRepository = playerRepository;
         }
 
-        public Player GetPlayerData(string id, bool includeCourses = false)
+        public Player GetPlayerData(string id, bool includeCourses = false, bool includeModules =  false)
         {
             Guid playerId;
             Guid.TryParse(id, out playerId);
-            return includeCourses? _playerRepository.GetByIdWithCourses(playerId): _playerRepository.GetById(playerId);
+            return includeCourses? _playerRepository.GetByIdWithCourses(playerId, includeModules): _playerRepository.GetById(playerId);
         }
 
         public string GetImagePathForPlayerId(string id)
