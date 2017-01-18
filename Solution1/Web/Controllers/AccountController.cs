@@ -69,7 +69,7 @@ namespace Web.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, isPersistent: false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
@@ -78,7 +78,7 @@ namespace Web.Controllers
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl });
                 }
                 if (result.IsLockedOut)
                 {
@@ -116,6 +116,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.UserRole = new SelectList(_roleManager.Roles.ToList(), "Name", "Name", "Student");
             if (ModelState.IsValid)
             {
                 // Username generation logic - should move it somewhere else?
@@ -147,7 +148,10 @@ namespace Web.Controllers
                     _playerRepo.Create(player);
                     
                     _logger.LogInformation(3, "Admin created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+
+                    ModelState.Clear();
+                    ViewData["Success"] = true;
+                    return View();
                 }
                 AddErrors(result);
             }

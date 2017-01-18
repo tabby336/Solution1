@@ -124,8 +124,7 @@ namespace Business.Services
             {
                 throw new Exception("Cannot subscripe to the course.");
             }
-
-            return true;
+            
         }
 
         public void UpdateCourse(Course course)

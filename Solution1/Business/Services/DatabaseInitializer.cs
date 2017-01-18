@@ -43,7 +43,7 @@ namespace Business.Services
             var userManager = serviceProvider.GetService(typeof(UserManager<ApplicationUser>))
                 as UserManager<ApplicationUser>;
 
-            var user = userManager.FindByEmailAsync(AdminEmail).Result;
+            var user = userManager.FindByIdAsync(admin.Id.ToString()).Result;
 
             if (user == null)
             {
