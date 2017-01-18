@@ -1,8 +1,14 @@
 ﻿var host = "http://" + $("#hostName").val();
-var anouncementGetUrl = host + "/Anouncement";
-$("#colapseHeader").click(function() {
+var getAnouncements = function ()
+{
     $.get(anouncementGetUrl,
     function (data) {
         $("#anouncements").html(data);
     });
+}
+
+getAnouncements();
+var anouncementGetUrl = host + "/Anouncement";
+$("#colapseHeader").click(function() {
+    getAnouncements();
 });
