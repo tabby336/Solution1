@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http.Extensions
+<!DOCTYPE html>
 <html lang="en">
 
 <!--================================================================================
@@ -53,6 +54,7 @@ Author URL: https://github.com/tabby336/Solution1
     </div>
     <!-- End Page Loading -->
 
+    <input type="hidden" id="hostName" value="@Url.ActionContext.HttpContext.Request.Host.Host:@Url.ActionContext.HttpContext.Request.Host.Port" />
     @RenderBody()
 
 <!-- SCRIPTS -->
