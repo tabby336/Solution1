@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using System.Net.Sockets;
+using System.IO;
 using System.Text;
 using Business.Services.Interfaces;
 
@@ -8,22 +8,18 @@ namespace Business.Services
 {
     public class MossOptionService : IMossOptionService
     {
-        public void SendOption(string option, string value, NetworkStream stream)
+        public void SendOption(string option, string value, Stream stream)
         {
-            try
+            if (option == null)
             {
-                var package = Encoding.UTF8.GetBytes(string.Format("{0} {1}\n", option, value));
-                var size = package.GetLength(0);
-                stream.Write(package, 0, size);
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+                throw new ArgumentNullException();
+            }         
+            var package = Encoding.UTF8.GetBytes(string.Format("{0} {1}\n", option, value));
+            stream.Write(package, 0, package.Length);
         }
 
         public void SendOptions(long userId, bool isDirectoryMode, bool isBetaRequest, int maxMatches,
-            int numberOfResultsToShow, NetworkStream stream)
+            int numberOfResultsToShow, Stream stream)
         {
             const string optionsFormatString = "G";
             SendOption(

@@ -32,7 +32,6 @@ namespace Web.Controllers
             {
                 var root = Directory.GetCurrentDirectory();
                 root = Path.Combine(root, "Data", "homeworks", mid);
-                //make connection to Moss
                 
                 var ipe = connectionService.GetEndPoint("moss.stanford.edu", 7690);
                 var socket = new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
