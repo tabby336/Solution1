@@ -76,7 +76,7 @@
                             </div>
                             <div class="row col s12">
                                 By
-                                <a href="http://localhost:57689/Course/GetCoursesByAuthor?author=@course.Author">@course.Author</a>
+                                <a href = "@Url.Action("GetCoursesByAuthor", "Course", new { author = course.Author})">@course.Author</a>
                             </div>
                         </div>
                         <!-- Course short description -->

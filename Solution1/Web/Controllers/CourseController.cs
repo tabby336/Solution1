@@ -47,8 +47,8 @@ namespace Web.Controllers
         {
             var courses = _courseService.GetCoursesForAuthor(author);
             var enumerable = courses as IList<Course> ?? courses.ToList();
-            var cvm = new CourseViewModel() { Courses = enumerable.ToList() };
-            return View("AuthorCourses", cvm);
+            var cvm = new CourseViewModel() { Courses = enumerable.ToList(), MyCourses = enumerable.ToList()};
+            return View("Courses", cvm);
         }
 
         [HttpGet]
