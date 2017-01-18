@@ -47,7 +47,10 @@ namespace Web
             services.AddDbContext<PlatformManagement>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options => 
+            {
+                options.Cookies.ApplicationCookie.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Error/AccessDenied");
+            })
                 .AddEntityFrameworkStores<PlatformManagement, Guid>()
                 .AddDefaultTokenProviders();
 
@@ -98,7 +101,6 @@ namespace Web
             app.UseStaticFiles();
 
             app.UseIdentity();
-
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 

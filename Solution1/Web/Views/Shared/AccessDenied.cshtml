@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_HomeLayout";
+}
+
+<div class="row center">
+
+    <div class="row">
+        <div class="col s12">
+            <img src="~/images/icon/logo.png" alt="" class="circle responsive-img valign profile-image-login">
+            <p class="center login-form-text">Error</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <h2>Access Denied.</h2>
+            <h4>You do not have the required credentials to access this.</h4>
+            <h6>Please log off and then log in with an acredited user.</h6>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <a class="btn waves-effect waves-light col s12 red darken-2" href="@Url.Action("LogOff", "Account")">Log off</a>
+        </div>
+    </div>
+</div>
