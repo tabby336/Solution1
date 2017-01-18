@@ -9,5 +9,6 @@ namespace DataAccess.Repositories.Interfaces
         IEnumerable<Course> GetAllWithModules();
         IEnumerable<string> GetCourseNames();
         IEnumerable<Module> GetModulesForCourse(Guid courseId);
+        IEnumerable<Course> GetCoursesByAuthor(string authorName);
     }
 }

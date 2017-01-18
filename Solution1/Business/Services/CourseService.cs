@@ -36,7 +36,13 @@ namespace Business.Services
             var courses = _playerService.GetPlayerData(playerId, true, true).Courses;
             return courses;
         }
-        
+
+        public IEnumerable<Course> GetCoursesForAuthor(string authorName)
+        {
+            var courses = _courseRepository.GetCoursesByAuthor(authorName);
+            return courses;
+        }
+
         public Course CreateCourse(string userid, string title, string description, string hashtag, string datalink, IList<IFormFile> files)
         {
             try
@@ -150,6 +156,8 @@ namespace Business.Services
         {
             _courseRepository.Delete(course);
         }
+
+     
     }
 }
 

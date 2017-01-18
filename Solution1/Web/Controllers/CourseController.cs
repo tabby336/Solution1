@@ -43,6 +43,15 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult GetCoursesByAuthor(string author)
+        {
+            var courses = _courseService.GetCoursesForAuthor(author);
+            var enumerable = courses as IList<Course> ?? courses.ToList();
+            var cvm = new CourseViewModel() { Courses = enumerable.ToList() };
+            return View("AuthorCourses", cvm);
+        }
+
+        [HttpGet]
         [Authorize(Roles = "Professor")]
         public IActionResult CreateCourse()
         {

@@ -8,5 +8,6 @@ namespace Web.Models.CourseViewModels
     {
         public List<Course> Courses { get; set; }
         public List<Course> MyCourses { get; set; }
+       
     }
 }
