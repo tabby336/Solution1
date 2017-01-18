@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DataAccess.Models;
 
 namespace DataAccess.Repositories.Interfaces
@@ -7,5 +8,6 @@ namespace DataAccess.Repositories.Interfaces
     {
         IEnumerable<Course> GetAllWithModules();
         IEnumerable<string> GetCourseNames();
+        IEnumerable<Module> GetModulesForCourse(Guid courseId);
     }
 }

@@ -13,6 +13,7 @@ namespace DataAccess
 
         public DbSet<Player> Players { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<PlayerCourse> PlayerCourses { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Mark> Marks { get; set; }
         public DbSet<Homework> Homeworks { get; set; }
@@ -32,6 +33,7 @@ namespace DataAccess
             builder.HasPostgresExtension("uuid-ossp");
 
             MarkSetUp(builder);
+            builder.Entity<PlayerCourse>().HasKey(x => new {x.Id, x.PlayerId, x.CourseId});
 
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.

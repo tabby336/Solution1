@@ -31,7 +31,7 @@ namespace Business.Services
                     return marks.ToList();
                 }
                 return null;
-            } catch(Exception e)
+            } catch
             {
                 return null;
             }
@@ -80,7 +80,7 @@ namespace Business.Services
                 Mark m = _markRepository.Create(mark);
                 return (m == mark);
             }
-            catch(DbUpdateException e)
+            catch(DbUpdateException)
             {
                 // If already exists, update
                 _markRepository.Update(mark);

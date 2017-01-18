@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DataAccess.Models;
 using DataAccess.Repositories.Interfaces;
@@ -22,6 +23,13 @@ namespace DataAccess.Repositories
         public IEnumerable<string> GetCourseNames()
         {
             return _platformManagement.Courses.Select(x => x.Title).ToList();
-        } 
+        }
+
+        public IEnumerable<Module> GetModulesForCourse(Guid courseId)
+        {
+            var course = _platformManagement.Courses.Where(c => c.Id == courseId).Include(c => c.Modules).FirstOrDefault();
+            if(course == null) return new List<Module>();
+            return course.Modules;
+        }
     }
 }

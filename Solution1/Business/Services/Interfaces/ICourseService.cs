@@ -7,7 +7,7 @@ namespace Business.Services.Interfaces
     public interface ICourseService
     {
         IEnumerable<Course> GetAllCourses(bool includeModules = false);
-        IEnumerable<string> GetAllCourseNames();
+        IEnumerable<Course> GetCoursesForPlayer(string playerId, bool includeModules = false);
         Course CreateCourse(string userid, string title, string description, string hashtag, string datalink, IList<IFormFile> files);
         string GetImagePathForCourseId(string id);
         void UpdateCourse(Course course);

@@ -57,14 +57,9 @@
 
                 }
 
-                @if (User.IsInRole("Professor"))
+                @if (User.IsInRole("Professor") || User.IsInRole("Student"))
                 {
                     await Html.RenderPartialAsync("../Home/LeftMenu");
-                }
-
-                @if (User.IsInRole("Student"))
-                {
-                    
                 }
                 
                 @{ await Html.RenderPartialAsync("../Home/Donate"); }

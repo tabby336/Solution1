@@ -63,6 +63,7 @@ namespace Web
             services.AddTransient<IMarkService, MarkService>();
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<IPlayerCourseRepository, PlayerCourseRepository>();
             services.AddTransient<IModuleRepository, ModuleRepository>();
             services.AddTransient<IModuleService, ModuleService>();
             services.AddTransient<IAnouncementRepository, AnouncementRepository>();
