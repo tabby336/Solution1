@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using DataAccess;
 using DataAccess.Models;
@@ -60,6 +61,7 @@ namespace Business.Services
             await InsertProfessorSample(serviceProvider);
             InsertCourseSamples(serviceProvider);
             InsertMarkSamples(serviceProvider);
+            InsertHomeworkSamples(serviceProvider);
             InsertSampleAnouncements(serviceProvider);
             context.Dispose();
         }
@@ -233,6 +235,51 @@ namespace Business.Services
             }   
         }
 
+        public static void InsertHomeworkSamples(IServiceProvider serviceProvider)
+        {
+            try
+            {
+                string root = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, 
+                                                "Web", "Data", "homeworks");
+                var homeworkRepository = serviceProvider.GetService(typeof(IHomeworkRepository)) as IHomeworkRepository;
+                var hw1 = new Homework()
+                {
+                    ModuleId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee")
+                    ,
+                    Observations = ""
+                    ,
+                    OwesMeMoney = false
+                    ,
+                    Timestamp = DateTime.Now 
+                    ,
+                    Url = Path.Combine(root, "bade8051-f56d-4187-9726-8694c9ca6aee",
+                                "bade8051-f56d-4187-9726-8694c9ca6aef",  "bex3.c")
+                    ,
+                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
+                };
+                var hw2 = new Homework()
+                {
+                    ModuleId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
+                    ,
+                    Observations = ""
+                    ,
+                    OwesMeMoney = false
+                    ,
+                    Timestamp = DateTime.Now
+                    ,
+                    Url = Path.Combine(root, "bade8051-f56d-4187-9726-8694c9ca6aef",
+                                "bade8051-f56d-4187-9726-8694c9ca6aef", "fex3.c")
+                    ,
+                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
+                };
+                homeworkRepository.Create(hw1);
+                homeworkRepository.Create(hw2);
+            }
+            catch
+            {
+            }
+        }
+
         public static void InsertMarkSamples(IServiceProvider serviceProvider)
         {
             try
@@ -240,27 +287,43 @@ namespace Business.Services
                 var markRepository = serviceProvider.GetService(typeof(IMarkRepository)) as IMarkRepository;
                 var mark1 = new Mark()
                 {
-                    HomeworkId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee"),
-                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef"),
-                    CreatorId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb"),
-                    Description = "la",
-                    HasComment = false,
-                    HasContestation = false,
-                    Id = Guid.Parse("abde8051-f56d-4187-9726-8694c9ca6aef"),
-                    Timestamp = DateTime.Now,
+                    HomeworkId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee")
+                    ,
+                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
+                    ,
+                    CreatorId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb")
+                    ,
+                    Description = ""
+                    ,
+                    HasComment = false
+                    ,
+                    HasContestation = false
+                    ,
+                    Id = Guid.Parse("abde8051-f56d-4187-9726-8694c9ca6aef")
+                    ,
+                    Timestamp = DateTime.Now
+                    ,
                     Value = 10
                 };
 
                 var mark2 = new Mark()
                 {
-                    HomeworkId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef"),
-                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef"),
-                    CreatorId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb"),
-                    Description = "la",
-                    HasComment = false,
-                    HasContestation = false,
-                    Id = Guid.Parse("aade8051-f56d-4187-9726-8694c9ca6aef"),
-                    Timestamp = DateTime.Now,
+                    HomeworkId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
+                    ,
+                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
+                    ,
+                    CreatorId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb")
+                    ,
+                    Description = "la"
+                    ,
+                    HasComment = false
+                    ,
+                    HasContestation = false
+                    ,
+                    Id = Guid.Parse("aade8051-f56d-4187-9726-8694c9ca6aef")
+                    ,
+                    Timestamp = DateTime.Now
+                    ,
                     Value = 7
                 };
                 markRepository.Create(mark1);

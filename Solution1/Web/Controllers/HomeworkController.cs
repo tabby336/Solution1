@@ -38,7 +38,7 @@ namespace Web.Controllers
             //Testing reasons, gets to be deleted
             if (moduleId == null)
             {
-                moduleId = "1f0b4daa-3a7e-4a94-a5de-9dcf707d9ab4";
+                moduleId = "bade8051-f56d-4187-9726-8694c9ca6aef";
             }
             return View("Upload", moduleId);
         }
@@ -86,7 +86,7 @@ namespace Web.Controllers
             //Testing reasons, gets to be deleted
             if (moduleId == null)
             {
-                moduleId = "1f0b4daa-3a7e-4a94-a5de-9dcf707d9ab4";
+                moduleId = "bade8051-f56d-4187-9726-8694c9ca6aef";
             }
             IEnumerable<Player> thatUploaded = _homeworkService.GetPlayersThatUploaded(moduleId);
             ViewBag.Players = thatUploaded;
