@@ -32,7 +32,31 @@
                 <div class="form-group">
                     <label asp-for="Language" class="col-md-2 control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="Language" class="form-control" value="c" />
+                           <select asp-for="Language">
+                                <option value="c">c</option>
+                                <option value="cc">c++</option>
+                                <option value="csharp">csharp</option>
+                                <option value="java">java</option>
+                                <option value="javascript">javascript</option>
+                                <option value="pascal">pascal</option>
+                                <option value="ada">ada</option>
+                                <option value="ml">ml</option>
+                                <option value="lisp">lisp</option>
+                                <option value="scheme">scheme</option>
+                                <option value="haskell">haskell</option>
+                                <option value="fortran">fortran</option>
+                                <option value="ascii">ascii</option>
+                                <option value="vhdl">vhdl</option>
+                                <option value="matlab">matlab</option>
+                                <option value="perl">perl</option>
+                                <option value="python">python</option>
+                                <option value="mips">mips</option>
+                                <option value="prolog">prolog</option>
+                                <option value="spice">spice</option>
+                                <option value="modula2">modula2</option>
+                                <option value="a8086">a8086</option>
+                                <option value="plsql">plsql</option>                                
+                            </select>
                         <span asp-validation-for="Language" class="text-danger"></span>
                     </div>
                 </div>
@@ -56,7 +80,7 @@
                         <input asp-for="IsDirectoryMode" class="form-control" />
                         <span asp-validation-for="IsDirectoryMode" class="text-danger"></span>
                     </div>
-                </div>
+                    </div>
                 <div class="form-group">
                     <label asp-for="IsBetaRequest" class="col-md-2 control-label"></label>
                     <div class="col-md-10">

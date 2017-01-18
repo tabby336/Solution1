@@ -1,4 +1,4 @@
-﻿namespace Business.MossService
+﻿namespace Business.Services
 {
     public enum Options
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Sockets;
 
-namespace Business.MossService.Interfaces
+namespace Business.Services.Interfaces
 {
     public interface IMossFileService
     {

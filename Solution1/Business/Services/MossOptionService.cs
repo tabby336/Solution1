@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.Net.Sockets;
 using System.Text;
-using Business.MossService.Interfaces;
+using Business.Services.Interfaces;
 
-namespace Business.MossService
+namespace Business.Services
 {
     public class MossOptionService : IMossOptionService
     {
