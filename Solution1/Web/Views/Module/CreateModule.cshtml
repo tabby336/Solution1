@@ -13,14 +13,35 @@
                         <a href="@Url.Action("GetAll", "Course")">Browse All</a>
                     </li>
                     <li>
-                        <a href="@Url.Action("GetMine", "Course")">Browse Mine</a>
-                    </li>
-                    <li>
                         <a href="@Url.Action("CreateCourse", "Course")">Create Course</a>
                     </li>
                     <li>
                         <a href="@Url.Action("CreateModule", "Module")">Create Module</a>
                     </li>
+                    <li>
+                        <a href="#">Browse Mine</a>
+                    </li>
+
+                    @*{% if data.courses.length > 0 %}
+                        {% for entry in data.courses %}
+                        <li class="no-padding">
+                            <ul class="collapsible collapsible-accordion">
+                                <li class="bold">
+                                    <a class="collapsible-header waves-effect waves-cyan">
+                                        {{ entry.course.title }}
+                                    </a>
+                                    <div class="collapsible-body">
+                                        <ul>
+                                            {% for round in entry.rounds %}
+                                            <li><a lessonId="{{ round.roundid }}" class="lessonLoader" style="color: black; cursor: pointer;">{{ round.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endfor %}
+                        {% endif %}*@
                 </ul>
             </div>
         </li>
@@ -46,6 +67,19 @@
                 <ul>
                     <li>
                         <a href="@Url.Action("Index", "Homework")">View Homework</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="bold">
+            <a class="collapsible-header waves-effect waves-cyan">
+                <i class="mdi-action-alarm"></i>
+                Anouncements
+            </a>
+            <div class="collapsible-body">
+                <ul>
+                    <li>
+                        <a href="@Url.Action("Index", "Anouncement")">View Anouncements</a>
                     </li>
                 </ul>
             </div>
