@@ -38,12 +38,11 @@
     </div>
 </header>
 <!-- END HEADER NAV -->
-
 <!-- START MAIN -->
 <div id="main">
     <!-- START WRAPPER -->
     <div class="wrapper">
-        
+
         <!-- START LEFT SIDEBAR NAV-->
         <aside id="left-sidebar-nav">
             <ul id="slide-out" class="side-nav fixed leftside-navigation">
@@ -51,7 +50,7 @@
                 @*@{ await Html.RenderPartialAsync("../Home/Profile"); }*@
                 <li id="profiledata" class="user-details cyan darken-2"></li>
 
-                @if(User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin"))
                 {
                     await Html.RenderPartialAsync("../Home/AdminSideMenu");
 
@@ -61,32 +60,42 @@
                 {
                     await Html.RenderPartialAsync("../Home/LeftMenu");
                 }
-                
+
                 @{ await Html.RenderPartialAsync("../Home/Donate"); }
-</ul>
+            </ul>
             <!-- Button displayed only on small screens (phones) -->
             <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="material-icons">toc</i></a>
         </aside>
         <!-- END LEFT SIDEBAR NAV-->
-
         <!-- START RIGHT SIDEBAR NAV-->
         <aside id="right-sidebar-nav">
             <ul id="chat-out" class="side-nav rightside-navigation" style="height: 100%;">
                 <li class="li-hover" style="height: 100%;">
                     <ul class="chat-collapsible" data-collapsible="expandable" style="height: 100%;">
                         <li style="height: 100%;">
-                            <div class="collapsible-header white-text active" style="background-color: #0097a7;"><i class="mdi-social-whatshot"></i>Be Social!
+                            <div id="colapseHeader"class="collapsible-header white-text active" style="background-color: #0097a7;">
+                                <i class="mdi-social-whatshot"></i>Be Social!
                             </div>
-                            <div class="collapsible-body recent-activity fullo" style="height: 100% !important;">
+                            <div id="anouncements" class="collapsible-body recent-activity fullo" style="height: 100% !important;">
 
-                                @*<div class="recent-activity-list chat-out-list row" style="height: 50%; padding-top: 5px;">
-                                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fthefunweb07%2F&tabs=timeline&width=300&height=350&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId=1706259366298551" width="300" style="height: 100%; overflow: scroll;" frameborder="0" allowTransparency="true"></iframe>
-                                </div>*@
+                               
+                                <div class="recent-activity-list chat-out-list row" style="padding-top: 5px;">
+                                    <div class="col s12 m12">
+                                        <div class="card  teal lighten-2">
+                                            <div class="card-content white-text">
+                                                <span class="card-title">Title</span>
+                                                <p>
+                                                    Text text text text
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <!-- Facebook Comments -->
                                 @*<div class="recent-activity-list chat-out-list row" style="height: 50%;">
-                                    <iframe src='./commsframe.html' frameborder='0' width='300' scrollable="no" style="height: 100%; overflow-x: hidden;"></iframe>
-                                </div>*@
+                                        <iframe src='./commsframe.html' frameborder='0' width='300' scrollable="no" style="height: 100%; overflow-x: hidden;"></iframe>
+                                    </div>*@
 
                             </div>
                         </li>
@@ -95,7 +104,6 @@
             </ul>
         </aside>
         <!-- END RIGHT SIDEBAR NAV-->
-
         <!-- START CONTENT -->
         <section id="content">
             <!--START CONTAINER-->
@@ -109,13 +117,12 @@
     <!-- END WRAPPER -->
 </div>
 <!-- END MAIN -->
-
 <!-- Floating button for entering the arena -->
 @*<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a id="arenaBTN" class="btn-floating btn-large red">
-        <i class="large mdi-hardware-security"></i>
-    </a>
-</div>*@
+        <a id="arenaBTN" class="btn-floating btn-large red">
+            <i class="large mdi-hardware-security"></i>
+        </a>
+    </div>*@
 
 <!-- The MODAL for course -->
 <div class="container" id="modalContainer">
@@ -133,7 +140,7 @@
             </div>
 
         </div>
-        
+
         <!-- Example modal with buttons -->
         <div class="modal-footer">
 
@@ -147,5 +154,6 @@
 @section Scripts {
     <script src="~/js/site.js"></script>
     <script src="~/js/player.js"></script>
+    <script src="~/js/anouncement.js"></script>
     @RenderSection("scripts", required: false)
 }

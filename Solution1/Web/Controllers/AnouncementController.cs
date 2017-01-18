@@ -21,8 +21,7 @@ namespace Web.Controllers
             {
                 Anouncements = anouncements
             };
-
-            return View(anouncementViewModel);
+            return PartialView(anouncementViewModel);
         }
         [HttpGet]
         [Route("Anouncement/GetAllByCourse")]
