@@ -35,7 +35,7 @@
                             <!-- Master course title and date added -->
                             <p class="row">
                                 <span class="left">
-                                    <b>@course.HashTag</b>
+                                    <b>#@course.HashTag</b>
                                 </span>
                                 <span class="right">
                                     @course.TimeStamp.ToString("g")
@@ -67,21 +67,9 @@
                                     if (true)
                                     {
                                         <div class="fixed-action-btn" style="position: relative; display: inline-block; bottom: 0px;">
-                                            <a class="btn-floating red darken-2 animated unlocked">
-                                                <i class="mdi-av-play-arrow"></i>
+                                            <a href="@Url.Action("Index", "Module", new { moduleId = module.Id})" class="btn-floating tooltipped red darken-2 animated unlocked" data-position="top" data-tooltip="@module.Title">
+                                                #@(j + 1)
                                             </a>
-                                            <ul class="center-align" style="bottom: 70%; margin-left: -1px;">
-                                                <li>
-                                                    <a lessonId="@module.Id" class="btn-floating tooltipped lessonLoader" data-position="right" data-tooltip="Read lesson">
-                                                        <i class="material-icons cyan darken-1">attach_file</i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a lessonId="@module.Id" class="btn-floating playable">
-                                                        <i class="material-icons red darken-1">query_builder</i>
-                                                    </a>
-                                                </li>
-                                            </ul>
                                         </div>
                                     }
                                     <!-- Future locked course -->
@@ -128,5 +116,7 @@
 </div>
 
 @section Scripts{
-    <script src="~/js/course.js"></script>
+    <script>
+        $('.tooltipped').tooltip({ delay: 50 });
+    </script>
 }

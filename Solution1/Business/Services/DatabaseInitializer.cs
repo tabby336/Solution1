@@ -143,11 +143,11 @@ namespace Business.Services
             var anouncementRepository = serviceProvider.GetService(typeof(IAnouncementRepository)) as IAnouncementRepository;
             var anouncement1 = new Anouncement
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee"),
                 CourseId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee"),
                 Date = DateTime.Now,
-                Text = "Cursul de ingineria programarii din data de 24.12.2017 va fi amanat!",
-                Title = "Amanare Curs!"
+                Text = "We announce you that during the day of 24.12.2017, the PI course will not take place! Have a nice evening.",
+                Title = "Course cancelled!"
             };
 
             try

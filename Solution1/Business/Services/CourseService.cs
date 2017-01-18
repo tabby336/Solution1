@@ -49,7 +49,12 @@ namespace Business.Services
                     TimeStamp = DateTime.Now
                 };
                 if (datalink != null) courseFromData.DataLink = datalink;
-                if (hashtag != null) courseFromData.HashTag = hashtag;
+                if (hashtag != null)
+                {
+                    if (hashtag.StartsWith("#") && hashtag.Length != 1)
+                        hashtag = hashtag.Substring(1);
+                    courseFromData.HashTag = hashtag;
+                }
                 
                 me.Courses.Add(courseFromData);
                 _playerService.UpdatePlayer(me);

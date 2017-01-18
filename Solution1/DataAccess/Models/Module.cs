@@ -10,7 +10,7 @@ namespace DataAccess.Models
         public virtual Course Course { get; set; }
 
         [Required]
-        [StringLength(256)]
+        [StringLength(50)]
         public string Title { get; set; }
 
         [Required]
@@ -18,7 +18,7 @@ namespace DataAccess.Models
         public string Description { get; set; }
 
         [StringLength(2048)]
-        public string UrlPdf { get; set; } = "#";
+        public string UrlPdf { get; set; } = "defaultModule.pdf";
 
         [Required]
         public bool HasHomework { get; set; } = true;

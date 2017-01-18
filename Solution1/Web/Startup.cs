@@ -61,6 +61,7 @@ namespace Web
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<ICourseService, CourseService>();
             services.AddTransient<IModuleRepository, ModuleRepository>();
+            services.AddTransient<IModuleService, ModuleService>();
             services.AddTransient<IAnouncementRepository, AnouncementRepository>();
             services.AddTransient<IAnouncementService, AnouncementService>();
             services.AddTransient<IHomeworkRepository, HomeworkRepository>();

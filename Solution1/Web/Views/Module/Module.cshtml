@@ -1,0 +1,115 @@
+﻿
+
+@model Web.Models.ModuleViewModels.ModuleViewModel
+
+@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Module " + "\"" + @Model.Module.Title + "\"";
+}
+
+<!-- START PROFILE HEADER : photo, username, level, experience, cookies, add friend button -->
+<div id="profile-page" class="section">
+    <!-- profile-page-header -->
+    <div id="profile-page-header" class="card">
+
+        <div class="card-image waves-effect waves-block waves-light" style="overflow: hidden;background: url('@Url.Content("~/images/cover.jpg")');background-size: cover;background-position: center;"></div>
+
+        <div class="card-content">
+
+            <div class="row">
+                <div class="col s5" style="margin-left: 130px;">
+                    <h4 class="card-title grey-text text-darken-4">@Model.Module.Title</h4>
+                    <p class="medium-small grey-text">
+                        /@(Model.Module.Course.Title)/Modules/
+                    </p>
+                </div>
+
+                <div class="col s2 hide-on-small-only center-align">
+                    <h4 class="card-title grey-text text-darken-4">33</h4>
+                    <p class="medium-small grey-text">students</p>
+                </div>
+                
+
+                @if (Model.Module.HasHomework)
+                {
+                    <div class="col s1 right">
+                        <a href="@Url.Action("Upload", "Homework", new {moduleId = Model.Module.Id})" class="btn-floating tooltipped waves-effect waves-light red darken-1 right" data-position="top" data-tooltip="Upload homework.">
+                            <i class="mdi-action-favorite"></i>
+                        </a>
+                    </div>
+                }
+                
+                @if (Model.Module.HasTest)
+                {
+                    <div class="col s1 right">
+                        <a href="#" class="btn-floating tooltipped waves-effect waves-light green darken-1 right" data-position="top" data-tooltip="Take test.">
+                            <i class="mdi-av-play-arrow"></i>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- END PROFILE HEADER -->
+
+    <!-- START PROFILE CONTENT -->
+    <div id="profile-page-content" class="row">
+
+        <!-- profile-page-sidebar-->
+        <div id="profile-page-sidebar" class="col s12">
+
+            <!-- START PROFILE GAMES / WINS / LOSES  -->
+            <div class="card white col s12">
+                <div class="row center-align" style="padding: 15px;">
+
+                    @Model.Module.Description
+
+                </div>
+            </div>
+            <!-- END PROFILE GAMES / WINS / LOSES -->
+
+            <!-- PROFILE UPDATE -->
+            <ul class="collection z-depth-1">
+                <li class="collection-item">
+                    <div class="row  center-align">
+                        <div class="grey-text darken-1">
+                            <i class="mdi-editor-border-color"></i>
+                            View the learning material
+                        </div>
+                    </div>
+                </li>
+                <li class="collection-item">
+                    <div>
+                        <a href="@Url.Action("GetPdf", "Module", new {id = Model.Module.Id})" class="btn-flat waves-effect waves-light col s12 m4 left white-text green darken-2 flow-text center-align" id="dload">Download</a>
+                    </div>
+
+                    <div>
+                        <canvas id="the-canvas" style="width: 100%; border:1px solid black"></canvas>
+                    </div>
+
+                </li>
+                <li class="collection-item center-align">
+                        <button class="btn-flat waves-effect waves-light col s12 m3 left grey white-text darken-2 flow-text" id="prev" style="margin-right: 2px; margin-bottom: 10px; margin-top: -3px;">Previous</button>
+                        <button class="btn-flat waves-effect waves-light col s12 m3 left grey white-text darken-2 flow-text" id="next" style="margin-right: 2px; margin-bottom: 10px; margin-top: -3px;">Next</button>
+                        &nbsp; &nbsp;
+                        <span class="col s12 m3 flow-text" style="margin-top: 7px; margin-bottom: 10px;">Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+                </li>
+            </ul>
+            <!-- END profile update -->
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/pdf.js"></script>
+    <script>
+        //
+        // If absolute URL from the remote server is provided, configure the CORS
+        // header on that server.
+        //
+        var url = '@Url.Action("GetPdf", "Module", new {id = Model.Module.Id})';
+        $('.tooltipped').tooltip({ delay: 50 });
+    </script>
+    <script src="~/js/module.js"></script>
+}
