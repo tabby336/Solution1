@@ -13,10 +13,12 @@ namespace Web.Controllers
 
         // GET: /Moss
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string moduleId = null)
         {
+            if(moduleId == null)
+                return BadRequest();
+            ViewBag.moduleId = moduleId;
             return View();
-            //  return "Not Implemented View";
         }
 
         [HttpPost]

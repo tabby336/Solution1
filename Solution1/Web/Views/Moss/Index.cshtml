@@ -12,8 +12,7 @@
 
 @{
     Layout = "_HomeLayout";
-    ViewData["Title"] = "Homework Upload";
-    string ModuleId = "1f0b4daa-3a7e-4a94-a5de-9dcf707d9ab0";
+    ViewData["Title"] = "Moss Controller";
 }
 
 
@@ -21,7 +20,7 @@
     <div class="col-md-8">
         <section>
             <form asp-controller="Moss" asp-action="SendRequest" method="post" class="form-horizontal">
-                <input type="hidden" name="mid" value=@ModuleId />
+                <input type="hidden" name="mid" value="@ViewBag.moduleId" />
 
                 <div class="form-group">
                     <label asp-for="UserId" class="col-md-2 control-label"></label>
