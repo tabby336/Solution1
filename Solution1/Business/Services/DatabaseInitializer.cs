@@ -59,6 +59,7 @@ namespace Business.Services
             await InsertStudentSample(serviceProvider);
             await InsertProfessorSample(serviceProvider);
             InsertCourseSamples(serviceProvider);
+            InsertMarkSamples(serviceProvider);
             InsertSampleAnouncements(serviceProvider);
             context.Dispose();
         }
@@ -232,6 +233,44 @@ namespace Business.Services
             }   
         }
 
+        public static void InsertMarkSamples(IServiceProvider serviceProvider)
+        {
+            try
+            {
+                var markRepository = serviceProvider.GetService(typeof(IMarkRepository)) as IMarkRepository;
+                var mark1 = new Mark()
+                {
+                    HomeworkId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee"),
+                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef"),
+                    CreatorId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb"),
+                    Description = "la",
+                    HasComment = false,
+                    HasContestation = false,
+                    Id = Guid.Parse("abde8051-f56d-4187-9726-8694c9ca6aef"),
+                    Timestamp = DateTime.Now,
+                    Value = 10
+                };
+
+                var mark2 = new Mark()
+                {
+                    HomeworkId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef"),
+                    UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef"),
+                    CreatorId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb"),
+                    Description = "la",
+                    HasComment = false,
+                    HasContestation = false,
+                    Id = Guid.Parse("aade8051-f56d-4187-9726-8694c9ca6aef"),
+                    Timestamp = DateTime.Now,
+                    Value = 7
+                };
+                markRepository.Create(mark1);
+                markRepository.Create(mark2);
+            }
+            catch
+            {
+            }
+        }
+            
         public static void InsertSampleAnouncements(IServiceProvider serviceProvider)
         {
             var anouncementRepository = serviceProvider.GetService(typeof(IAnouncementRepository)) as IAnouncementRepository;
