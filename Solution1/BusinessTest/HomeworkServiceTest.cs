@@ -50,6 +50,12 @@ namespace BusinessTest
             return mockSet;
         }
 
+        private Mock<DbSet<Player>> MockPlayerDbSet(IQueryable<Player> data)
+        {
+            var mockSet = new Mock<DbSet<Player>>();
+            return mockSet;   
+        }
+
         private IHomeworkRepository mockHomeworkRepositoryExpectedBehaviour()
         {
             var data = new List<Homework>().AsQueryable();
@@ -58,6 +64,14 @@ namespace BusinessTest
             addedHomework = new List<Homework>();
             mockHomeworkRepository.Setup(m => m.Create(It.IsAny<Homework>())).Callback<Homework>(s => addedHomework.Add(s)).Returns(new Homework());
             return mockHomeworkRepository.Object;
+        }
+
+        private IPlayerRepository mockPlayerRepositoryExpectedBehaviour()
+        {
+            var data = new List<Player>().AsQueryable();
+            var mockSet = MockPlayerDbSet(data);
+            Mock<IPlayerRepository> mockPlayerRepository = new Mock<IPlayerRepository>();
+            return mockPlayerRepository.Object;
         }
 
         private IHomeworkRepository mockHomeworkDataBaseInsertError()
@@ -74,7 +88,8 @@ namespace BusinessTest
         public void When_UploadIsCalled_Then_TheFilesAreSavedIntoDatabase()
         {
             var homeworkRepository = mockHomeworkRepositoryExpectedBehaviour();
-            HomeworkService homeworkService = new HomeworkService(homeworkRepository);
+            var playerRepository = mockPlayerRepositoryExpectedBehaviour();
+            HomeworkService homeworkService = new HomeworkService(homeworkRepository, playerRepository);
             List<string> expectedUrls = new List<string>(new string[] { "test1", "test2" });
             string messageToBePrinted = homeworkService.Upload(CreateUpload(expectedUrls), new List<IFormFile>(), "f3610178-09ca-497d-927f-3edff8ab2ea0", "f3610178-09ca-497d-927f-3edff8ab2ea1", "None");
             for (int i = 0; i < addedHomework.Count; ++i)
@@ -92,7 +107,8 @@ namespace BusinessTest
         public void When_UploadIsCalledAndAnErrorOccuredWhileSavingIntoDataBase_Then_AnErrorMessageIsReturned()
         {
             var homeworkRepository = mockHomeworkDataBaseInsertError();
-            HomeworkService homeworkService = new HomeworkService(homeworkRepository);
+            var playerRepository = mockPlayerRepositoryExpectedBehaviour();
+            HomeworkService homeworkService = new HomeworkService(homeworkRepository, playerRepository);
             List<string> expectedUrls = new List<string>(new string[] { "test" });
             string messageToBePrinted = homeworkService.Upload(CreateUpload(expectedUrls), new List<IFormFile>(), "f3610178-09ca-497d-927f-3edff8ab2ea0", "f3610178-09ca-497d-927f-3edff8ab2ea1", "None");
             addedHomework.Count.Should().Be(0);
@@ -104,7 +120,8 @@ namespace BusinessTest
         public void When_UploadIsCalledWithNullUploadHelper_Then_ArgumentNullExceptionIsThrown()
         {
             var homeworkRepository = mockHomeworkRepositoryExpectedBehaviour();
-            HomeworkService homeworkService = new HomeworkService(homeworkRepository);
+            var playerRepository = mockPlayerRepositoryExpectedBehaviour();
+            HomeworkService homeworkService = new HomeworkService(homeworkRepository, playerRepository);
             try
             {
                 homeworkService.Upload(null, new List<IFormFile>(), "f3610178-09ca-497d-927f-3edff8ab2ea0", "f3610178-09ca-497d-927f-3edff8ab2ea1", "None");
@@ -119,7 +136,8 @@ namespace BusinessTest
         public void When_UploadIsCalledWithNullList_Then_ArgumentNullExceptionIsThrown()
         {
             var homeworkRepository = mockHomeworkRepositoryExpectedBehaviour();
-            HomeworkService homeworkService = new HomeworkService(homeworkRepository);
+            var playerRepository = mockPlayerRepositoryExpectedBehaviour();
+            HomeworkService homeworkService = new HomeworkService(homeworkRepository, playerRepository);
             List<string> expectedUrls = new List<string>(new string[] { "test" });
             try
             {
@@ -135,7 +153,8 @@ namespace BusinessTest
         public void When_UploadIsCalledWithNullUid_Then_ArgumentNullExceptionIsThrown()
         {
             var homeworkRepository = mockHomeworkRepositoryExpectedBehaviour();
-            HomeworkService homeworkService = new HomeworkService(homeworkRepository);
+            var playerRepository = mockPlayerRepositoryExpectedBehaviour();
+            HomeworkService homeworkService = new HomeworkService(homeworkRepository, playerRepository);
             List<string> expectedUrls = new List<string>(new string[] { "test" });
             try
             {
@@ -151,7 +170,8 @@ namespace BusinessTest
         public void When_UploadIsCalledWithNullMid_Then_ArgumentNullExceptionIsThrown()
         {
             var homeworkRepository = mockHomeworkRepositoryExpectedBehaviour();
-            HomeworkService homeworkService = new HomeworkService(homeworkRepository);
+            var playerRepository = mockPlayerRepositoryExpectedBehaviour();
+            HomeworkService homeworkService = new HomeworkService(homeworkRepository, playerRepository);
             List<string> expectedUrls = new List<string>(new string[] { "test" });
             try
             {
@@ -167,7 +187,8 @@ namespace BusinessTest
         public void When_UploadIsCalledWithInvalidMid_Then_FormatErrorIsThown()
         {
             var homeworkRepository = mockHomeworkRepositoryExpectedBehaviour();
-            HomeworkService homeworkService = new HomeworkService(homeworkRepository);
+            var playerRepository = mockPlayerRepositoryExpectedBehaviour();
+            HomeworkService homeworkService = new HomeworkService(homeworkRepository, playerRepository);
             List<string> expectedUrls = new List<string>(new string[] { "test" });
             try
             {
@@ -183,7 +204,8 @@ namespace BusinessTest
         public void When_UploadIsCalledWithInvalidlUid_Then_FormatErrorIsThown()
         {
             var homeworkRepository = mockHomeworkRepositoryExpectedBehaviour();
-            HomeworkService homeworkService = new HomeworkService(homeworkRepository);
+            var playerRepository = mockPlayerRepositoryExpectedBehaviour();
+            HomeworkService homeworkService = new HomeworkService(homeworkRepository, playerRepository);
             List<string> expectedUrls = new List<string>(new string[] { "test" });
             try
             {
