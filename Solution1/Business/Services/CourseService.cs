@@ -105,6 +105,29 @@ namespace Business.Services
             return path;
         }
 
+        public void Partikip(string userId, string courseId)
+        {
+            var me =_playerService.GetPlayerData(userId, true);
+            Guid courseGid;
+            Guid.TryParse(courseId, out courseGid);
+            var course = _courseRepository.GetById(courseGid);
+
+            if (me.Courses.Contains(course))
+                throw new Exception("Already subscribed to the course.");
+
+            try
+            {
+                me.Courses.Add(course);
+                _playerService.UpdatePlayer(me);
+            }
+            catch
+            {
+                throw new Exception("Cannot subscripe to the course.");
+            }
+
+            return true;
+        }
+
         public void UpdateCourse(Course course)
         {
             _courseRepository.Update(course);

@@ -15,5 +15,10 @@ namespace DataAccess.Repositories
         {
             _platformManagement = platformManagement;
         }
+
+        public Player GetByIdWithCourses(Guid id)
+        {
+            return _platformManagement.Players.Where(p => p.Id == id).Include(p => p.Courses).FirstOrDefault();
+        }
     }
 }

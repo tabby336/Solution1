@@ -12,6 +12,7 @@ namespace Business.Services.Interfaces
         string GetImagePathForCourseId(string id);
         void UpdateCourse(Course course);
         void DeleteCourse(Course course);
+        void Partikip(string userId, string courseId);
 
     }
 }

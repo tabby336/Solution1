@@ -33,6 +33,14 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult GetMine()
+        {
+            var courses = _courseService.GetAllCourses(true);
+            var cvm = new CourseViewModel() { Courses = courses.ToList() };
+            return View("Courses", cvm);
+        }
+
+        [HttpGet]
         [Authorize(Roles = "Professor")]
         public IActionResult CreateCourse()
         {
@@ -76,34 +84,25 @@ namespace Web.Controllers
             var redirectUrl = string.Format(@"/UpDown/Download?path={0}", filePath);
             return Redirect(redirectUrl);
         }
-
-        [HttpGet]
-        [Route("api/Course/GetCourseNames")]
-        public IActionResult GetCourseNames()
+        
+        [Authorize(Roles = "Student")]
+        public IActionResult Partikip(string courseId = null)
         {
-            var courseNames = _courseService.GetAllCourseNames();
-            return Ok(courseNames);
-        }
+            if (courseId == null)
+                return NotFound();
 
-        [HttpGet]
-        [Route("api/Course/GetAllCourses")]
-        public IActionResult GetAllCourses()
-        {
-            var courses = _courseService.GetAllCourses();
-            return Ok(courses);
-        }
+            var myId = this.GetLoggedInUserId();
+            try
+            {
+                _courseService.Partikip(myId, courseId);
+            }
+            catch(Exception e)
+            {
+                // here return view error
+                return BadRequest(e.Message);
+            }
 
-        [HttpPut]
-        public IActionResult Update(Course course)
-        {
-            _courseService.UpdateCourse(course);
-            return Ok();
-        }
-
-        [HttpDelete]
-        public void Delete(Course course)
-        {
-            _courseService.DeleteCourse(course);
+            return RedirectToAction("GetMine");
         }
     }
 }

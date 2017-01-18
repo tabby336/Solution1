@@ -107,7 +107,7 @@ namespace Business.Services
                     ,
                     Description = "This is only a test course."
                     ,
-                    HashTag = "#valoare"
+                    HashTag = "valoare"
                     ,
                     Title = "Fx Test Course"
                 };

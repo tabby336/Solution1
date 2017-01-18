@@ -25,9 +25,12 @@
                         <!-- The special info button -->
                         <ul class="card-action-buttons">
                             <li>
-                                <a class="btn-floating tooltipped waves-effect waves-light light-blue" data-position="top" data-tooltip="See info">
-                                    <i class="mdi-action-info activator"></i>
+                                <a class="btn-floating btn-large tooltipped waves-effect waves-light grey" data-position="top" data-tooltip="See info">
+                                    <i class="mdi-communication-live-help activator"></i>
                                 </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Partikip", "Course", new { courseId = course.Id })" class="btn waves-effect teal darken-2 white-text flow-text" data-position="top" data-tooltip="Follow this course">Partikip</a>
                             </li>
                         </ul>
                         <!-- Card info text -->
