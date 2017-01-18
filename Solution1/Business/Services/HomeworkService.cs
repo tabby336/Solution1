@@ -18,12 +18,15 @@ namespace Business.Services
     public class HomeworkService : IHomeworkService
     {
         private IHomeworkRepository _homeworkRepository;
+        private IPlayerRepository _playerRepository;
         private string _root;
         private string _tmp;
 
-        public HomeworkService(IHomeworkRepository repository)
+        public HomeworkService(IHomeworkRepository hw, IPlayerRepository player)
         {
-            _homeworkRepository = repository;
+            _homeworkRepository = hw;
+            _playerRepository = player;
+
             _root = Directory.GetCurrentDirectory();
             _tmp = Path.Combine(_root, "Data", "tmp");
             _root = Path.Combine(_root, "Data", "homeworks");
@@ -72,6 +75,22 @@ namespace Business.Services
 
             return archivePath;
         }
+
+        public IEnumerable<Player> GetPlayersThatUploaded(string mid)
+        {
+            IEnumerable<Homework> hws = _homeworkRepository.GetHomeworksByModuleId(Guid.Parse(mid));
+            List<Player> players = new List<Player>();
+            foreach(Homework hw in hws)
+            {
+                Player p = _playerRepository.GetById(hw.UserId);
+                if (!players.Contains(p))
+                {
+                    players.Add(p);
+                }
+            }
+            return players;
+        }
+
 
         private Homework CreateHomeworkModel(string uid, string mid, string obs, string url)
         {

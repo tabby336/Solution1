@@ -9,5 +9,6 @@ namespace Business.Services.Interfaces
     {
         string Upload(IUpload upload, IList<IFormFile> files, string uid, string mid, string obs);
         string Archive(string uid, string mid);
+        IEnumerable<Player> GetPlayersThatUploaded(string mid);
     }
 }

@@ -19,6 +19,11 @@ namespace DataAccess.Repositories
             return context.Homeworks.Where(homework => homework.UserId == uid);
         }
 
+        public IEnumerable<Homework> GetHomeworksByModuleId(Guid mid)
+        {
+            return context.Homeworks.Where(homework => homework.ModuleId == mid);
+        }
+
         public override Homework Create(Homework homework)
         {
             if (homework == null)

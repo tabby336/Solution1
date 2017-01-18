@@ -7,5 +7,6 @@ namespace DataAccess.Repositories.Interfaces
    public interface IHomeworkRepository : IRepository<Homework>
     {
         IEnumerable<Homework> GetHomeworksByUserId(Guid uid);
+        IEnumerable<Homework> GetHomeworksByModuleId(Guid mid);
     }
 }

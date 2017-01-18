@@ -1,0 +1,62 @@
+@model string
+
+@{
+    Layout = "_HomeLayout";
+    ViewData["Title"] = "Homework Upload";
+}
+
+
+@ViewData["Message"]
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Download
+        </th>
+        <th>
+            Mark
+        </th>
+    </tr>
+    @{
+        var players = ViewBag.Players as IEnumerable<Player>;
+        foreach (var player in players)
+        {
+            <tr>
+                <td>
+                    <p class="login-form-text" style="font-size:100%;"> @player.FirstName</p>
+                </td>
+                <td>
+                    <p class="login-form-text" style="font-size:100%;"> @player.LastName</p>
+                </td>
+                <td>
+                    <form action = "@Url.Action("Download", "Homework")"  
+                            method = "get">
+                        <input type="hidden" name="moduleId" value=@Model />
+                        <input type="hidden" name="playerId" value=@player.Id />
+                        <input class="btn waves-effect waves-light col s12 green darken-2" 
+                            type="submit" value = "Download" />
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="Homework"
+                            asp-action="Mark"  
+                            method = "post">
+                        <input type="hidden" name="moduleId" value=@Model />
+                        <input type="hidden" name="playerId" value=@player.Id />
+                        <div class="row">
+                            <input class = "input-text col s4" type="text" name="mark" />
+                            <input class="btn waves-effect waves-light col s4 green darken-2" type="submit" value="Mark"/>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            
+                            
+        }
+    }
+</table>

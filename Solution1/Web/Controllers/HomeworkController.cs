@@ -9,16 +9,19 @@ using Business.Services.Interfaces;
 using Business.Services;
 using Business.CommonInfrastructure;
 using Business.CommonInfrastructure.Interfaces;
+using DataAccess.Models;
 
 namespace Web.Controllers
 {
     public class HomeworkController : Controller
     {
         private IHomeworkService _homeworkService;
+        private IMarkService _markService;
 
-        public HomeworkController(IHomeworkService service)
+        public HomeworkController(IHomeworkService hw, IMarkService mark)
         {
-            _homeworkService = service;
+            _homeworkService = hw;
+            _markService = mark;
         }
 
         [HttpGet]
@@ -64,22 +67,41 @@ namespace Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Professor")]
-        public IActionResult Download(string uid = null, string moduleId = null)
+        public IActionResult Download(string playerId = null, string moduleId = null)
         {
-            if (uid == null)
+            if(playerId != null && moduleId != null)
             {
-                uid = this.GetLoggedInUserId();
-                if(uid == null)
-                    return NotFound();
-            }
-            if(uid != null && moduleId != null)
-            {
-                string path = _homeworkService.Archive(uid, moduleId);
+                string path = _homeworkService.Archive(playerId, moduleId);
                 var redirectUrl = string.Format(@"/UpDown/Download?path={0}", path);
                 return Redirect(redirectUrl);
 
             }
-            return View("Download", moduleId);
+            return Evaluate(moduleId);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Professor")]
+        public IActionResult Evaluate(string moduleId)
+        {
+            //Testing reasons, gets to be deleted
+            if (moduleId == null)
+            {
+                moduleId = "1f0b4daa-3a7e-4a94-a5de-9dcf707d9ab4";
+            }
+            IEnumerable<Player> thatUploaded = _homeworkService.GetPlayersThatUploaded(moduleId);
+            ViewBag.Players = thatUploaded;
+            return View("Evaluate", moduleId);
+        }
+
+        [HttpPost]
+        public IActionResult Mark(string playerId, string moduleId, string mark)
+        {
+            string creatorId = this.GetLoggedInUserId();
+            if(creatorId == null)
+                return NotFound();
+
+            _markService.MarkHomework(moduleId, playerId, creatorId, mark);
+            return Evaluate(moduleId);
         }
     }
 }
