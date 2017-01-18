@@ -25,6 +25,11 @@ namespace DataAccess.Repositories
             return _platformManagement.Courses.Select(x => x.Title).ToList();
         }
 
+        public IEnumerable<Course> GetCoursesByAuthor(string authorName)
+        {
+            return _platformManagement.Courses.Where(x => x.Author == authorName).ToList();
+        }
+
         public IEnumerable<Module> GetModulesForCourse(Guid courseId)
         {
             var course = _platformManagement.Courses.Where(c => c.Id == courseId).Include(c => c.Modules).FirstOrDefault();
