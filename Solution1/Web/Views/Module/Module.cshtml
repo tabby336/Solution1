@@ -32,14 +32,22 @@
 
                 @if (Model.Module.HasHomework)
                 {
+                    
+                    var action = "Upload";
+                    var description = "Upload Homework.";
+                    if (User.IsInRole("Professor"))
+                    {
+                        action = "Evaluate";
+                        description = "Evaluate Module.";
+                    }
                     <div class="col s1 right">
-                        <a href="@Url.Action("Upload", "Homework", new {moduleId = Model.Module.Id})" class="btn-floating tooltipped waves-effect waves-light red darken-1 right" data-position="top" data-tooltip="Upload homework.">
+                        <a href="@Url.Action(action, "Homework", new {moduleId = Model.Module.Id})" class="btn-floating tooltipped waves-effect waves-light red darken-1 right" data-position="top" data-tooltip="@description">
                             <i class="mdi-action-favorite"></i>
                         </a>
                     </div>
                 }
                 
-                @if (Model.Module.HasTest)
+                @if (User.IsInRole("Student") && Model.Module.HasTest)
                 {
                     <div class="col s1 right">
                         <a href="#" class="btn-floating tooltipped waves-effect waves-light green darken-1 right" data-position="top" data-tooltip="Take test.">

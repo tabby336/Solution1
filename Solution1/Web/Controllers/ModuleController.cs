@@ -1,7 +1,7 @@
 ﻿
 
 using Business.Services.Interfaces;
-using DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.ModuleViewModels;
 
@@ -16,6 +16,7 @@ namespace Web.Controllers
             _moduleService = moduleService;
         }
 
+        [Authorize(Roles = "Student,Professor")]
         public IActionResult Index(string moduleId = null)
         {
             if(moduleId == null)
@@ -29,6 +30,7 @@ namespace Web.Controllers
             return View("Module", model);
         }
 
+        [Authorize(Roles = "Student,Professor")]
         public IActionResult GetPdf(string id = null)
         {
             if (id == null)
