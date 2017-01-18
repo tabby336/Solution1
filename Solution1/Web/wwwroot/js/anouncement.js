@@ -15,12 +15,13 @@ var getHtmlTemplate = function (title, text) {
     return template;
 }
 
-var getAnouncements = function ()
-{
+var getAnouncements = function () {
+    var anouncements = $("#anouncements");
+    anouncements.empty();
     $.get(anouncementGetUrl,
     function (data) {
         for (var i = 0; i < data.length; i++) {
-            $("#anouncements").append(getHtmlTemplate(data[i].title, data[i].text));
+            anouncements.append(getHtmlTemplate(data[i].title, data[i].text));
         }
     });
 }

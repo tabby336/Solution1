@@ -8,7 +8,6 @@ namespace Web.Controllers
     {
         public IActionResult Index()
         {
-            ViewData["hostName"] = Request.Host;
             return View();
         }
 
