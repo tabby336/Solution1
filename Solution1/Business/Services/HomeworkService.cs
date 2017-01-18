@@ -82,13 +82,9 @@ namespace Business.Services
             List<Player> players = new List<Player>();
             foreach(Homework hw in hws)
             {
-                Player p = _playerRepository.GetById(hw.UserId);
-                if (!players.Contains(p))
-                {
-                    players.Add(p);
-                }
+                players.Add(_playerRepository.GetById(hw.UserId));
             }
-            return players;
+            return players.Distinct();
         }
 
 
