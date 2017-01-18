@@ -1,11 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Error";
+﻿@using Web.Models.ErrorViewModels
+@model ErrorViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = Model.Title;
+}
+
+@section Styles {
+    <link type="text/css" rel="stylesheet" href="~/css/home.css">
+    <link type="text/css" rel="stylesheet" href="~/css/site.css">
 }
 
 <div id="error-page">
 
     <div class="row">
-        <div class="col s12">
+        <div class="col s12 m6 offset-m3">
             <div class="browser-window">
                 <div class="top-bar">
                     <div class="circles">
@@ -17,18 +26,31 @@
                 <div class="content">
                     <div class="row">
                         <div id="site-layout-example-top" class="col s12">
-                            <p class="flat-text-logo center white-text caption-uppercase">Internal server error</p>
+                            <p class="flat-text-logo center white-text caption-uppercase">
+                            @Model.Title
+                            </p>
                         </div>
-                        <div id="site-layout-example-right" class="col s12 m12 l12">
-                            <div class="row center">
-                                <h1 class="text-long-shadow col s12">500</h1>
+                        <div id="site-layout-example-center" class="col s12 m12 l12" style="background-color: #26a69a">
+
+                            <div class="row">
+                                <h2 class="text-long-shadow col s12">
+                                    @if (Model.ErrorCode == null)
+                                    {
+                                        <span>???</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Model.ErrorCode</span>
+                                    }
+                                </h2>
+                                <p class="center white-text col s12">@Model.Description</p>
                             </div>
+
                             <div class="row center">
-                                <p class="center white-text col s12">Something has gone seriously wrong. Please try later.</p>
-                                <p class="center s12"><button onclick="goBack()" class="btn waves-effect waves-light">Back</button> <a href="index.html" class="btn waves-effect waves-light">Homepage</a>
-                                <p>
-                                </p>
+                                <a href="@Url.Action("Index", "Home")" class="btn waves-effect waves-light center-align">Homepage</a>
                             </div>
+                            <br />
+                            <br />
                         </div>
                     </div>
                 </div>

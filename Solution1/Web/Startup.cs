@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace Web
 {
@@ -49,7 +50,7 @@ namespace Web
 
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options => 
             {
-                options.Cookies.ApplicationCookie.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Error/AccessDenied");
+                options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Error/AccessDenied");
             })
                 .AddEntityFrameworkStores<PlatformManagement, Guid>()
                 .AddDefaultTokenProviders();
