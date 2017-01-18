@@ -17,20 +17,19 @@ namespace Web.Controllers
             _markService = service;
         }
 
+        [HttpGet]
         public IActionResult Index(string uid = null)
         {
-            ViewData["Message"] = "Trecem si noi anul asta?";
-            if (uid == null) 
+            if (uid == null)
             {
-                 return View();
+                uid = this.GetLoggedInUserId();
+                if(uid == null)
+                    return NotFound();
             }
-            IEnumerable<Mark> marks = _markService.FilterMarksByUser(uid);
+            var marks = _markService.GetHumanReadableMarks(uid);
             ViewBag.Marks = marks;  
             return View("Marks");
             
-        }
-
-
-        
+        }       
     }
 }
