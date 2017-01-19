@@ -35,10 +35,9 @@ namespace Web.Controllers
         [Authorize(Roles = "Student")]
         public IActionResult Upload(string moduleId)
         {
-            //Testing reasons, gets to be deleted
             if (moduleId == null)
             {
-                moduleId = "bade8051-f56d-4187-9726-8694c9ca6aef";
+                return NotFound();
             }
             return View("Upload", moduleId);
         }
@@ -83,10 +82,9 @@ namespace Web.Controllers
         [Authorize(Roles = "Professor")]
         public IActionResult Evaluate(string moduleId)
         {
-            //Testing reasons, gets to be deleted
             if (moduleId == null)
             {
-                moduleId = "bade8051-f56d-4187-9726-8694c9ca6aef";
+                return NotFound();
             }
             IEnumerable<Player> thatUploaded = _homeworkService.GetPlayersThatUploaded(moduleId);
             ViewBag.Players = thatUploaded;
