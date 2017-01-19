@@ -13,10 +13,11 @@ using DataAccess.Models;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class HomeworkController : Controller
     {
-        private IHomeworkService _homeworkService;
-        private IMarkService _markService;
+        private readonly IHomeworkService _homeworkService;
+        private readonly IMarkService _markService;
 
         public HomeworkController(IHomeworkService hw, IMarkService mark)
         {
@@ -25,7 +26,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Student, Professor")]
         public IActionResult Index()
         {
             return View();
@@ -94,6 +95,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Professor")]
         public IActionResult Mark(string playerId, string moduleId, string mark)
         {
             string creatorId = this.GetLoggedInUserId();

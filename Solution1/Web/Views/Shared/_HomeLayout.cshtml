@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Web.Controllers
+
+@{
     Layout = "_Layout";
 }
 
@@ -50,13 +52,12 @@
                 @*@{ await Html.RenderPartialAsync("../Home/Profile"); }*@
                 <li id="profiledata" class="user-details cyan darken-2"></li>
 
-                @if (User.IsInRole("Admin"))
+                @if (User.IsAdmin())
                 {
                     await Html.RenderPartialAsync("../Home/AdminSideMenu");
 
                 }
-
-                @if (User.IsInRole("Professor") || User.IsInRole("Student"))
+                else
                 {
                     await Html.RenderPartialAsync("../Home/LeftMenu");
                 }

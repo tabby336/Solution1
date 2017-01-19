@@ -157,6 +157,12 @@ namespace Business.Services
             _courseRepository.Delete(course);
         }
 
+        public void DeleteEntryBy(Guid userId, Guid courseId)
+        {
+
+            var entry = _playerCourseRepository.GetByPlayerAndCourse(userId, courseId);
+            _playerCourseRepository.Delete(entry);
+        }
      
     }
 }

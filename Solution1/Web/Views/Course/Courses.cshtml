@@ -1,5 +1,5 @@
 ﻿
-
+@using Web.Controllers
 @model Web.Models.CourseViewModels.CourseViewModel
 
 @{
@@ -37,10 +37,16 @@
                                     <i class="mdi-communication-live-help activator"></i>
                                 </a>
                             </li>
-                            @if (User.IsInRole("Student") && !Model.MyCourses.Any(c => c.Id == course.Id))
+                            @if (User.IsStudent() && !Model.MyCourses.Any(c => c.Id == course.Id))
                             {
                                 <li>
                                     <a href="@Url.Action("Partikip", "Course", new {courseId = course.Id})" class="btn waves-effect cyan white-text flow-text  tooltipped" data-position="top" data-tooltip="Follow this course" style="font-size: 12px;"><strong>Partikip</strong></a>
+                                </li>
+                            }
+                            @if (User.IsProfessor())
+                            {
+                                <li>
+                                    <a href="@Url.Action("Delete", "Course", course)" class="btn waves-effect cyan white-text flow-text  tooltipped" data-position="top" data-tooltip="Delete this course" style="font-size: 12px;"><strong>Delete</strong></a>
                                 </li>
                             }
                         </ul>

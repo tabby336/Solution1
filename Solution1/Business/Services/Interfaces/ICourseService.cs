@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Business.Services.Interfaces
 {
@@ -14,5 +15,6 @@ namespace Business.Services.Interfaces
         void UpdateCourse(Course course);
         void DeleteCourse(Course course);
         void Partikip(string userId, string courseId);
+        void DeleteEntryBy(Guid userId, Guid courseId);
     }
 }

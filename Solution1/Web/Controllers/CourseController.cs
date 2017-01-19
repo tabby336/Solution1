@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.CourseViewModels;
+using DataAccess.Repositories.Interfaces;
 
 namespace Web.Controllers
 {
@@ -23,6 +24,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Student")]
         public IActionResult GetAll()
         {
             var courses = _courseService.GetAllCourses(true);
@@ -33,6 +35,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Student, Professor")]
         public IActionResult GetMine()
         {
             var myId = this.GetLoggedInUserId();
@@ -82,7 +85,6 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult Image(string id = null)
         {
             if (id == null)
@@ -113,6 +115,17 @@ namespace Web.Controllers
                 return BadRequest(e.Message);
             }
 
+            return RedirectToAction("GetMine");
+        }
+
+        [Authorize(Roles = "Professor")]
+        public IActionResult Delete(Course course)
+        {
+            if (course == null)
+                return NotFound();
+            
+            _courseService.DeleteEntryBy(User.Id(), course.Id);
+            _courseService.DeleteCourse(course);
             return RedirectToAction("GetMine");
         }
     }

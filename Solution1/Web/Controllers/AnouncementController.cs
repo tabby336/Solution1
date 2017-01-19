@@ -1,10 +1,11 @@
 ﻿using System;
 using Business.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Web.Models.AnouncementViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class AnouncementController : Controller
     {
         private readonly IAnouncementService _anouncementService;

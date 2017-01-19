@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class MarkController : Controller 
     {
         private readonly IMarkService _markService;

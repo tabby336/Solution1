@@ -1,51 +1,60 @@
-﻿<!-- Information about user here -->
-<!-- COURSES -->
+﻿@using Web.Controllers
+
 <li class="no-padding">
+
     <ul class="collapsible collapsible-accordion">
-        <li class="bold">
-            <a class="collapsible-header waves-effect waves-cyan">
-                <i class="mdi-file-folder"></i>
-                Courses
-            </a>
-            <div class="collapsible-body">
-                <ul>
-                    <li>
-                        <a href="@Url.Action("GetAll", "Course")">Browse All</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("GetMine", "Course")">Browse Mine</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("CreateCourse", "Course")">Create Course</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="bold">
-            <a class="collapsible-header waves-effect waves-cyan">
-                <i class="mdi-image-looks-5"></i>
-                Marks
-            </a>
-            <div class="collapsible-body">
-                <ul>
-                    <li>
-                        <a href="@Url.Action("Index", "Mark")">View My Marks</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="bold">
-            <a class="collapsible-header waves-effect waves-cyan">
-                <i class="mdi-action-favorite"></i>
-                Homeworks
-            </a>
-            <div class="collapsible-body">
-                <ul>
-                    <li>
-                        <a href="@Url.Action("Index", "Homework")">View Homework</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+
+        <!-- COURSES -->
+        @if (!User.IsAdmin())
+        {
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-cyan">
+                    <i class="mdi-file-folder"></i>
+                    Courses
+                </a>
+
+                <div class="collapsible-body">
+                    <ul>
+                        @if (User.IsStudent())
+                        {
+                            <li>
+                                <a href="@Url.Action("GetAll", "Course")">Browse All</a>
+                            </li>
+                        }
+
+                        <li>
+                            <a href="@Url.Action("GetMine", "Course")">Browse Mine</a>
+                        </li>
+
+                        @if (User.IsProfessor())
+                        {
+                            <li>
+                                <a href="@Url.Action("CreateCourse", "Course")">Create Course</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </li>
+        }
+        
+        <!-- MARKS -->
+        @if (User.IsStudent())
+        {
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-cyan">
+                    <i class="mdi-image-looks-5"></i>
+                    Marks
+                </a>
+                <div class="collapsible-body">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("Index", "Mark")">View My Marks</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        }
+
     </ul>
 </li>
