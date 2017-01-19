@@ -7,6 +7,7 @@ namespace Web.Models.ModuleViewModels
     public class CreateModuleViewModel
     {
         [Required]
+        [Display(Name = "Select one of your Courses")]
         public Guid CourseId { get; set; }
 
         [Required]
@@ -16,9 +17,6 @@ namespace Web.Models.ModuleViewModels
         [Required]
         [StringLength(4096)]
         public string Description { get; set; }
-
-        [StringLength(2048)]
-        public string UrlPdf { get; set; } = "defaultModule.pdf";
 
         [Required]
         public bool HasHomework { get; set; } = true;

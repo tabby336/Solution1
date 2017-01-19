@@ -42,28 +42,33 @@ namespace Web.Controllers
         [Authorize(Roles = "Professor")]
         public IActionResult CreateModule()
         {
-            var courses = _courseService.GetAllCourses(false);
+            var myId = this.GetLoggedInUserId();
+            var courses = _courseService.GetCoursesForPlayer(myId);
             ViewBag.Courses = new SelectList(courses, "Id", "Title");
-            return View("CreateModule");
+            return View("CreateModule", new CreateModuleViewModel());
         }
 
         [HttpPost]
         [Authorize(Roles = "Professor")]
         public IActionResult CreateModule(IFormFile file, CreateModuleViewModel model)
         {
+            // reassign courses
+            var myId = this.GetLoggedInUserId();
+            var courses = _courseService.GetCoursesForPlayer(myId);
+            ViewBag.Courses = new SelectList(courses, "Id", "Title");
+
             if (!ModelState.IsValid) return View("CreateModule", model);
             if (file == null)
             {
                 ModelState.AddModelError(string.Empty, "You must upload a file for the Module.");
                 return View("CreateModule", model);
             }
-
-            var myId = this.GetLoggedInUserId();
+            
             var module = _moduleService.CreateModule(myId, model.CourseId, model.Title, model.Description, new List<IFormFile> { file }, model.HasHomework, model.HasTest);
 
             if (module != null) //success
             {
-                return RedirectToAction("GetAll", "Course");
+                return RedirectToAction("Index", "Module", new { moduleId = module.Id.ToString()});
             }
 
             ModelState.AddModelError(string.Empty, "Cannot create Module. Please try again later.");

@@ -19,6 +19,6 @@ namespace Web.Models.CourseViewModels
         [StringLength(2048)]
         [Display(Name = "Additional info (link, optional)")]
         [DataType(DataType.Url)]
-        public string DataLink { get; set; } = "#";
+        public string DataLink { get; set; } = "";
     }
 }

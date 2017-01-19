@@ -51,7 +51,6 @@ namespace Business.Services
         {
             try
             {
-                var me = _playerService.GetPlayerData(userid);
                 var moduleFromData = new Module()
                 {
                     CourseId = courseId,
@@ -61,24 +60,23 @@ namespace Business.Services
                     HasTest = hasTest
                 };
 
-                _playerService.UpdatePlayer(me);
-
+                moduleFromData = _moduleRepository.Create(moduleFromData);
                 IUpload uploader = new Upload(new FileDataSource());
                 var success = Upload(uploader, files, moduleFromData.Id.ToString());
                 if (!success)
                 {
-                    _playerService.UpdatePlayer(me);
+                    _moduleRepository.Delete(moduleFromData);
                     throw new Exception();
                 }
 
                 // finally set the image
                 moduleFromData.UrlPdf = files[0].FileName;
-                _moduleRepository.Create(moduleFromData);
+                _moduleRepository.Update(moduleFromData);
                 return moduleFromData;
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                return null;
             }
         }
         public bool Upload(IUpload upload, IList<IFormFile> files, string courseId)
