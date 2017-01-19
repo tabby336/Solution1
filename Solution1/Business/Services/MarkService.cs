@@ -4,6 +4,7 @@ using DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Business.Services
@@ -26,11 +27,7 @@ namespace Business.Services
             try
             {
                 IEnumerable<Mark> marks = _markRepository.GetMarksByUserId(Guid.Parse(uid));
-                if (marks != null)
-                {
-                    return marks.ToList();
-                }
-                return null;
+                return marks?.ToList();
             } catch
             {
                 return null;
@@ -39,23 +36,23 @@ namespace Business.Services
 
         public List<Dictionary<string,string>> GetHumanReadableMarks(string uid)
         {
-            List<Dictionary<string,string>> MarksExplained = new List<Dictionary<string,string>>();
+            List<Dictionary<string,string>> marksExplained = new List<Dictionary<string,string>>();
             try
             {
-                IEnumerable<Mark> marks = _markRepository.GetMarksByUserId(Guid.Parse(uid));
-                foreach(Mark m in marks)
+                var marks = _markRepository.GetMarksByUserId(Guid.Parse(uid));
+                foreach(var m in marks)
                 {
                     var explained = new Dictionary<string, string>();
 
                     var module = _moduleRepository.GetById(m.HomeworkId);
                     explained["ModuleName"] = module.Title;
-                    explained["Value"] = m.Value.ToString();
+                    explained["Value"] = m.Value.ToString(CultureInfo.InvariantCulture);
                     explained["CourseName"] = _courseRepository.GetById(module.CourseId).Title;
-                    MarksExplained.Add(explained);
+                    marksExplained.Add(explained);
                 }
-                return MarksExplained;
+                return marksExplained;
             } 
-            catch(Exception e)
+            catch(Exception)
             {
                 return null;
             }
@@ -63,7 +60,7 @@ namespace Business.Services
 
         public bool MarkHomework(string moduleId, string playerId, string creatorId, string value)
         {
-            Mark mark = new Mark
+            var mark = new Mark
             {
                 HomeworkId = Guid.Parse(moduleId),
                 UserId = Guid.Parse(playerId),
@@ -77,7 +74,7 @@ namespace Business.Services
             };
             try 
             {
-                Mark m = _markRepository.Create(mark);
+                var m = _markRepository.Create(mark);
                 return (m == mark);
             }
             catch(DbUpdateException)

@@ -1,20 +1,20 @@
-﻿using Business.Services;
+﻿using System;
+using System.Collections.Generic;
+using Business.Services;
 using DataAccess.Models;
 using DataAccess.Repositories.Interfaces;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Collections.Generic;
 
-namespace BusinessTest
+namespace BusinessTest.Services
 { 
     [TestClass]
     public class MarkServiceTest
     {
-        private List<Mark> CreateSUT()
+        private static List<Mark> CreateSut()
         {
-            Mark first_element = new Mark
+            var firstElement = new Mark
             {
                 HomeworkId = Guid.Parse("3a6021f9-864c-429f-9878-fe382ec2e56a"),
                 UserId = Guid.Parse("89e4dcb2-3f25-4f7c-bb3f-b2a96ae4b6e6"),
@@ -25,7 +25,7 @@ namespace BusinessTest
                 HasComment = false,
                 HasContestation = false
             };
-            Mark second_element = new Mark
+            var secondElement = new Mark
             {
                 HomeworkId = Guid.Parse("3a6021f9-864c-429f-9878-fe382ec2e56f"),
                 UserId = Guid.Parse("89e4dcb2-3f25-4f7c-bb3f-b2a96ae4b6e6"),
@@ -36,7 +36,7 @@ namespace BusinessTest
                 HasComment = false,
                 HasContestation = false
             };
-            Mark third_element = new Mark
+            var thirdElement = new Mark
             {
                 HomeworkId = Guid.Parse("3a6021f9-864c-429f-9878-fe382ec2e56f"),
                 UserId = Guid.Parse("89e4dcb2-3f25-1111-bb3f-b2a96ae4b6e6"),
@@ -47,12 +47,12 @@ namespace BusinessTest
                 HasComment = false,
                 HasContestation = false
             };
-            return new List<Mark> { first_element, second_element, third_element };
+            return new List<Mark> { firstElement, secondElement, thirdElement };
         }
 
         [TestMethod]
         public void When_FilterMarksByUserIsCalledWithAnUserIdThatHasAMark_Then_ReturnItsMarks() {
-            List<Mark> marks = CreateSUT();
+            var marks = CreateSut();
             var mockDataAccess = new Mock<IMarkRepository>();
             var mockCourseRepository = new Mock<ICourseRepository>();
             var mockModuleRepository = new Mock<IModuleRepository>();

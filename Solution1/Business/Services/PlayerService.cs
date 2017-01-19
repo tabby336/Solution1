@@ -13,7 +13,7 @@ namespace Business.Services
 
         public PlayerService(IPlayerRepository playerRepository)
         {
-            this._playerRepository = playerRepository;
+            _playerRepository = playerRepository;
         }
 
         public Player GetPlayerData(string id, bool includeCourses = false, bool includeModules =  false)

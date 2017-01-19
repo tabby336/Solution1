@@ -7,7 +7,7 @@ namespace Business.CommonInfrastructure
     {
         public FileStream Stream(string path)
         {
-            return System.IO.File.Create(path);
+            return File.Create(path);
         }
     }
 }

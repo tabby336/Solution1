@@ -1,10 +1,6 @@
 using Business.Services.Interfaces;
-using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Web.Controllers
 {

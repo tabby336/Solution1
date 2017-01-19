@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models.CourseViewModels;
-using DataAccess.Repositories.Interfaces;
 
 namespace Web.Controllers
 {

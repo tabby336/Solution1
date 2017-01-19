@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using DataAccess.Models;
 
 namespace Web.Models.ModuleViewModels
 {

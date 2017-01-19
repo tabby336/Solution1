@@ -2,12 +2,8 @@ using Business.Services.Interfaces;
 using DataAccess.Models;
 using DataAccess.Repositories.Interfaces;
 using Business.CommonInfrastructure.Interfaces;
-using Business.CommonInfrastructure;
-
-using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Net.Http.Headers;
 using System;
 using System.Linq;
 using System.IO;
@@ -17,10 +13,10 @@ namespace Business.Services
 {
     public class HomeworkService : IHomeworkService
     {
-        private IHomeworkRepository _homeworkRepository;
-        private IPlayerRepository _playerRepository;
-        private string _root;
-        private string _tmp;
+        private readonly IHomeworkRepository _homeworkRepository;
+        private readonly IPlayerRepository _playerRepository;
+        private readonly string _root;
+        private readonly string _tmp;
 
         public HomeworkService(IHomeworkRepository hw, IPlayerRepository player)
         {
@@ -40,37 +36,24 @@ namespace Business.Services
                 throw new ArgumentNullException();
             }
             
-            string hwdir = Path.Combine(_root, mid, uid);
+            var hwdir = Path.Combine(_root, mid, uid);
 
-            IList<string> uploadedPaths = upload.UploadFiles(files, hwdir);
-            string notUploadedFiles = "Not uploaded files:";
-            foreach (var path in uploadedPaths)
-            {
-                Homework homework = CreateHomeworkModel(uid, mid, obs, path);
-                Homework hw = _homeworkRepository.Create(homework); 
-                if (hw == null) 
-                {
-                    notUploadedFiles += Path.GetFileName(path) + ", ";
-                }   
-            }
-            if (notUploadedFiles == "Not uploaded files:")
-            {
-                return "Upload successfully!";
-            }
-            return notUploadedFiles.TrimEnd(' ', ',');
+            var uploadedPaths = upload.UploadFiles(files, hwdir);
+            var notUploadedFiles = (from path in uploadedPaths let homework = CreateHomeworkModel(uid, mid, obs, path) let hw = _homeworkRepository.Create(homework) where hw == null select path).Aggregate("Not uploaded files:", (current, path) => current + (Path.GetFileName(path) + ", "));
+            return notUploadedFiles == "Not uploaded files:" ? "Upload successfully!" : notUploadedFiles.TrimEnd(' ', ',');
         }
 
         public string Archive(string uid, string mid)
         {
-            string hwpath = Path.Combine(_root, mid, uid);
+            var hwpath = Path.Combine(_root, mid, uid);
     
             // empty the temp folder
-            Directory.EnumerateFiles(_tmp).ToList().ForEach(f => System.IO.File.Delete(f));
+            Directory.EnumerateFiles(_tmp).ToList().ForEach(File.Delete);
             
             //TODO: change with actual student name
-            string relativeTmpPath = Path.Combine("Data", "tmp");
-            string archiveName = uid + ".zip";
-            string archivePath = Path.Combine(_tmp, archiveName);
+            Path.Combine("Data", "tmp");
+            var archiveName = uid + ".zip";
+            var archivePath = Path.Combine(_tmp, archiveName);
             ZipFile.CreateFromDirectory(hwpath, archivePath, CompressionLevel.Fastest, true);
 
             return archivePath;
@@ -78,17 +61,13 @@ namespace Business.Services
 
         public IEnumerable<Player> GetPlayersThatUploaded(string mid)
         {
-            IEnumerable<Homework> hws = _homeworkRepository.GetHomeworksByModuleId(Guid.Parse(mid));
-            List<Player> players = new List<Player>();
-            foreach(Homework hw in hws)
-            {
-                players.Add(_playerRepository.GetById(hw.UserId));
-            }
+            var hws = _homeworkRepository.GetHomeworksByModuleId(Guid.Parse(mid));
+            var players = hws.Select(hw => _playerRepository.GetById(hw.UserId)).ToList();
             return players.Distinct();
         }
 
 
-        private Homework CreateHomeworkModel(string uid, string mid, string obs, string url)
+        private static Homework CreateHomeworkModel(string uid, string mid, string obs, string url)
         {
             return new Homework
             {   

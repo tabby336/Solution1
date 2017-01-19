@@ -26,11 +26,9 @@ namespace Business.Services
 
             foreach (var roleName in RolesNames)
             {
-                if (!await roleManager.RoleExistsAsync(roleName))
-                {
-                    var role = new IdentityRole<Guid> {Name = roleName};
-                    await roleManager.CreateAsync(role);
-                }
+                if (roleManager != null && await roleManager.RoleExistsAsync(roleName)) continue;
+                var role = new IdentityRole<Guid> {Name = roleName};
+                if (roleManager != null) await roleManager.CreateAsync(role);
             }
 
             var admin = new ApplicationUser
@@ -43,16 +41,20 @@ namespace Business.Services
             var userManager = serviceProvider.GetService(typeof(UserManager<ApplicationUser>))
                 as UserManager<ApplicationUser>;
 
-            var user = userManager.FindByIdAsync(admin.Id.ToString()).Result;
-
-            if (user == null)
+            if (userManager != null)
             {
-                await userManager.CreateAsync(admin, AdminPassword);
-                await userManager.AddToRoleAsync(admin, "Admin");
-                await userManager.AddToRoleAsync(admin, "Professor");
-                await userManager.AddToRoleAsync(admin, "Student");
+                var user = userManager.FindByIdAsync(admin.Id.ToString()).Result;
+
+                if (user == null)
+                {
+                    await userManager.CreateAsync(admin, AdminPassword);
+                    await userManager.AddToRoleAsync(admin, "Admin");
+                    await userManager.AddToRoleAsync(admin, "Professor");
+                    await userManager.AddToRoleAsync(admin, "Student");
+                }
             }
 
+            if (context == null) return;
             await context.SaveChangesAsync();
 
             // insert sample data here
@@ -88,10 +90,11 @@ namespace Business.Services
                     ,
                     Semester = 5
                 };
-                playerRepository.Create(p);
+                playerRepository?.Create(p);
             }
             catch
             {
+                // ignored
             }
         }
 
@@ -112,8 +115,11 @@ namespace Business.Services
                     Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
                 };
 
-                await userManager.CreateAsync(student, "Student0.");
-                await userManager.AddToRoleAsync(student, "Student");
+                if (userManager != null)
+                {
+                    await userManager.CreateAsync(student, "Student0.");
+                    await userManager.AddToRoleAsync(student, "Student");
+                }
 
                 var s = new Player()
                 {
@@ -129,10 +135,11 @@ namespace Business.Services
                     ,
                     Semester = 5
                 };
-                playerRepository.Create(s);
+                playerRepository?.Create(s);
             }
             catch
             {
+                // ignored
             }
         }
 
@@ -153,8 +160,11 @@ namespace Business.Services
                     Id = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb")
                 };
 
-                await userManager.CreateAsync(professor, "Professor0.");
-                await userManager.AddToRoleAsync(professor, "Professor");
+                if (userManager != null)
+                {
+                    await userManager.CreateAsync(professor, "Professor0.");
+                    await userManager.AddToRoleAsync(professor, "Professor");
+                }
 
                 var t = new Player()
                 {
@@ -170,10 +180,11 @@ namespace Business.Services
                     ,
                     Semester = 5
                 };
-                playerRepository.Create(t);
+                playerRepository?.Create(t);
             }
             catch
             {
+                // ignored
             }
         }
 
@@ -219,7 +230,7 @@ namespace Business.Services
                 c.Modules.Add(module1);
                 c.Modules.Add(module2);
 
-                courseRepository.Create(c);
+                courseRepository?.Create(c);
 
 
                 // assign course to teacher
@@ -228,18 +239,19 @@ namespace Business.Services
                     PlayerId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aeb"),
                     CourseId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aee")
                 };
-                playerCourseRepository.Create(playerCourse);
+                playerCourseRepository?.Create(playerCourse);
             }
             catch
             {
-            }   
+                // ignored
+            }
         }
 
         public static void InsertHomeworkSamples(IServiceProvider serviceProvider)
         {
             try
             {
-                string root = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, 
+                var root = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, 
                                                 "Web", "Data", "homeworks");
                 var homeworkRepository = serviceProvider.GetService(typeof(IHomeworkRepository)) as IHomeworkRepository;
                 var hw1 = new Homework()
@@ -272,11 +284,13 @@ namespace Business.Services
                     ,
                     UserId = Guid.Parse("bade8051-f56d-4187-9726-8694c9ca6aef")
                 };
+                if (homeworkRepository == null) return;
                 homeworkRepository.Create(hw1);
                 homeworkRepository.Create(hw2);
             }
             catch
             {
+                // ignored
             }
         }
 
@@ -326,11 +340,13 @@ namespace Business.Services
                     ,
                     Value = 7
                 };
+                if (markRepository == null) return;
                 markRepository.Create(mark1);
                 markRepository.Create(mark2);
             }
             catch
             {
+                // ignored
             }
         }
             
@@ -348,11 +364,11 @@ namespace Business.Services
 
             try
             {
-                anouncementRepository.Create(anouncement1);
+                anouncementRepository?.Create(anouncement1);
             }
             catch
             {
-                
+                // ignored
             }
         }
     }

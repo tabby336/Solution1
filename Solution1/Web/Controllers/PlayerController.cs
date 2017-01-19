@@ -1,7 +1,4 @@
-﻿
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Business.Services.Interfaces;
+﻿using Business.Services.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,7 +18,6 @@ namespace Web.Controllers
             _playerService = playerService;
         }
 
-        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         public IActionResult Index(string id = null)
         { 
             if (id == null)
