@@ -10,9 +10,12 @@ Solution1/Web/Data/Modules/*
 !Solution1/Web/Data/Modules/defaultModule.pdf
 Solution1/Web/Data/Avatars/Courses/*
 !Solution1/Web/Data/Avatars/Courses/defaultCourse.png
+Solution1/Web/Data/tmp/*
 Solution1/Web/Data/homeworks/*
-!Solution1/Web/Data/homeworks/bade8051-f56d-4187-9726-8694c9ca6aef/bade8051-f56d-4187-9726-8694c9ca6aef/fex3.c
-!Solution1/Web/Data/homeworks/bade8051-f56d-4187-9726-8694c9ca6aee/bade8051-f56d-4187-9726-8694c9ca6aef/bex3.c
+!Solution1/Web/Data/homeworks/bade8051-f56d-4187-9726-8694c9ca6aef/*
+!Solution1/Web/Data/homeworks/bade8051-f56d-4187-9726-8694c9ca6aef/bade8051-f56d-4187-9726-8694c9ca6aef/
+!Solution1/Web/Data/homeworks/bade8051-f56d-4187-9726-8694c9ca6aee/*
+!Solution1/Web/Data/homeworks/bade8051-f56d-4187-9726-8694c9ca6aee/bade8051-f56d-4187-9726-8694c9ca6aee/
 
 # User-specific files
 *.suo
